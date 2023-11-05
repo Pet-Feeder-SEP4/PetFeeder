@@ -10,13 +10,14 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private UserP user;
+
+    private Long userId;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<Time> time;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public List<PetFeeder> petfeederId;
+    public List<PetFeeder> petFeeder;
+
     private String scheduleLabel;
 
     public Schedule() {
@@ -38,12 +39,12 @@ public class Schedule {
         this.scheduleLabel = scheduleLabel;
     }
 
-    public UserP getUserId() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserId(UserP userId) {
-        this.user = userId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public List<Time> getTime() {
@@ -54,11 +55,11 @@ public class Schedule {
         this.time = time;
     }
 
-    public List<PetFeeder> getPetfeederId() {
-        return petfeederId;
+    public List<PetFeeder> getPetFeeder() {
+        return petFeeder;
     }
 
-    public void setPetfeederId(List<PetFeeder> petfeederId) {
-        this.petfeederId = petfeederId;
+    public void setPetFeeder(List<PetFeeder> petFeeder) {
+        this.petFeeder = petFeeder;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -9,10 +10,10 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private UserP user;
-    @OneToOne(cascade = CascadeType.ALL)
-    private PetFeeder petFeeder;
+
+    private Long userId;
+
+    private Long petFeederId;
 
     private String name;
     private Date birthdate;
@@ -23,20 +24,20 @@ public class Pet {
 
     }
 
-    public UserP getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserP user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public PetFeeder getPetFeeder() {
-        return petFeeder;
+    public Long getPetFeederId() {
+        return petFeederId;
     }
 
-    public void setPetFeeder(PetFeeder petFeeder) {
-        this.petFeeder = petFeeder;
+    public void setPetFeederId(Long petFeederId) {
+        this.petFeederId = petFeederId;
     }
 
     public String getName() {

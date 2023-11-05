@@ -9,8 +9,8 @@ public class Time {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long timeId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Schedule scheduleId;
+
+    private Long scheduleId;
     private String timeLabel;
     private LocalTime time;
     public Time(){
@@ -41,11 +41,11 @@ public class Time {
         this.time = time;
     }
 
-    public Schedule getScheduleId() {
+    public Long getScheduleId() {
         return scheduleId;
     }
 
-    public void setScheduleId(Schedule scheduleId) {
+    public void setScheduleId(Long scheduleId) {
         this.scheduleId = scheduleId;
     }
 }

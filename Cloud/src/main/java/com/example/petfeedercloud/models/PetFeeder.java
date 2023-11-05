@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,12 +10,12 @@ public class PetFeeder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petFeederId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Schedule schedule;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private UserP user;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public List<Pet> pets;
+
+    private Long scheduleId;
+
+    private Long userId;
+
+    public Long petId;
 
     private String petFeederLabel;
     private String foodLevel;
@@ -26,28 +27,28 @@ public class PetFeeder {
 
     }
 
-    public Schedule getSchedule() {
-        return schedule;
+    public Long getScheduleId() {
+        return scheduleId;
     }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
+    public void setSchedule(Long scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
-    public UserP getUser() {
-        return user;
+    public long getUser() {
+        return userId;
     }
 
-    public void setUser(UserP user) {
-        this.user = user;
+    public void setUser(Long userId) {
+        this.userId = userId;
     }
 
-    public List<Pet> getPets() {
-        return pets;
+    public Long getPetId() {
+        return petId;
     }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 
     public String getPetFeederLabel() {
