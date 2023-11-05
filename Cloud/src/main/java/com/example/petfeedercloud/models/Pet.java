@@ -10,8 +10,9 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petId;
-
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
+    private UserP user;
 
     private Long petFeederId;
 
@@ -23,13 +24,11 @@ public class Pet {
     public Pet() {
 
     }
-
-    public Long getUserId() {
-        return userId;
+    public UserP getUser() {
+        return user;
     }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserP user) {
+        this.user = user;
     }
 
     public Long getPetFeederId() {

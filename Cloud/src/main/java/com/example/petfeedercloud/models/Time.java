@@ -9,14 +9,22 @@ public class Time {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long timeId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "scheduleId") // Name of the foreign key column in the pet_feeder table
+    private Schedule schedule;
 
-    private Long scheduleId;
     private String timeLabel;
     private LocalTime time;
     public Time(){
 
     }
+    public Schedule getSchedule() {
+        return schedule;
+    }
 
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
     public Long getTimeId() {
         return timeId;
     }
@@ -41,11 +49,4 @@ public class Time {
         this.time = time;
     }
 
-    public Long getScheduleId() {
-        return scheduleId;
-    }
-
-    public void setScheduleId(Long scheduleId) {
-        this.scheduleId = scheduleId;
-    }
 }
