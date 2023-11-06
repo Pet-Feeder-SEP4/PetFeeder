@@ -46,13 +46,13 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "Cloud-GC-Deploy " ]
+    branches: [ "Cloud-GC-Deploy" ]
 
 env:
-  PROJECT_ID: ${{ secrets.GC_PROJECT_ID }} # TODO: update Google Cloud project id
-  GAR_LOCATION: ${{ secrets.GC_GAR_LOCATION }} # TODO: update Artifact Registry location
-  SERVICE: PetFeeder # TODO: update Cloud Run service name
-  REGION: ${{ secrets.GC_GAR_LOCATION }} # TODO: update Cloud Run service region
+  PROJECT_ID: ${{ secrets.GC_PROJECT_ID }}
+  GAR_LOCATION: ${{ secrets.GC_GAR_LOCATION }}
+  SERVICE: PetFeeder
+  REGION: ${{ secrets.GC_GAR_LOCATION }}
 
 jobs:
   deploy:
