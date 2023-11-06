@@ -45,10 +45,9 @@
 name: Build and Deploy to Cloud Run
 
 on:
-#  push:
-#    branches: [ "main" ]
-  workflow_dispatch:
-    
+  push:
+    branches: [ "Cloud-GC-Deploy" ]
+
 env:
   PROJECT_ID: ${{ secrets.GC_PROJECT_ID }}
   GAR_LOCATION: ${{ secrets.GC_GAR_LOCATION }}
