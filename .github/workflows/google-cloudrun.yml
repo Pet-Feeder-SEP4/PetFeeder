@@ -46,7 +46,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "Cloud-GC-Deploy" ]
+    branches: [ "main" ]
 
 env:
   PROJECT_ID: ${{ secrets.GC_PROJECT_ID }}
