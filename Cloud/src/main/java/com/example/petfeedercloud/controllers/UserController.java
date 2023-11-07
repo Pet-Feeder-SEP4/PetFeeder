@@ -2,6 +2,7 @@ package com.example.petfeedercloud.controllers;
 
 
 import com.example.petfeedercloud.dtos.UserDTO;
+import com.example.petfeedercloud.dtos.UserLoginDTO;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.services.UserService;
 import com.example.petfeedercloud.services.UserServiceImpl;
@@ -23,7 +24,7 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> authenticateUser(@RequestBody UserLoginDTO userDTO) {
         UserP authenticatedUser = userService.authenticateUser(userDTO);
         if (authenticatedUser != null) {
             return ResponseEntity.ok("Authentication successful");
