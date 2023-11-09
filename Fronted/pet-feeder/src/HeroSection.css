@@ -1,0 +1,28 @@
+/* styles.css */
+
+.hero-section {
+    background-image: url("/public/herobackground.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    height: 500px;
+    flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Center horizontally */
+  display: flex;
+  }
+  
+  .hero-content {
+    text-align: center;
+  }
+  
+  .hero-content h1 {
+    font-size: 2em; /* Adjust the font size as needed */
+  }
+  
+  .hero-content p {
+    font-size: 1.2em; /* Adjust the font size as needed */
+  }
+  
+ 
+  
+  
