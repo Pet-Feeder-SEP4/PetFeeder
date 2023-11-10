@@ -1,0 +1,21 @@
+name: Frontend CD Workflow
+
+on:
+  workflow_run:
+    workflows: ["CI Workflow"]
+    types:
+      - completed
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure Kubernetes Context
+        run: kubectl config use-context minikube
+
+      - name: Apply Frontend Manifests
+        run: kubectl apply -f kubernetes/frontend-deployment.yaml -f kubernetes/frontend-service.yaml
