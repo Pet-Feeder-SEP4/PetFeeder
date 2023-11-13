@@ -200,7 +200,7 @@ const Register = () => {
                         Already registered?<br />
                         <span className="line">
                             {/* replace router link here!! */}
-                            <a className="link" href="#">Sign In</a>
+                            <a className="link" href="#">Sign In</a> //replace with log in connection
                         </span>
                     </p>
                 </section>
