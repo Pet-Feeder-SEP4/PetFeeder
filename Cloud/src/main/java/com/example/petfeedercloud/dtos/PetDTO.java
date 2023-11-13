@@ -7,7 +7,7 @@ public class PetDTO {
     private Long userId;
     private String name;
     private Date birthdate;
-    private int weight;
+    private double weight;
     private String breed;
 
     public Long getPetId() {
@@ -42,11 +42,11 @@ public class PetDTO {
         this.birthdate = birthdate;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
