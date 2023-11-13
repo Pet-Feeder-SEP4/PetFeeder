@@ -48,9 +48,10 @@ public class PetServiceImpl implements PetService {
     public void deletePet(Long petId) {
         petRepository.deleteById(petId);
     }
+
     @Override
     public List<PetDTO> getAllPetsByUser(Long userId) {
-        return petRepository.findAllByUserId(userId).stream()
+        return petRepository.findAllByUserUserId(userId).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
