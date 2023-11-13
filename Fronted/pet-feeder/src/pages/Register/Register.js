@@ -2,13 +2,13 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Register.css';
-import axios from "../api/axios";
+import axios from "../../api/axios";
 
 
 // validation of user input for email and password
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/register"; // should be endpoint for registration in backend api
+const REGISTER_URL = "/auth/register"; // should be endpoint for registration in backend api
 
 
 const Register = () => {
@@ -71,7 +71,7 @@ const Register = () => {
         }
        try {
          // user and pwd is what backend is expecting
-        const response = await axios.post(REGISTER_URL, JSON.stringify({user, pwd}),{
+        const response = await axios.post(REGISTER_URL, JSON.stringify({email: user, password: pwd, firstName, lastName}),{
             headers: { 'Content-Type': 'application/json'},
             withCredentials: true
         }
