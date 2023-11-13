@@ -12,6 +12,11 @@
 
 body {
     min-height: 100vh;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
     background: hsla(159, 35%, 45%, 1);
 
     background: linear-gradient(180deg, hsla(159, 35%, 45%, 1) 30%, hsla(176, 68%, 12%, 1) 100%);
@@ -35,15 +40,17 @@ body {
 
 section {
     width: 100%;
-    max-width: 520px;
-    min-height: 500px;
+    min-width: 600px;
+    min-height: 100px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
     padding: 2rem;
     background-color: #fff;
-   
-}
+ }
+ 
+
 
 .title{
     font-size: 30px;
