@@ -18,7 +18,7 @@ public class Pet {
 
     private String name;
     private Date birthdate;
-    private int weight;
+    private double weight;
     private String breed;
 
     public Pet() {
@@ -55,11 +55,11 @@ public class Pet {
         this.birthdate = birthdate;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
