@@ -56,6 +56,7 @@ public class PetServiceImpl implements PetService {
                 .collect(Collectors.toList());
     }
 
+
     private PetDTO convertToDto(Pet pet) {
         PetDTO petDTO = new PetDTO();
         petDTO.setPetId(pet.getPetId());
