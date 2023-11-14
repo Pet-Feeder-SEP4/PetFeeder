@@ -26,6 +26,7 @@ jobs:
     - run: |
         cd Fronted/pet-feeder
         npm install  # Ensure dependencies are installed
+        npm install @fortawesome/free-solid-svg-icons
         npm run build
     - run: |
         cd Fronted/pet-feeder
