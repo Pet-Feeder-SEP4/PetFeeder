@@ -1,16 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+
+
+.b {
     font-family: 'Poppins', sans-serif;
-    
-}
-
-
-
-body {
     min-height: 100vh;
    margin: 0;
    padding: 0;
@@ -28,6 +22,7 @@ body {
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#4A9B7F", endColorstr="#0A3431", GradientType=1 );
 }
 
+
 .App {
   display: flex;
   flex-direction: column;
@@ -42,6 +37,7 @@ section {
     width: 100%;
     min-width: 600px;
     min-height: 100px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Center vertically */
@@ -100,7 +96,7 @@ button {
     background-color: aqua;
 }
 
-.btn:enabled{
+#bttn:enabled{
     background-color:  rgb(5, 36, 10);
     color: white;
 }
