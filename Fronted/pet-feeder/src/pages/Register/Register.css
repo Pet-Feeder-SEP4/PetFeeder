@@ -162,3 +162,28 @@ button {
     font-size: 15px;
    
 }
+/* Add this at the end of your existing CSS file */
+
+@media only screen and (max-width: 600px) {
+    section {
+        min-width: 90%;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    button {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    input[type="text"],
+    input[type="password"],
+    button {
+        font-size: 16px;
+    }
+}
