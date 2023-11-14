@@ -25,6 +25,7 @@ jobs:
         cache-dependency-path: Fronted/pet-feeder
     - run: |
         cd Fronted/pet-feeder
+        npm install  # Ensure dependencies are installed
         npm run build
     - run: |
         cd Fronted/pet-feeder
