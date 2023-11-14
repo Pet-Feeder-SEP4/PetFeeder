@@ -98,7 +98,7 @@ const Register = () => {
                 <section >
                     <p>
                         {/* replace with react router link */}
-                        <a href="#" className="link">Sign In</a>
+                        <a  className="link">Sign In</a>
                     </p>
                 </section>
             ) : (
@@ -203,7 +203,7 @@ const Register = () => {
                         Already registered?<br />
                         <span className="line">
                             {/* replace router link here!! */}
-                            <a className="link" href="#">Sign In</a>{/* replace w lpgin*/}
+                            <a className="link" >Sign In</a>{/* replace w lpgin*/}
                         </span>
                     </p>
                 </section>
