@@ -98,7 +98,7 @@ const Register = () => {
                 <section >
                     <p>
                         {/* replace with react router link */}
-                        <a href="#">Sign In</a>
+                        <a href="#" className="link">Sign In</a>
                     </p>
                 </section>
             ) : (
@@ -195,7 +195,9 @@ const Register = () => {
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />
-                        <button  className="btn" id="bttn" disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
+
+                        <button  className="btn" id="bttn"disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
+
                     </form>
                     <p>
                         Already registered?<br />
@@ -205,8 +207,11 @@ const Register = () => {
                         </span>
                     </p>
                 </section>
-            )}
+
+            )} 
             </div>
+            
+
         </>
     )
 }
