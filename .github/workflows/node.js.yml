@@ -26,7 +26,6 @@ jobs:
     - run: |
         cd Fronted/pet-feeder
         npm install  
-        npm run build
     - run: |
         cd Fronted/pet-feeder
         npm test
