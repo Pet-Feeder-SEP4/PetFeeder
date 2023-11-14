@@ -5,16 +5,19 @@ import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.PetRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class PetServiceImpl implements PetService {
-
+    private static final Logger log = LoggerFactory.getLogger(PetServiceImpl.class);
     @Autowired
     private PetRepository petRepository;
 
@@ -37,11 +40,23 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public void saveOrUpdatePet(PetDTO petDTO) {
-        Pet pet = convertToEntity(petDTO);
-        Long userId = petDTO.getUserId();
-        UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(null));
-        pet.setUser(user);
-        petRepository.save(pet);
+        try {
+            if (petDTO.getName() == null || petDTO.getName().isEmpty()) {
+                throw new IllegalArgumentException("Please fill out the pet name.");
+            }
+
+            Pet pet = convertToEntity(petDTO);
+            Long userId = petDTO.getUserId();
+            UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+            pet.setUser(user);
+            petRepository.save(pet);
+
+            // No need to throw an Exception here
+        } catch (IllegalArgumentException ex) {
+            throw new ConstraintViolationException(ex.getMessage(), null);
+        } catch (Exception ex) {
+            throw new RuntimeException("An error occurred while creating the pet");
+        }
     }
 
     @Override
