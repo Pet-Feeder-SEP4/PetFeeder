@@ -25,7 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: Fronted/pet-feeder/package-lock.json
+        cache-dependency-path: Fronted/pet-feeder/package.json
     - run: npm ci 
     - run: npm run build
     - run: npm test
