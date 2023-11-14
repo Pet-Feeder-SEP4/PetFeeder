@@ -57,7 +57,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Change to app directory
+        run: cd Fronted/pet-feeder
 
+      # Run npm commands within the specified directory
+      - name: Run build and tests
+        run: |
+          npm run build
+          npm test
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
