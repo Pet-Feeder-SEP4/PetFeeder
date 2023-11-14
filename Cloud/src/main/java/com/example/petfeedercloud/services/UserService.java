@@ -9,4 +9,5 @@ public interface UserService {
     UserP getUserByEmail(String email);
 
     void saveUser(UserP newUser);
+    UserDTO getUserById(Long userId);
 }
