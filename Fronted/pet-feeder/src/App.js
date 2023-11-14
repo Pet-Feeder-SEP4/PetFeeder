@@ -1,7 +1,7 @@
 
 import Register from "./pages/Register/Register";
-import Welcome from './Pages/Welcome/Welcome';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Welcome from "./pages/Welcome/Welcome";
 import './App.css';
 
 function App() {
