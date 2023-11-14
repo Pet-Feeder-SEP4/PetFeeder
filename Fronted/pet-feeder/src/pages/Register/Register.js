@@ -95,14 +95,14 @@ const Register = () => {
         <>
         <div className="b">
             {success ? (
-                <section>
+                <section >
                     <p>
                         {/* replace with react router link */}
                         <a href="#" className="link">Sign In</a>
                     </p>
                 </section>
             ) : (
-                <section>
+                <section >
                     <p ref={errRef} className={errMSg ? "errmsg" : "offscreen"} aria-live="assertive">{errMSg}</p>
                     <h1 className="title">Create Account</h1>
                     <form onSubmit={handleSubmit}>
@@ -195,7 +195,9 @@ const Register = () => {
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />
+
                         <button  className="btn" id="bttn"disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
+
                     </form>
                     <p>
                         Already registered?<br />
@@ -205,9 +207,11 @@ const Register = () => {
                         </span>
                     </p>
                 </section>
+
             )} 
             </div>
             
+
         </>
     )
 }
