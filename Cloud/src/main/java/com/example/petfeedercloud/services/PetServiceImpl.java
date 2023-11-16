@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class PetServiceImpl implements PetService {
     public PetDTO getPetById(Long petId) {
         return petRepository.findById(petId)
                 .map(this::convertToDto)
-                .orElse(null);
+                .orElseThrow(() -> new NotFoundException("Pet not found with ID: " + petId));
     }
 
     @Override
@@ -45,25 +46,41 @@ public class PetServiceImpl implements PetService {
                 throw new IllegalArgumentException("Please fill out the pet name.");
             }
 
-            Pet pet = convertToEntity(petDTO);
-            Long userId = petDTO.getUserId();
-            UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
-            pet.setUser(user);
-            petRepository.save(pet);
+            Long petId = petDTO.getPetId();
+            Optional<Pet> existingPetOptional = petRepository.findById(petId);
 
-            // No need to throw an Exception here
-        } catch (IllegalArgumentException ex) {
-            throw new ConstraintViolationException(ex.getMessage(), null);
+            if (existingPetOptional.isPresent()) {
+                Pet existingPet = existingPetOptional.get();
+                // Update the existing pet with new data
+                existingPet.setName(petDTO.getName());
+                existingPet.setBirthdate(petDTO.getBirthdate());
+                existingPet.setWeight(petDTO.getWeight());
+                existingPet.setBreed(petDTO.getBreed());
+
+                Long userId = petDTO.getUserId();
+                UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+                existingPet.setUser(user);
+
+                petRepository.save(existingPet); // Update the existing pet
+            } else {
+                throw new NotFoundException("Pet not found with ID: " + petId);
+            }
+        } catch (IllegalArgumentException | ConstraintViolationException ex) {
+            throw ex; // Let the controller handle these exceptions
         } catch (Exception ex) {
-            throw new RuntimeException("An error occurred while creating the pet");
+            throw new RuntimeException("An error occurred while updating the pet");
         }
     }
 
     @Override
     public void deletePet(Long petId) {
-        petRepository.deleteById(petId);
+        Optional<Pet> petOptional = petRepository.findById(petId);
+        if (petOptional.isPresent()) {
+            petRepository.deleteById(petId);
+        } else {
+            throw new NotFoundException("Pet not found with ID: " + petId);
+        }
     }
-
     @Override
     public List<PetDTO> getAllPetsByUser(Long userId) {
         return petRepository.findAllByUserUserId(userId).stream()

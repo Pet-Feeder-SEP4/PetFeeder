@@ -23,10 +23,14 @@ public class PetController {
     }
 
     @GetMapping("/{petId}")
-    public PetDTO getPetById(@PathVariable Long petId) {
-        return petService.getPetById(petId);
+    public ResponseEntity<?> getPetById(@PathVariable Long petId) {
+        try {
+            PetDTO pet = petService.getPetById(petId);
+            return ResponseEntity.ok(pet);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
-
     @PostMapping("/")
     public ResponseEntity<String> savePet(@RequestBody PetDTO petDTO) {
         try {
@@ -48,8 +52,8 @@ public class PetController {
             petService.saveOrUpdatePet(petDTO);
             return ResponseEntity.ok("Pet updated successfully");
         } catch (NotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + ex.getMessage());
-        } catch (ConstraintViolationException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet not found: " + ex.getMessage());
+        } catch (IllegalArgumentException | ConstraintViolationException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the pet");
@@ -57,10 +61,16 @@ public class PetController {
     }
 
     @DeleteMapping("/{petId}")
-    public void deletePet(@PathVariable Long petId) {
-        petService.deletePet(petId);
+    public ResponseEntity<?> deletePet(@PathVariable Long petId) {
+        try {
+            petService.deletePet(petId);
+            return ResponseEntity.ok("Pet deleted successfully");
+        } catch (NotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the pet");
+        }
     }
-
     @GetMapping("/user/{userId}")
     public List<PetDTO> getAllPetsByUser(@PathVariable Long userId) {
         return petService.getAllPetsByUser(userId);
