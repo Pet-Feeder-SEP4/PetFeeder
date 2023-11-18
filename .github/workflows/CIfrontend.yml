@@ -45,7 +45,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: ./Fronted/pet-feeder/build # Adjust the path to your build output
-
+          folder: ./Fronted/pet-feeder/build
