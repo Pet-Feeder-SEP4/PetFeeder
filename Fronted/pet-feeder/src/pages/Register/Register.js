@@ -26,7 +26,7 @@ const Register = () => {
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false); // check password match validation
-    const [matchFocus, setMatchFocus] = useState(false); // wether we have focus on input field
+    const [ setMatchFocus] = useState(false); // wether we have focus on input field
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
