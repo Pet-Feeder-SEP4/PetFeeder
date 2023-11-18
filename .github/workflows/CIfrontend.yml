@@ -10,36 +10,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Debug Workflow Environment
-        run: |
-          pwd
-          ls -R
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
           cache: 'npm'
+          cache-dependency-path: PetFeeder/Fronted/pet-feeder/package-lock.json
 
-      - name: Install Dependencies
-        run: |
+      - run: |
           cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
           npm ci
 
-      - name: Build
-        run: |
+      - run: |
           cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
           npm run build --if-present
 
-      - name: Test
-        run: |
+      - run: |
           cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
           npm test
