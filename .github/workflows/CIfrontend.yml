@@ -50,4 +50,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: ${{ github.workspace }}/Fronted/pet-feeder/build
+          folder: ${{ github.workspace }}/Fronted/pet-feeder/out
