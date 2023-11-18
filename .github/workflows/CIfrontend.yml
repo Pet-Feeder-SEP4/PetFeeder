@@ -35,6 +35,29 @@ jobs:
         run: npm test
         working-directory: ./Fronted/pet-feeder
 
-      - name: List Build Directory Contents
-        run: ls -R ./Fronted/pet-feeder/build
+      - name: Check if gh-pages Branch Exists
+        run: |
+          if [[ -z $(git ls-remote --heads origin gh-pages) ]]; then
+            git checkout --orphan gh-pages
+            git rm -rf .
+            touch .nojekyll
+            git add .nojekyll
+            git commit -m "Initialize gh-pages branch"
+            git push origin gh-pages
+          else
+            echo "gh-pages branch already exists."
+          fi
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.6
+        with:
+          branch: gh-pages
+          folder: ./Fronted/pet-feeder/build
