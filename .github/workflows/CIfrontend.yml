@@ -15,9 +15,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: [ 18.x ]
+          node-version: 18
           cache: 'npm'
-          cache-dependency-path: PetFeeder/Fronted/pet-feeder
+          cache-dependency-path: PetFeeder/PetFeeder/Fronted/pet-feeder
 
       - run: |
           cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
