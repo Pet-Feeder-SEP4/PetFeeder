@@ -35,6 +35,9 @@ jobs:
         run: npm test
         working-directory: ./Fronted/pet-feeder
 
+      - name: List Build Directory Contents
+        run: ls -R ./Fronted/pet-feeder/build
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -47,4 +50,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: ./Fronted/pet-feeder/build
+          folder: ${{ github.workspace }}/Fronted/pet-feeder/build
