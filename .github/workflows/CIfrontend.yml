@@ -1,8 +1,12 @@
+name: Node.js CI & Deploy
+
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build:
@@ -19,14 +23,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./Fronted/pet-feeder/package-lock.json
 
-      - name: Print Directory Structure
-        run: ls -R
-        working-directory: ./Fronted/pet-feeder
-
-      - name: Print Package-lock Contents
-        run: cat package-lock.json
-        working-directory: ./Fronted/pet-feeder
-
       - name: Install Dependencies
         run: npm install
         working-directory: ./Fronted/pet-feeder
@@ -38,3 +34,8 @@ jobs:
       - name: Test
         run: npm test
         working-directory: ./Fronted/pet-feeder
+
+      - name: List Build Directory Contents
+        run: ls -R ./Fronted/pet-feeder/build
+
+ 
