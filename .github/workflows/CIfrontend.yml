@@ -38,23 +38,3 @@ jobs:
       - name: List Build Directory Contents
         run: ls -R ./Fronted/pet-feeder/build
 
- deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install Dependencies for Deployment
-        run: npm install
-        working-directory: ./Fronted/pet-feeder
-
-      - name: List Build Directory Contents
-        run: ls -R ./Fronted/pet-feeder/build
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: ${{ github.workspace }}/Fronted/pet-feeder/build
