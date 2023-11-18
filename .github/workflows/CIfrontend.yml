@@ -20,13 +20,13 @@ jobs:
           cache-dependency-path: PetFeeder/PetFeeder/Fronted/pet-feeder/package-lock.json
 
       - run: |
-          cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
+          cd ./Fronted/pet-feede
           npm ci
 
       - run: |
-          cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
+          cd ./Fronted/pet-feede
           npm run build --if-present
 
       - run: |
-          cd /home/runner/work/PetFeeder/PetFeeder/Fronted/pet-feeder
+          cd ./Fronted/pet-feede
           npm test
