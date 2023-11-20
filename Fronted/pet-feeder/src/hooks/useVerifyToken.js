@@ -1,6 +1,6 @@
 // useVerifyToken.js
 import { useEffect, useState } from 'react';
-import AsyncStorage from 'react-native';
+
 
 const useVerifyToken = () => {
   const [isTokenValid, setIsTokenValid] = useState(null);
@@ -8,7 +8,7 @@ const useVerifyToken = () => {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem('token');
+        const storedToken = localStorage.getItem('token');
         setIsTokenValid(!!storedToken);
       } catch (error) {
         console.error('Error verifying token:', error);
