@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-
+import { AsyncStorage } from 'react-native';
 import './Register.css';
 import axios from "../../api/axios";
 
@@ -75,6 +75,12 @@ const Register = () => {
             withCredentials: true
         }
         );
+
+        const token = response.data.token;
+
+        await AsyncStorage.setItem('token', token);
+
+
         console.log(JSON.stringify(response));
         setSuccess(true);
         
