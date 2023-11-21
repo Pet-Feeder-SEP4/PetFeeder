@@ -75,6 +75,12 @@ const Register = () => {
             withCredentials: true
         }
         );
+
+        const token = response.data.token;
+
+        localStorage.setItem('token', token);
+
+
         console.log(JSON.stringify(response));
         setSuccess(true);
         
