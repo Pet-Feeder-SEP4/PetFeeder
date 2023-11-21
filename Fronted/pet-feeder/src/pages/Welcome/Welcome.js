@@ -1,10 +1,14 @@
 import React from 'react';
 import HeroSection from '../../components/HeroSection';
+import PetFeederInfo from '../../components/PetFeederInfo';
 
 const Welcome = () => {
-  console.log('Welcome component rendered');
   return (
+    <>
     <HeroSection/>
+    <PetFeederInfo/>
+    </>
+    
   );
 };
 
