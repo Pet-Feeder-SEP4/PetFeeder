@@ -5,12 +5,14 @@ import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.PetRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,8 @@ public class PetServiceImpl implements PetService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private ObjectMapper objectMapper;
 
     @Override
     public List<PetDTO> getAllPets() {
@@ -63,12 +67,12 @@ public class PetServiceImpl implements PetService {
 
                 petRepository.save(existingPet); // Update the existing pet
             } else {
-                throw new NotFoundException("Pet not found with ID: " + petId);
+                petRepository.save(convertToEntity(petDTO));
             }
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             throw ex; // Let the controller handle these exceptions
         } catch (Exception ex) {
-            throw new RuntimeException("An error occurred while updating the pet");
+            throw new RuntimeException(ex.getMessage());
         }
     }
 
@@ -108,5 +112,10 @@ public class PetServiceImpl implements PetService {
         pet.setWeight(petDTO.getWeight());
         pet.setBreed(petDTO.getBreed());
         return pet;
+    }
+
+    @Override
+    public String convertPetToJson(PetDTO pet) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(pet);
     }
 }

@@ -13,9 +13,7 @@ public class Pet {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
-
     private Long petFeederId;
-
     private String name;
     private Date birthdate;
     private double weight;
