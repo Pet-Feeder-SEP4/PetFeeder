@@ -3,6 +3,7 @@ package com.example.petfeedercloud.dtos;
 import java.util.Date;
 
 public class PetDTO {
+    private Long petId;
     private Long userId;
     private Long petFeederId;
     private String name;
@@ -57,5 +58,13 @@ public class PetDTO {
 
     public void setBreed(String breed) {
         this.breed = breed;
+    }
+
+    public Long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 }

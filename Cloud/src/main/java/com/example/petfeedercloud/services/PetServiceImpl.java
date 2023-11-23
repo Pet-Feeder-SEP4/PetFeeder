@@ -25,14 +25,14 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<PetDTO> getAllPets() {
         return petRepository.findAll().stream()
-                .map(this::convertToDto)
+                .map(this::convertToDtoWithId)
                 .collect(Collectors.toList());
     }
 
     @Override
     public PetDTO getPetById(Long petId) {
         return petRepository.findById(petId)
-                .map(this::convertToDto)
+                .map(this::convertToDtoWithId)
                 .orElseThrow(() -> new NotFoundException("Pet not found with ID: " + petId));
     }
 
@@ -113,6 +113,17 @@ public class PetServiceImpl implements PetService {
 
     private PetDTO convertToDto(Pet pet) {
         PetDTO petDTO = new PetDTO();
+        petDTO.setUserId(pet.getUser().getUserId());
+        petDTO.setName(pet.getName());
+        petDTO.setBirthdate(pet.getBirthdate());
+        petDTO.setWeight(pet.getWeight());
+        petDTO.setBreed(pet.getBreed());
+        return petDTO;
+    }
+
+    private PetDTO convertToDtoWithId(Pet pet) {
+        PetDTO petDTO = new PetDTO();
+        petDTO.setPetId(pet.getPetId());
         petDTO.setUserId(pet.getUser().getUserId());
         petDTO.setName(pet.getName());
         petDTO.setBirthdate(pet.getBirthdate());
