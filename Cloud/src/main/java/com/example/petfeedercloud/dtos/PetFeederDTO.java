@@ -17,7 +17,7 @@ public class PetFeederDTO {
     private int foodHumidity;
     private int waterTemperture;
     private Long userId;
-    private Long scheduleId;
+   // private Long scheduleId;
     private Long petId;
 
     public Long getPetFeederId() {
@@ -76,13 +76,9 @@ public class PetFeederDTO {
         this.userId = userId;
     }
 
-    public Long getScheduleId() {
-        return scheduleId;
-    }
+   // public Long getScheduleId() {return scheduleId;}
 
-    public void setScheduleId(Long scheduleId) {
-        this.scheduleId = scheduleId;
-    }
+    // public void setScheduleId(Long scheduleId) {this.scheduleId = scheduleId;}
 
     public Long getPetId() {
         return petId;

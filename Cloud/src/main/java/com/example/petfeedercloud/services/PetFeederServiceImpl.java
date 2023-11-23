@@ -61,7 +61,7 @@ public class PetFeederServiceImpl implements PetFeederService{
                 existingPF.setLowLevelFood(petFeeder.getLowLevelFood());
 
                 Long userId = petFeeder.getUserId();
-                Long scheduleId = petFeeder.getScheduleId();
+                //Long scheduleId = petFeeder.getScheduleId();
                 Long petId = petFeeder.getPetId();
 
                 UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
@@ -74,7 +74,7 @@ public class PetFeederServiceImpl implements PetFeederService{
                 existingPF.setUser(user);
                 existingPF.setPet(pet);
                 //When schedule is implemented change *null* to *schedule*
-                existingPF.setSchedule(null);
+                //existingPF.setSchedule(null);
 
                 petFeederRepository.save(existingPF); // Update the existing pet
             } else {
@@ -82,7 +82,7 @@ public class PetFeederServiceImpl implements PetFeederService{
                 petF.setUser(userRepository.findById(petFeeder.getUserId()).get());
                 petF.setPet(petRepository.findById(petFeeder.getPetId()).get());
                 //When schedule is implemented change null
-                petF.setSchedule(null);
+               // petF.setSchedule(null);
                 petF.setLowLevelFood(petFeeder.getLowLevelFood());
                 petF.setFoodLevel(petFeeder.getFoodLevel());
                 petF.setFoodHumidity(petFeeder.getFoodHumidity());
@@ -111,13 +111,14 @@ public class PetFeederServiceImpl implements PetFeederService{
 
     private PetFeederDTO convertToDto(PetFeeder pf) {
         PetFeederDTO pfDTO = new PetFeederDTO();
+        pfDTO.setPetFeederId(pf.getPetFeederId());
         pfDTO.setPetFeederLabel(pf.getPetFeederLabel());
         pfDTO.setFoodHumidity(pf.getFoodHumidity());
         pfDTO.setFoodLevel(pf.getFoodLevel());
         pfDTO.setWaterTemperture(pf.getWaterTemperture());
         pfDTO.setLowLevelFood(pf.getLowLevelFood());
         pfDTO.setPetId(pf.getPet().getPetId());
-        pfDTO.setScheduleId(pf.getSchedule().getScheduleId());
+        //pfDTO.setScheduleId(pf.getSchedule().getScheduleId());
         pfDTO.setUserId(pf.getUser().getUserId());
         return pfDTO;
     }

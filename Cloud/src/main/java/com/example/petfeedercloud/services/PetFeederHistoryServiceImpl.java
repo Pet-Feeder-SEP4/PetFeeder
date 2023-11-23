@@ -10,6 +10,7 @@ import com.example.petfeedercloud.models.Role;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.PetFeederHistoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PetFeederHistoryServiceImpl implements PetFeederHistoryService{
 
+    @Autowired
     private PetFeederHistoryRepository petFeederHistoryRepository;
+    @Autowired
     private PetFeederService petFeederService;
     //This function is going to be executed at 1am, 7am, 1pm, 7pm
     @Override
-    @Scheduled(cron = "0 16 19 * * ?")
+
     public void fetchDataAtScheduledTimes() {
         List<PetFeederDTO> petFeeders = petFeederService.getAllPetFeeders();
+        for (PetFeederDTO petFeeder : petFeeders) {
+            savePetFeederHistory(petFeeder);
+        }
+    }
+    @Scheduled(fixedRate = 1000*60*60*4)
+    public void scheduleFixedRateTask() {
+
+        List<PetFeederDTO> petFeeders = petFeederService.getAllPetFeeders();
+        System.out.println(
+                "TESTING TEST - " +petFeeders.toString());
         for (PetFeederDTO petFeeder : petFeeders) {
             savePetFeederHistory(petFeeder);
         }
@@ -39,12 +52,12 @@ public class PetFeederHistoryServiceImpl implements PetFeederHistoryService{
             PetFeederHistory newHistory = new PetFeederHistory();
             //setters
             newHistory.setPetFeeder(petFeederService.getPetFeederById(petFeederDTO.getPetFeederId()));
-            newHistory.setDate(LocalDate.now()); // Set current date
+            newHistory.setDate(LocalDate.now());
             newHistory.setTime(LocalTime.now());
             newHistory.setFoodLevel(petFeederDTO.getFoodLevel());
             newHistory.setFoodHumidity(petFeederDTO.getFoodHumidity());
             newHistory.setWaterTemperature(petFeederDTO.getWaterTemperture());
-            //savee to db
+            //Save to db
             petFeederHistoryRepository.save(newHistory);
             return newHistory;
         }catch (Exception e){
