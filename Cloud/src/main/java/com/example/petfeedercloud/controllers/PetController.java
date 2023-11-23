@@ -34,7 +34,7 @@ public class PetController {
     @PostMapping("/")
     public ResponseEntity<String> savePet(@RequestBody PetDTO petDTO) {
         try {
-            petService.saveOrUpdatePet(petDTO);
+            petService.createPet(petDTO);
             return ResponseEntity.ok("Pet created successfully");
         } catch (NotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + ex.getMessage());
@@ -48,8 +48,7 @@ public class PetController {
     @PutMapping("/{petId}")
     public ResponseEntity<String> updatePet(@PathVariable Long petId, @RequestBody PetDTO petDTO) {
         try {
-            petDTO.setPetId(petId);
-            petService.saveOrUpdatePet(petDTO);
+            petService.updatePet(petId, petDTO);
             return ResponseEntity.ok("Pet updated successfully");
         } catch (NotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet not found: " + ex.getMessage());
