@@ -5,18 +5,12 @@ import java.util.Date;
 public class PetDTO {
     private Long petId;
     private Long userId;
+    private Long petFeederId;
     private String name;
     private Date birthdate;
     private double weight;
     private String breed;
 
-    public Long getPetId() {
-        return petId;
-    }
-
-    public void setPetId(Long petId) {
-        this.petId = petId;
-    }
 
     public Long getUserId() {
         return userId;
@@ -24,6 +18,14 @@ public class PetDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getPetFeederId() {
+        return petFeederId;
+    }
+
+    public void setPetFeederId(Long petFeederId) {
+        this.petFeederId = petFeederId;
     }
 
     public String getName() {
@@ -56,5 +58,13 @@ public class PetDTO {
 
     public void setBreed(String breed) {
         this.breed = breed;
+    }
+
+    public Long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 }
