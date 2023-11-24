@@ -11,7 +11,7 @@ public class PetFeederHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petFeederHistoryId;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "petFeederId")
+    @JoinColumn(name = "petFeederId", referencedColumnName = "petFeederId")
     private PetFeeder petFeeder;
     private LocalDate date;
     private LocalTime time;
