@@ -5,40 +5,27 @@ const Motto = () => {
         <div className='mottob'>
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-4 catquote ">
-                        <figure class="text-end mt-5">
-                            <blockquote class="blockquote">
-                                <p className="catquote">"No need for human if there is PetFeeder"</p>
-                            </blockquote>
-                            <figcaption class="blockquote-footes catfoot">
-                                - Cat from <cite title="horsens" className="catfoot">Horsens</cite>
-                            </figcaption>
-                        </figure>
+                    <div className="col-lg-1 text-left">
+
                     </div>
-                    <div className="col-lg-4 text-center">
-                        <img
-                            src="/assets/mottocat.png"
-                            alt="mottocat"
-                            className='img-fluid cat'
-                        />
+                    <div className="col-lg-7 ">
+                        <blockquote class="otro-blockquote shadow-lg ">
+                            Kindness towards animals is a reflection of our humanity.
+                            Embrace compassion, extend a gentle hand, and cherish the
+                            silent beauty that surrounds us. In their eyes, we find a
+                            language of trust, and in our actions, we define a world
+                            where every heartbeat matters.
+                            <span>Jack Spinola</span>
+                        </blockquote>
                     </div>
-                    <div className="col-lg-4 ">
-                    <img
-                            src="/assets/ig.png"
-                            alt="mottocat"
-                            className='img-fluid social '
-                        />
+                    <div className="col-lg-4 text-left">
                         <img
-                            src="/assets/fg.png"
-                            alt="mottocat"
-                            className='img-fluid social'
-                        />
-                        <img
-                            src="/assets/twitter.png"
-                            alt="mottocat"
-                            className='img-fluid social'
+                            src="/assets/PetBlack.png"
+                            alt="logofoot"
+                            className='img-fluid logofoot'
                         />
                     </div>
+
                 </div>
             </div>
         </div>
