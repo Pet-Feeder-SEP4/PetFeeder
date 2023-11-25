@@ -89,7 +89,8 @@ public class PetFeederHistoryServiceImpl implements PetFeederHistoryService{
         // You need to implement this method based on your requirements
         PetFeederHistoryDTO historyDTO = new PetFeederHistoryDTO();
         // Set properties from petFeederHistory to historyDTO
-        historyDTO.setPetFeederHistoryId(petFeederHistory.getPetFeeder().getPetFeederId());
+        historyDTO.setPetFeederHistoryId(petFeederHistory.getPetFeederHistoryId());
+        historyDTO.setPetFeeder(petFeederHistory.getPetFeeder().getPetFeederId());
         historyDTO.setDate(petFeederHistory.getDate());
         historyDTO.setTime(petFeederHistory.getTime());
         historyDTO.setFoodLevel(petFeederHistory.getFoodLevel());

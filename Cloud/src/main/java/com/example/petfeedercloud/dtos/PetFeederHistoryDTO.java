@@ -8,7 +8,7 @@ import java.time.LocalTime;
 
 public class PetFeederHistoryDTO {
     private Long petFeederHistoryId;
-    private PetFeeder petFeeder;
+    private Long petFeederId;
     private LocalDate date;
     private LocalTime time;
     private int foodLevel;
@@ -23,12 +23,12 @@ public class PetFeederHistoryDTO {
         this.petFeederHistoryId = petFeederHistoryId;
     }
 
-    public PetFeeder getPetFeeder() {
-        return petFeeder;
+    public Long getPetFeeder() {
+        return petFeederId;
     }
 
-    public void setPetFeeder(PetFeeder petFeeder) {
-        this.petFeeder = petFeeder;
+    public void setPetFeeder(Long petFeederId) {
+        this.petFeederId = petFeederId;
     }
 
     public LocalDate getDate() {

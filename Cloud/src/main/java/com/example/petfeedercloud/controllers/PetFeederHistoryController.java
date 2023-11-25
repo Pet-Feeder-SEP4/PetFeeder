@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -23,8 +24,17 @@ public class PetFeederHistoryController {
     @PostMapping("/getHistoryByDateInterval")
     public ResponseEntity<?> getHistoryByDateInterval(@RequestBody GetDateIntervalDTO dateIntervalDTO){
         try {
+            if (dateIntervalDTO.getStartDate() == null || !isValidDate(dateIntervalDTO.getStartDate())
+                    || dateIntervalDTO.getEndDate() == null || !isValidDate(dateIntervalDTO.getEndDate())) {
+                throw new Exception("Invalid dates!Dates should be in the format 'yyyy-MM-dd'");
+            }
+            if (dateIntervalDTO.getStartDate().isAfter(dateIntervalDTO.getEndDate())) {
+                throw new Exception("Start date cannot be after end date");
+            }
             List<PetFeederHistoryDTO> historyList = petFeederService.getHistoryByDateInterval(dateIntervalDTO);
-            // Return the result as ResponseEntity
+            if (historyList == null|| historyList.isEmpty()) {
+                throw new Exception("History list is empty! Please try other dates or petFeeder id!");
+            }
             return new ResponseEntity<>(historyList, HttpStatus.OK);
         } catch (Exception e) {
             String errorMessage = "Failed to save PetFeederHistory. " + e.getMessage();
@@ -36,11 +46,27 @@ public class PetFeederHistoryController {
     @PostMapping("/history")
     public ResponseEntity<?> getPetFeederHistory(@RequestBody GetHistoryDTO historyDTO) {
         try {
+            if (historyDTO.getDate() == null || !isValidDate(historyDTO.getDate())) {
+                throw new Exception("Invalid date!Dates should be in the format 'yyyy-MM-dd'");
+            }
             List<PetFeederHistoryDTO> history = petFeederService.getHistoryByDate(historyDTO.getPetFeederId(),historyDTO.getDate());
+            if (history == null || history.isEmpty()) {
+                throw new Exception("History list is empty! Please try another date or petFeeder id!");
+            }
             return new ResponseEntity<>(history, HttpStatus.OK);
         } catch (Exception e) {
             String errorMessage = "Failed to save PetFeederHistory. " + e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    private boolean isValidDate(LocalDate date) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            String formattedDate = date.format(dateFormatter);
+            LocalDate parsedDate = LocalDate.parse(formattedDate, dateFormatter);
+            return parsedDate.equals(date);
+        } catch (Exception e) {
+            return false;
         }
     }
 }
