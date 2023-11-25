@@ -5,6 +5,16 @@ import java.util.Date;
 public class PetDTO {
     private Long petId;
     private Long userId;
+
+    public Long getPetFeederId() {
+        return petFeederId;
+    }
+
+    public void setPetFeederId(Long petFeederId) {
+        this.petFeederId = petFeederId;
+    }
+
+    private Long petFeederId;
     private String name;
     private Date birthdate;
     private double weight;
