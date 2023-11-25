@@ -5,6 +5,7 @@ import com.example.petfeedercloud.dtos.UserLoginDTO;
 import com.example.petfeedercloud.jwt.AuthenticationResponse;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final UserService userService;
+
+    @Operation(summary = "Register user", description = "This will return a token if the user is created")
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDTO userDTO) {
             return ResponseEntity.ok(userService.saveUser(userDTO));
     }
 
+    @Operation(summary = "Login", description = "This will return a token if the user is authenticate")
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody UserLoginDTO userDTO) {
         return ResponseEntity.ok(userService.authenticateUser(userDTO));

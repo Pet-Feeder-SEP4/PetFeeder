@@ -1,0 +1,32 @@
+.pet-feeder-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  
+  .pet-image {
+    max-width: 70%;
+    height: auto;
+  }
+
+  .aboutb{
+    background-color:#1d4847 ;
+  }
+
+  .badgeImg {
+    width: 65%;
+    height: 90%;
+  }
+  .textcontent{
+    margin-bottom: 120px;
+    color:#FAF9F6 ;
+  }
+  .texttitle{
+    margin-bottom: 120px;
+    color:#40826D ;
+    font-weight: bold;
+  }
+
+
+ 
