@@ -39,7 +39,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     public void sendPetFeederUpdateToSessions(Long petFeederId) throws JsonProcessingException {
         PetDTO p = petService.getPetById(petFeederId);
-        String petJson = petService.convertPetToJson(p);
+        String petJson = "petService.convertPetToJson(p)";
         for (WebSocketSession session : sessions) {
             Map<String, Object> attributes = session.getAttributes();
             Long sessionPetFeederId = Long.valueOf(String.valueOf(attributes.get("petFeederId")));
