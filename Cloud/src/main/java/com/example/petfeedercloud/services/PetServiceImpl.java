@@ -79,7 +79,7 @@ public class PetServiceImpl implements PetService {
                 UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
                 existingPet.setUser(user);
 
-                Long petFeederId = petDTO.getPetId();
+                Long petFeederId = petDTO.getPetFeederId();
                 existingPet.setPetFeederId(petFeederId);
 
                 petRepository.save(existingPet);
