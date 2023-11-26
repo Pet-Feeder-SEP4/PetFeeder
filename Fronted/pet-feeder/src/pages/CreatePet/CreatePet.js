@@ -45,13 +45,13 @@ const CreatePet = () => {
 
 
     return (
-        <div>
+        <div className="bbb">
             <NavBar />
             <div className="container createpetb">
                 <div className="row">
 
-                    <div className="col-lg-6 ">
-                        <div className="marginthing">
+                    <div className="col-lg-6 col-md-12 createPetBox ">
+                        <div className="marginthing ">
                             <h3>ADD NEW PET</h3>
                             <Form onSubmit={handleSubmit} >
                                 {/* Breed Input */}
@@ -110,18 +110,18 @@ const CreatePet = () => {
 
 
                                 {/* Submit Button */}
-                                <Button variant="primary" type="submit">
+                                <Button  type="submit" className="btncreate">
                                     CREATE
                                 </Button>
                             </Form>
                         </div>
 
                     </div>
-                    <div className="col-lg-6 text-center">
+                    <div className="col-lg-6 col-md-12 text-center createPetBox">
                         <img
                             src="/assets/createpetPhoto.jpg"
                             alt="pettio"
-                            className='petImg'
+                            className='petImg shadow-lg'
                         />
                     </div>
 

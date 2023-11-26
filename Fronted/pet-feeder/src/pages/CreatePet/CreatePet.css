@@ -1,12 +1,8 @@
 .petImg{
-    
+    margin: 5%;
     width: 60%;
 }
 
-.createpetb{
-    margin-top: 5%;
-    
-}
 
 
 #name{
@@ -28,8 +24,28 @@
 
 .marginthing{
     margin-left: 110px;
+    margin-top: 10%;
+    font-family: 'Poppins', sans-serif;
 }
 
 .form-control::placeholder {
     font-size: 14px; /* Adjust the font size as needed */
+}
+
+.createPetBox{
+    background-color: #AAC88F;
+}
+button.btncreate{
+    background-color: #06350D;
+    color:#F6f6f6;
+    outline: none;
+}
+button.btncreate:hover {
+    background-color: #095715; /* Your desired hover color */
+    color: #fff; /* Text color on hover */
+    /* Add any additional styles you need */
+}
+
+.bbb{
+    background-color:#06350de0;
 }
