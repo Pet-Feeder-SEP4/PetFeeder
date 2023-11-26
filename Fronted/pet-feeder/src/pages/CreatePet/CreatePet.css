@@ -1,0 +1,35 @@
+.petImg{
+    
+    width: 60%;
+}
+
+.createpetb{
+    margin-top: 5%;
+    
+}
+
+
+#name{
+    width:400px;
+    height: 40px;
+}
+#birthdate{
+    width:400px;
+    height: 40px;
+}
+#weight{
+    width:400px;
+    height: 40px;
+}
+#breed{
+    width:400px;
+    height: 40px;
+}
+
+.marginthing{
+    margin-left: 110px;
+}
+
+.form-control::placeholder {
+    font-size: 14px; /* Adjust the font size as needed */
+}
