@@ -85,6 +85,12 @@ public class UserServiceImpl implements UserService {
                 .map(this::convertToUserDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Long getIdByEmail(String email) {
+      return 2L;
+    }
+
     //HELPERS
     //=======================
     private UserDTO convertToDto(UserP user) {
