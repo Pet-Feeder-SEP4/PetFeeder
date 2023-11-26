@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class JwtService {
+public class JwtService implements JwtServiceInterface{
     //Custom because we are using our user object and not springsframework's one
 
     private UserService userService;
@@ -68,7 +68,7 @@ public class JwtService {
     }
     public Long extractUserId(String token) {
         Map<String, Object> claims = extractAllClaims(token);
-        return (Long) claims.get("userId");
+        return Long.valueOf(claims.get("userId").toString());
     }
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
