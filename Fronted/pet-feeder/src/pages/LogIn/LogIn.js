@@ -61,7 +61,8 @@ const LogIn = () => {
 
   return (
     <>
-      {success ? (
+     <div className='b'>
+     {success ? (
         <section>
           <h1>You are logged in!</h1>
           <br />
@@ -99,7 +100,7 @@ const LogIn = () => {
               value={pwd}
               required
             />
-            <button type="submit">Sign in</button>
+            <button className="btn" type="submit">Sign in</button>
           </form>
 
           <p>
@@ -111,6 +112,7 @@ const LogIn = () => {
           </p>
         </section>
       )}
+     </div>
     </>
   );
 };

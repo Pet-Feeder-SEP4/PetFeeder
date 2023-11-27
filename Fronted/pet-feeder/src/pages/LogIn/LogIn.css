@@ -1,25 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
 
-body {
+
+.b {
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
     background: hsla(159, 35%, 45%, 1);
+
     background: linear-gradient(180deg, hsla(159, 35%, 45%, 1) 30%, hsla(176, 68%, 12%, 1) 100%);
+    
     background: -moz-linear-gradient(180deg, hsla(159, 35%, 45%, 1) 30%, hsla(176, 68%, 12%, 1) 100%);
+    
     background: -webkit-linear-gradient(180deg, hsla(159, 35%, 45%, 1) 30%, hsla(176, 68%, 12%, 1) 100%);
+    
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#4A9B7F", endColorstr="#0A3431", GradientType=1 );
 }
+
 
 .App {
     display: flex;
@@ -30,23 +31,13 @@ body {
     padding: 1rem 0.5rem;
 }
 
-section {
-    width: 100%;
-    min-width: 600px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    background-color: #fff;
-}
+
 
 .title {
     font-size: 30px;
     font-weight: bold;
     color: rgb(5, 36, 10);
-    font-family: 'Manrope', sans-serif;
+   
 }
 
 form {
@@ -73,27 +64,20 @@ button {
   
 }
 
-button {
+.btn {
     font-size: 22px;
     padding: 0.5rem;
     border-radius: 0.5rem;
     margin-top: 20px;
-    background-color: rgb(5, 36, 10);
+    background-color: rgb(36, 8, 5);
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
   
-  button:hover {
-    background-color: aqua;
-  }
-  
-  button:enabled {
-    background-color: rgb(5, 36, 10);
-    color: white;
-  }
-  
+
 
 
 .instructions {

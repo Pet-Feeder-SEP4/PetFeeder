@@ -1,12 +1,9 @@
 
 import Register from "./pages/Register/Register";
-<<<<<<< HEAD
 import LogIn from './pages/LogIn/LogIn';
 import Aboutpage from "./pages/AboutPage/AboutPage";
 import MainPage from "./pages/MainPage/MainPage";
-=======
 import Welcome from "./pages/Welcome/Welcome";
->>>>>>> origin/main
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 
