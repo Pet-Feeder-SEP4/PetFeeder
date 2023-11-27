@@ -109,6 +109,17 @@ public class PetFeederServiceImpl implements PetFeederService{
                 .collect(Collectors.toList());
     }
 
+    public int getHumidityForPetFeeder(Long petFeederId) {
+        Optional<PetFeeder> petFeederOptional = petFeederRepository.findById(petFeederId);
+
+        if (petFeederOptional.isPresent()) {
+            PetFeeder petFeeder = petFeederOptional.get();
+            return petFeeder.getFoodHumidity();
+        } else {
+            throw new NotFoundException("Pet feeder not found with ID: " + petFeederId);
+        }
+    }
+
     private PetFeederDTO convertToDto(PetFeeder pf) {
         PetFeederDTO pfDTO = new PetFeederDTO();
         pfDTO.setPetFeederId(pf.getPetFeederId());

@@ -2,6 +2,7 @@ package com.example.petfeedercloud.config;
 
 import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.models.Pet;
+import com.example.petfeedercloud.services.PetFeederService;
 import com.example.petfeedercloud.services.PetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     @Autowired
     private PetService petService;
+    @Autowired
+    private PetFeederService petFeederService;
 
     private static final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
@@ -36,6 +39,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessions.remove(session);
     }
+
+
 
     public void sendPetFeederUpdateToSessions(Long petFeederId) throws JsonProcessingException {
         PetDTO p = petService.getPetById(petFeederId);
@@ -61,6 +66,30 @@ public class WebSocketHandler extends TextWebSocketHandler {
             petFeederId = url.substring(index + 1);
         }
         return petFeederId;
+    }
+
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        String payload = message.getPayload();
+
+        // Example: Check if the incoming message requests humidity data
+        if ("getHumidity".equals(payload)) {
+            Long petFeederId = Long.valueOf(String.valueOf(session.getAttributes().get("petFeederId")));
+            // Assuming you have a method in PetFeederService to get humidity
+            int humidity = petFeederService.getHumidityForPetFeeder(petFeederId);
+
+            // Convert humidity to JSON or String
+            String humidityJson = "{\"humidity\": " + humidity + "}";
+
+            // Send the humidity data back to the WebSocket client
+            try {
+                session.sendMessage(new TextMessage(humidityJson));
+            } catch (IOException e) {
+                // Handle or log the IOException
+            }
+        } else {
+            // Handle other message types or unrecognized messages
+        }
     }
 
 }

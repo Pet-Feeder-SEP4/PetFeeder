@@ -21,12 +21,16 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService serviceJWT;
+    private static final String WS_ENDPOINT = "/ws";
     private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        if (isWebSocketEndpoint(request)) {
+            return;
+        }
         final String authHeader= request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
@@ -53,5 +57,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request,response);
+    }
+
+    private boolean isWebSocketEndpoint(HttpServletRequest request) {
+        // Check if the request is for the WebSocket endpoint
+        return request.getRequestURI().equals(request.getContextPath() + WS_ENDPOINT);
     }
 }

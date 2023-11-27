@@ -12,4 +12,5 @@ public interface PetFeederService {
     void saveOrUpdatePetFeeder(PetFeederDTO petFeeder);
     void deletePetFeeder(Long petFeederId);
     List<PetFeederDTO> getAllPetFeedersByUser(Long userId);
+    int getHumidityForPetFeeder(Long petFeederId);
 }
