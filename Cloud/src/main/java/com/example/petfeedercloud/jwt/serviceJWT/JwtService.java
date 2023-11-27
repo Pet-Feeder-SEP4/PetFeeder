@@ -1,6 +1,7 @@
 package com.example.petfeedercloud.jwt.serviceJWT;
 
 import com.example.petfeedercloud.dtos.UserDTO;
+import com.example.petfeedercloud.repositories.UserRepository;
 import com.example.petfeedercloud.services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,19 +14,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 public class JwtService implements JwtServiceInterface{
-    //Custom because we are using our user object and not springsframework's one
+    //custom because we are using our user object and not springsframework's one
+    private Set<String> blacklistedTokens = new HashSet<>();
+    private final UserRepository userRepository;
 
-    private UserService userService;
     private static final String SECRET_KEY ="IFVXybWvFdDIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yIFVXybWvFdDt0X90pUjn9lw48H3grw1yt0X90pUjn9lw48H3grw1y";
+
     public String extractUsername(String token){
         return extractClaim(token,Claims::getSubject);
     }
@@ -36,19 +36,14 @@ public class JwtService implements JwtServiceInterface{
 
     public boolean isTokenValid(String token,UserDetails userDetails){
         final String username= extractUsername(token);
-        return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
-    }
-    private boolean isTokenExpired(String token){
-        return  extractExpiration(token).before(new Date());
+        return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token) && !isTokenBlacklisted(token);
     }
 
-    private Date extractExpiration(String token) {
-        return extractClaim(token,Claims::getExpiration);
-    }
     public String generateToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
-        //Long userId = userService.getIdByEmail(userDetails.getUsername());
-        claims.put("userId", 21L);
+        Long userId = userRepository.findByEmail(userDetails.getUsername()).getUserId();
+        System.out.println(userId);
+        claims.put("userId", userId);
         return generateeToken(claims, userDetails);
     }
     public String generateeToken(Map<String, Object> extraClaims,UserDetails userDetails
@@ -62,16 +57,35 @@ public class JwtService implements JwtServiceInterface{
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-    private Claims extractAllClaims(String token){
-       return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
-
-    }
     public Long extractUserId(String token) {
         Map<String, Object> claims = extractAllClaims(token);
         return Long.valueOf(claims.get("userId").toString());
     }
+
+    //check if the token is blacklisted
+    public boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
+    }
+
+    //blacklist a token
+    public void blacklistToken(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    //helpers
+    private Claims extractAllClaims(String token){
+       return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
+
+    }
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+    private boolean isTokenExpired(String token){
+        return  extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token,Claims::getExpiration);
     }
 }

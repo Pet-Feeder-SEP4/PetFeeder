@@ -3,7 +3,7 @@ package com.example.petfeedercloud.controllers;
 import com.example.petfeedercloud.dtos.UserDTO;
 import com.example.petfeedercloud.dtos.UserLoginDTO;
 import com.example.petfeedercloud.jwt.AuthenticationResponse;
-import com.example.petfeedercloud.jwt.serviceJWT.JwtService;
+
 import com.example.petfeedercloud.jwt.serviceJWT.JwtServiceInterface;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.services.UserService;
@@ -41,5 +41,19 @@ public class AuthenticationController {
     @GetMapping("/user")
     public Long getUserInfo(HttpServletRequest request) {
         return jwtTokenProvider.extractUserId(request.getHeader("Authorization").substring(7));
+    }
+
+    @Operation(summary = "Logout", description = "This will logout the user")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            // Blacklist the token
+            jwtTokenProvider.blacklistToken(token);
+            return ResponseEntity.ok("Logout successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or missing Authorization header");
+        }
     }
 }
