@@ -5,16 +5,17 @@ import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.PetRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class PetServiceImpl implements PetService {
-
     @Autowired
     private PetRepository petRepository;
 
@@ -24,31 +25,84 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<PetDTO> getAllPets() {
         return petRepository.findAll().stream()
-                .map(this::convertToDto)
+                .map(this::convertToDtoWithId)
                 .collect(Collectors.toList());
     }
 
     @Override
     public PetDTO getPetById(Long petId) {
         return petRepository.findById(petId)
-                .map(this::convertToDto)
-                .orElse(null);
+                .map(this::convertToDtoWithId)
+                .orElseThrow(() -> new NotFoundException("Pet not found with ID: " + petId));
     }
 
     @Override
-    public void saveOrUpdatePet(PetDTO petDTO) {
-        Pet pet = convertToEntity(petDTO);
-        Long userId = petDTO.getUserId();
-        UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(null));
-        pet.setUser(user);
-        petRepository.save(pet);
+    public PetDTO createPet(PetDTO petDTO) {
+        try {
+            if (petDTO.getName() == null || petDTO.getName().isEmpty()) {
+                throw new IllegalArgumentException("Please fill out the pet name.");
+            }
+
+            Pet pet = convertToEntity(petDTO);
+
+            Long userId = petDTO.getUserId();
+            UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+            pet.setUser(user);
+
+            Long petFeederId = petDTO.getPetFeederId();
+            pet.setPetFeederId(petFeederId);
+
+            petRepository.save(pet);
+            return convertToDto(pet);
+        } catch (IllegalArgumentException | ConstraintViolationException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RuntimeException("An error occurred while creating the pet");
+        }
     }
+
+
+    @Override
+    public void updatePet(Long petId, PetDTO petDTO) {
+        try {
+            Optional<Pet> existingPetOptional = petRepository.findById(petId);
+
+            if (existingPetOptional.isPresent()) {
+                Pet existingPet = existingPetOptional.get();
+
+                existingPet.setName(petDTO.getName());
+                existingPet.setBirthdate(petDTO.getBirthdate());
+                existingPet.setWeight(petDTO.getWeight());
+                existingPet.setBreed(petDTO.getBreed());
+
+                Long userId = petDTO.getUserId();
+                UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+                existingPet.setUser(user);
+
+                Long petFeederId = petDTO.getPetFeederId();
+                existingPet.setPetFeederId(petFeederId);
+
+                petRepository.save(existingPet);
+            } else {
+                throw new NotFoundException("Pet not found with ID: " + petId);
+            }
+        } catch (NotFoundException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RuntimeException("An error occurred while updating the pet");
+        }
+    }
+
 
     @Override
     public void deletePet(Long petId) {
-        petRepository.deleteById(petId);
+        Optional<Pet> petOptional = petRepository.findById(petId);
+        if (petOptional.isPresent()) {
+            petRepository.deleteById(petId);
+        } else {
+            throw new NotFoundException("Pet not found with ID: " + petId);
+        }
     }
-
     @Override
     public List<PetDTO> getAllPetsByUser(Long userId) {
         return petRepository.findAllByUserUserId(userId).stream()
@@ -58,6 +112,16 @@ public class PetServiceImpl implements PetService {
 
 
     private PetDTO convertToDto(Pet pet) {
+        PetDTO petDTO = new PetDTO();
+        petDTO.setUserId(pet.getUser().getUserId());
+        petDTO.setName(pet.getName());
+        petDTO.setBirthdate(pet.getBirthdate());
+        petDTO.setWeight(pet.getWeight());
+        petDTO.setBreed(pet.getBreed());
+        return petDTO;
+    }
+
+    private PetDTO convertToDtoWithId(Pet pet) {
         PetDTO petDTO = new PetDTO();
         petDTO.setPetId(pet.getPetId());
         petDTO.setUserId(pet.getUser().getUserId());
@@ -70,7 +134,6 @@ public class PetServiceImpl implements PetService {
 
     private Pet convertToEntity(PetDTO petDTO) {
         Pet pet = new Pet();
-        pet.setPetId(petDTO.getPetId());
         pet.setName(petDTO.getName());
         pet.setBirthdate(petDTO.getBirthdate());
         pet.setWeight(petDTO.getWeight());

@@ -12,10 +12,10 @@ public class PetFeeder {
     private Long petFeederId;
 
     private String petFeederLabel;
-    private String foodLevel;
-    private String lowLevelFood;
-    private String foodHumidity;
-    private String waterTemperture;
+    private int foodLevel;
+    private int lowLevelFood;
+    private int foodHumidity;
+    private int waterTemperture;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
@@ -23,9 +23,9 @@ public class PetFeeder {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "petId") // Name of the foreign key column in the pet_feeder table
     private Pet pet;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "scheduleId") // Name of the foreign key column in the pet_feeder table
-    private Schedule schedule;
+    //ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "scheduleId") // Name of the foreign key column in the pet_feeder table
+    //private Schedule schedule;
 
     public PetFeeder() {
 
@@ -36,12 +36,8 @@ public class PetFeeder {
     public void setUser(UserP user) {
         this.user = user;
     }
-    public Schedule getSchedule() {
-        return schedule;
-    }
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
+   // public Schedule getSchedule() {return schedule;}
+   // public void setSchedule(Schedule schedule) {this.schedule = schedule; }
     public String getPetFeederLabel() {
         return petFeederLabel;
     }
@@ -54,28 +50,28 @@ public class PetFeeder {
     public void setPet(Pet pet) {
         this.pet = pet;
     }
-    public String getFoodLevel() {
+    public int getFoodLevel() {
         return foodLevel;
     }
-    public void setFoodLevel(String foodLevel) {
+    public void setFoodLevel(int foodLevel) {
         this.foodLevel = foodLevel;
     }
-    public String getLowLevelFood() {
+    public int getLowLevelFood() {
         return lowLevelFood;
     }
-    public void setLowLevelFood(String lowLevelFood) {
+    public void setLowLevelFood(int lowLevelFood) {
         this.lowLevelFood = lowLevelFood;
     }
-    public String getFoodHumidity() {
+    public int getFoodHumidity() {
         return foodHumidity;
     }
-    public void setFoodHumidity(String foodHumidity) {
+    public void setFoodHumidity(int foodHumidity) {
         this.foodHumidity = foodHumidity;
     }
-    public String getWaterTemperture() {
+    public int getWaterTemperture() {
         return waterTemperture;
     }
-    public void setWaterTemperture(String waterTemperture) {
+    public void setWaterTemperture(int waterTemperture) {
         this.waterTemperture = waterTemperture;
     }
     public void setPetFeederId(Long petFeederId) {

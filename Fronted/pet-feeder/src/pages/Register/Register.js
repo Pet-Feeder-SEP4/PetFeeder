@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import './Register.css';
 import axios from "../../api/axios";
 
@@ -27,7 +26,7 @@ const Register = () => {
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false); // check password match validation
-    const [matchFocus, setMatchFocus] = useState(false); // wether we have focus on input field
+    const [ matchFocus, setMatchFocus] = useState(false); // wether we have focus on input field
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -76,6 +75,12 @@ const Register = () => {
             withCredentials: true
         }
         );
+
+        const token = response.data.token;
+
+        localStorage.setItem('token', token);
+
+
         console.log(JSON.stringify(response));
         setSuccess(true);
         
@@ -93,15 +98,16 @@ const Register = () => {
 
     return (
         <>
+        <div className="b">
             {success ? (
-                <section>
+                <section >
                     <p>
                         {/* replace with react router link */}
-                        <a href="#">Sign In</a>
+                        <a href="/" className="link">Sign In</a>
                     </p>
                 </section>
             ) : (
-                <section>
+                <section >
                     <p ref={errRef} className={errMSg ? "errmsg" : "offscreen"} aria-live="assertive">{errMSg}</p>
                     <h1 className="title">Create Account</h1>
                     <form onSubmit={handleSubmit}>
@@ -129,8 +135,8 @@ const Register = () => {
                         />
                         <label htmlFor="email" className="form-label">
                             Email:
-                            <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validEmail || !user ? "hide" : "invalid"} />
+                            <span  className={validEmail ? "valid" : "hide"} />
+                            <apan  className={validEmail || !user ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="text"
@@ -148,15 +154,15 @@ const Register = () => {
                             onBlur={() => setUserFocus(false)}
                         />
                         <p id="uidnote" className={userFocus && user && !validEmail ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
+                            
                             Must contain @.<br />
                             Letters, numbers, underscores, hyphens allowed.
                         </p>
 
                         <label htmlFor="password" className="form-label">
                             Password:
-                            <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
+                            <span className={validPwd ? "valid" : "hide"} />
+                            <span className={validPwd || !pwd ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="password"
@@ -171,7 +177,7 @@ const Register = () => {
                             onBlur={() => setPwdFocus(false)}
                         />
                         <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
+                          
                             8 to 24 characters.<br />
                             Must include uppercase and lowercase letters, a number, and a special character.<br />
                             Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
@@ -179,8 +185,8 @@ const Register = () => {
 
                         <label htmlFor="confirm_pwd" className="form-label">
                             Confirm Password:
-                            <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
+                            <span className={validMatch && matchPwd ? "valid" : "hide"} />
+                            <span className={validMatch || !matchPwd ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="password"
@@ -194,17 +200,25 @@ const Register = () => {
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />
-                        <button  className="btn" disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
+                         <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                        Must match the first password input field.
+                         </p>
+                        <button  className="btn" id="bttn"disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
+
                     </form>
                     <p>
                         Already registered?<br />
                         <span className="line">
                             {/* replace router link here!! */}
-                            <a className="link" href="#">Sign In</a>{/* replace w lpgin*/}
+                            <a className="link" href="/">Sign In</a>{/* replace w lpgin*/}
                         </span>
                     </p>
                 </section>
-            )}
+
+            )} 
+            </div>
+            
+
         </>
     )
 }

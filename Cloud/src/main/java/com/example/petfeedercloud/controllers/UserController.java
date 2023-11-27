@@ -2,56 +2,60 @@ package com.example.petfeedercloud.controllers;
 
 
 import com.example.petfeedercloud.dtos.UserDTO;
-import com.example.petfeedercloud.dtos.UserLoginDTO;
-import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.services.UserService;
-import com.example.petfeedercloud.services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-    @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody UserLoginDTO userDTO) {
-        UserP authenticatedUser = userService.authenticateUser(userDTO);
-        if (authenticatedUser != null) {
-            return ResponseEntity.ok("Authentication successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-    }
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
-        //validate input
-        if (userDTO.getEmail() == null || userDTO.getPassword() == null ||
-                userDTO.getFirstName() == null || userDTO.getLastName() == null) {
-            return ResponseEntity.badRequest().body("All fields are required for registration.");
-        }
-        //check if the user exists
-        UserP existingUser = userService.getUserByEmail(userDTO.getEmail());
-        if (existingUser != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email already exists.");
-        }
-        //create a new user and save it to the db
-        UserP newUser = new UserP();
-        newUser.setFirstName(userDTO.getFirstName());
-        newUser.setLastName(userDTO.getLastName());
-        newUser.setEmail(userDTO.getEmail());
-        newUser.setPassword(userDTO.getPassword());
-        userService.saveUser(newUser);
 
-        return ResponseEntity.ok("Registration successful");
+    @Operation(summary = "Get alll users", description = "This will return all users in the system")
+    @GetMapping("/all")
+    public  ResponseEntity<List<UserDTO>> getAllUsers() {
+        try {
+            List<UserDTO> users = userService.getAllUsers();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            // Handle the exception, you can log it or customize the error response
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @Operation(summary = "Get user by id", description = "This will return the user by its id")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        try {
+            UserDTO user = userService.getUserById(id);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id " + id + " not found!!!");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching user!!");
+        }
+    }
+    @Operation(summary = "Get user by email", description = "This will return the user by its email")
+    @GetMapping("/email")
+    public ResponseEntity<?> getUserByEmail(@RequestParam String email) {
+        try {
+            UserDTO user = userService.getUserByEmailDto(email);
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " not found!!!");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching user!!");
+        }
     }
 }
