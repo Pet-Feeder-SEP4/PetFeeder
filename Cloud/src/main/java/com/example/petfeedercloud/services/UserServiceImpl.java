@@ -3,7 +3,8 @@ package com.example.petfeedercloud.services;
 import com.example.petfeedercloud.dtos.UserDTO;
 import com.example.petfeedercloud.dtos.UserLoginDTO;
 import com.example.petfeedercloud.jwt.AuthenticationResponse;
-import com.example.petfeedercloud.jwt.serviceJWT.JwtService;
+
+import com.example.petfeedercloud.jwt.serviceJWT.JwtServiceInterface;
 import com.example.petfeedercloud.models.Role;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.UserRepository;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;  // Inject BCryptPasswordEncoder
-    private final JwtService jwtService;
+    private final JwtServiceInterface jwtService;
     private final AuthenticationManager authenticationManager;
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String PWD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$";
@@ -51,6 +52,11 @@ public class UserServiceImpl implements UserService {
         }
         if (!verifyPasswordComplexity(user.getPassword())) {
             throw new IllegalArgumentException("Password does not meet complexity requirements");
+        }
+        //check if the email already exists in the database
+        UserP existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new IllegalArgumentException("Email is already registered");
         }
         // create a new user and save it to the db
         UserP newUser = new UserP();
@@ -85,6 +91,13 @@ public class UserServiceImpl implements UserService {
                 .map(this::convertToUserDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Long getIdByEmail(String email) {
+        UserP user = userRepository.findByEmail(email);
+        return user != null ? user.getUserId() : null;
+    }
+
     //HELPERS
     //=======================
     private UserDTO convertToDto(UserP user) {
