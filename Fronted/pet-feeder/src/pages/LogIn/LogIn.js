@@ -64,7 +64,7 @@ const LogIn = () => {
      <div className='b'>
      {success ? (
         <section>
-          <h1>You are logged in!</h1>
+          <h1 >You are logged in!</h1>
           <br />
           <p>
             <a href="#">Go to HomePage</a>
@@ -79,12 +79,13 @@ const LogIn = () => {
           >
             {errMsg}
           </p>
-          <h1>Sign In</h1>
+          <h1 className='l-title'>Sign In</h1>
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email:</label>
             <input
               type="text"
-              id="email"
+              id="email-l"
+              className="form-control"
               ref={userRef}
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}
@@ -95,12 +96,13 @@ const LogIn = () => {
             <label htmlFor="password">Password:</label>
             <input
               type="password"
-              id="password"
+              id="password-l"
+              className="form-control"
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
               required
             />
-            <button className="btn" type="submit">Sign in</button>
+            <button className="btn" id="bttn" type="submit">Sign in</button>
           </form>
 
           <p>
