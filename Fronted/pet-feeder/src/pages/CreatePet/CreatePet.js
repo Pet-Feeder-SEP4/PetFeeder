@@ -47,11 +47,23 @@ const CreatePet = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const response = await axios.get('https://peefee.azurewebsites.net/auth/user', formData, {
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIxLCJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDExODc0MzYsImV4cCI6MTcwMTE5MTAzNn0.j4a5tAI1gsxmCU7WkDpBP3Hzbf0Ohq631839p3d4JT4',
+                    'Content-Type': 'application/json',  // Adjust the content type if needed
+                },
+            });
+
+            console.log('Pet created successfully:', response.data);
+        } catch (error) {
+            console.error('Error creating pet:', error);
+        }
 
         try {
             const response = await axios.post('https://peefee.azurewebsites.net/pets/', formData, {
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDEwMDMxODUsImV4cCI6MTcwMTAwNjc4NX0.KKRHv3tmrECZeqjm2gu5AZZ6Qs8zd5bLS-GFZzWCWXA',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIxLCJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDExODc0MzYsImV4cCI6MTcwMTE5MTAzNn0.j4a5tAI1gsxmCU7WkDpBP3Hzbf0Ohq631839p3d4JT4',
                     'Content-Type': 'application/json',  // Adjust the content type if needed
                 },
             });
