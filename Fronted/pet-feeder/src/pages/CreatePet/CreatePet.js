@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './CreatePet.css'
 
+
 const CreatePet = () => {
     // State to store form data
     const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const CreatePet = () => {
         weight: 0,
         breed: '',
     });
+
 
     // Handle input changes
     const handleInputChange = (e) => {
@@ -47,12 +49,16 @@ const CreatePet = () => {
     return (
         <div className="bbb">
             <NavBar />
+           
+            <div className="createPetBlock">
+                <h1 className="blockText">ADD PET</h1>
+            </div>
             <div className="container createpetb">
                 <div className="row">
 
                     <div className="col-lg-6 col-md-12 createPetBox ">
                         <div className="marginthing ">
-                            <h3>ADD NEW PET</h3>
+                            
                             <Form onSubmit={handleSubmit} >
                                 {/* Breed Input */}
                                 <Form.Group controlId="breed">
@@ -117,7 +123,7 @@ const CreatePet = () => {
                         </div>
 
                     </div>
-                    <div className="col-lg-6 col-md-12 text-center createPetBox">
+                    <div className="col-lg-6 col-md-12 text-center ">
                         <img
                             src="/assets/createpetPhoto.jpg"
                             alt="pettio"

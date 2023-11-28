@@ -1,6 +1,13 @@
 .petImg{
-    margin: 5%;
+    margin: -5%;
     width: 60%;
+    z-index: 10;
+    position: relative;
+}
+@media (max-width: 768px) {
+    .petImg {
+        margin: 3%;
+    }
 }
 
 
@@ -23,8 +30,8 @@
 }
 
 .marginthing{
-    margin-left: 110px;
-    margin-top: 10%;
+    margin-left: 17px;
+    margin-top: 7%;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -32,9 +39,7 @@
     font-size: 14px; /* Adjust the font size as needed */
 }
 
-.createPetBox{
-    background-color: #AAC88F;
-}
+
 button.btncreate{
     background-color: #06350D;
     color:#F6f6f6;
@@ -46,6 +51,17 @@ button.btncreate:hover {
     /* Add any additional styles you need */
 }
 
-.bbb{
-    background-color:#06350de0;
+.createPetBlock{
+    background-color: #06350D;
+    height:200px;
+   
 }
+.blockText{
+    font-family: 'Poppins', sans-serif;
+    margin-left: 17%;
+    padding-top: 75px;
+    color:#F6f6f6;
+    font-size: 40px;
+
+}
+
