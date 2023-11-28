@@ -58,7 +58,7 @@ void rotate(uint8_t speed, int amountOfTurns){
         if (i<amountOfTurns)
         {
             servo360(speed);
-            _delay_ms(1000);
+            _delay_ms(100);
         } else{
             servo360(0);
             break;
