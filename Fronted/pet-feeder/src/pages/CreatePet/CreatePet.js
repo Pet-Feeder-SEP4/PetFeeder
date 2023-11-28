@@ -1,12 +1,30 @@
 
 import axios from "../../api/axios";
 import NavBar from "../../components/Navbar/Navbar";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './CreatePet.css'
 
+import useVerifyToken from '../../hooks/useVerifyToken';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const CreatePet = () => {
+    // check user token 
+    const isTokenValid = useVerifyToken();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isTokenValid) {
+            console.log("Invalid token, please log in")
+            // navigate('/login');  
+        } else {
+            // ... (your existing component logic)
+        }
+    }, [isTokenValid, navigate]);
+
+
     // State to store form data
     const [formData, setFormData] = useState({
         userId: 21,
@@ -49,7 +67,7 @@ const CreatePet = () => {
     return (
         <div className="bbb">
             <NavBar />
-           
+
             <div className="createPetBlock">
                 <h1 className="blockText">ADD PET</h1>
             </div>
@@ -58,7 +76,7 @@ const CreatePet = () => {
 
                     <div className="col-lg-6 col-md-12 createPetBox ">
                         <div className="marginthing ">
-                            
+
                             <Form onSubmit={handleSubmit} >
                                 {/* Breed Input */}
                                 <Form.Group controlId="breed">
@@ -116,7 +134,7 @@ const CreatePet = () => {
 
 
                                 {/* Submit Button */}
-                                <Button  type="submit" className="btncreate">
+                                <Button type="submit" className="btncreate">
                                     CREATE
                                 </Button>
                             </Form>
