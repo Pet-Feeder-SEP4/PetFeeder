@@ -1,6 +1,47 @@
-/* Add this to your CSS stylesheet */
+/* CreateSchedule.css */
+
+/* Default styles */
+
+.new-schedule-form .form-group {
+  margin-bottom: 1rem;
+}
+
 .custom-time-picker .rc-time-picker-input {
-    border: none;
-    font-size: 16px;
+  border: none;
+  font-size: 16px;
+}
+
+/* Responsive styles */
+
+@media (max-width: 768px) {
+  .new-schedule-form .d-flex {
+    flex-direction: column;
   }
-  
+
+  .new-schedule-form .mx-1 {
+    margin-right: 0;
+    margin-bottom: 0.5rem; /* Adjust the margin as needed */
+  }
+
+  .new-schedule-form .custom-time-picker {
+    width: 100%;
+  }
+
+  .new-schedule-form .rounded-1 {
+    width: 100%;
+  }
+
+  /* Adjust styles for smaller screens */
+  .new-schedule-form .mx-0 {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .new-schedule-form .btn-group {
+    flex-wrap: wrap;
+  }
+
+  .new-schedule-form .btn {
+    width: 48%; /* Adjust the width as needed */
+  }
+}
