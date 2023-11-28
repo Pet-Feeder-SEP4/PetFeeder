@@ -24,7 +24,7 @@ public class SwaggerConfiguration {
                 .info(new Info().title("REST API - PET FEEDER")
                         .description("API for Pet Feeder Project.")
                         .version("1.0")
-                        .contact(new Contact().name("Guilherme Miranda").email( "guilhermecm@sapo.pt")));
+                        .contact(new Contact().name("Pet Feeder Inc.").email( "support@petfeeder.com")));
     }
 
     private SecurityScheme createAPIKeyScheme() {

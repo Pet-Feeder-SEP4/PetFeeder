@@ -96,7 +96,6 @@ public class PetFeederHistoryServiceImpl implements PetFeederHistoryService{
         historyDTO.setFoodLevel(petFeederHistory.getFoodLevel());
         historyDTO.setFoodHumidity(petFeederHistory.getFoodHumidity());
         historyDTO.setWaterTemperature(petFeederHistory.getWaterTemperature());
-
         return historyDTO;
     }
 

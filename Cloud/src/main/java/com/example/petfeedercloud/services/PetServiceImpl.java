@@ -1,6 +1,7 @@
 package com.example.petfeedercloud.services;
 
 import com.example.petfeedercloud.dtos.PetDTO;
+import com.example.petfeedercloud.jwt.serviceJWT.JwtServiceInterface;
 import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.PetRepository;
@@ -18,12 +19,14 @@ import java.util.stream.Collectors;
 public class PetServiceImpl implements PetService {
     @Autowired
     private PetRepository petRepository;
-
+    @Autowired
+    private JwtServiceInterface jwtService;
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public List<PetDTO> getAllPets() {
+
         return petRepository.findAll().stream()
                 .map(this::convertToDtoWithId)
                 .collect(Collectors.toList());
