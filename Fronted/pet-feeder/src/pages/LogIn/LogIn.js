@@ -38,7 +38,8 @@ const LogIn = () => {
 
       const token = response?.data?.token;
       localStorage.setItem("token", token);
-    
+
+     
 
       setAuth({ user, pwd, token });
       setUser('');
