@@ -1,0 +1,14 @@
+.button-container {
+    margin-top: auto;
+    align-self: flex-end;
+  }
+  
+  .info-boxes-img-container {
+    margin-bottom: 12px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+  }

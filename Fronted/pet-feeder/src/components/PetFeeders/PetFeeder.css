@@ -1,0 +1,147 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.work-section-wrapper {
+  margin-top: 15rem;
+}
+
+.work-section-top p {
+  text-align: center;
+  max-width: 600px !important;
+}
+
+.work-section-top h1 {
+  max-width: 700px !important;
+}
+
+.work-section-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.work-section-info {
+  width: 290px;
+  min-height: 350px;
+  background-color: #AAC88F;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 1rem;
+  color: #505050;
+  margin: 1rem 2rem;
+}
+
+.work-section-info h2 {
+  margin: 1rem 0rem;
+}
+
+.work-section-info p {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* Rounded buttons inside .work-section-info */
+.work-section-info .info-button {
+  margin-top: 1rem;
+  border-radius: 8px; /* Rounded corners */
+  padding: 8px 16px; /* Adjust padding as needed */
+  background-color: #AAC88F;
+  color: #505050;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.work-section-info .info-button:hover {
+  background-color: #8EAF71; /* Change the color on hover */
+}
+
+.work-section-bottom {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin-top: 20px;
+}
+
+.subtitle {
+  font-size: 14px;
+  margin-bottom: 27px;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .home-bannerImage-container,
+  .about-background-image-container {
+    display: none;
+  }
+}
+
+.work-section-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.info-boxes-img-container {
+  margin-bottom: 12px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.top-button {
+  margin-left: 10px;
+  border-radius: 8px; /* You can adjust the value to control the roundness */
+  padding: 8px 16px; /* Adjust the padding as needed */
+  background-color: #AAC88F;
+  color: #505050;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.top-button:hover {
+  background-color: #8EAF71; /* Change the color on hover */
+}
+
+.subtitle-container {
+  display: flex;
+  align-items: center;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: -17px;
+  margin-right: 8px;
+}
+
+.online {
+  background-color: green;
+}
+
+.offline {
+  background-color: red;
+}
