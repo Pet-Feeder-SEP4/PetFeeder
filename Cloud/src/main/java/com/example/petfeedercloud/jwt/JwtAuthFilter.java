@@ -1,6 +1,7 @@
 package com.example.petfeedercloud.jwt;
 
-import com.example.petfeedercloud.jwt.serviceJWT.JwtService;
+
+import com.example.petfeedercloud.jwt.serviceJWT.JwtServiceInterface;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,23 +21,18 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
-    private final JwtService serviceJWT;
-    private static final String WS_ENDPOINT = "/ws";
+    private final JwtServiceInterface serviceJWT;
     private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        if (isWebSocketEndpoint(request)) {
-            return;
-        }
         final String authHeader= request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request,response);
-            //maybe retunr error
             return;
         }
         jwt= authHeader.substring(7);
@@ -57,10 +53,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request,response);
-    }
-
-    private boolean isWebSocketEndpoint(HttpServletRequest request) {
-        // Check if the request is for the WebSocket endpoint
-        return request.getRequestURI().equals(request.getContextPath() + WS_ENDPOINT);
     }
 }
