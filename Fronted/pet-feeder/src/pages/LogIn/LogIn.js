@@ -1,12 +1,10 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
 import './LogIn.css';
 import axios from '../../api/axios';
-
 const LOGIN_URL = '/auth/authenticate';
 
 const LogIn = () => {
-  const { setAuth } = useContext(AuthContext);
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -40,11 +38,12 @@ const LogIn = () => {
       localStorage.setItem("token", token);
     
 
-      setAuth({ user, pwd, token });
+   
       setUser('');
       setPwd('');
       setSuccess(true);
     } catch (err) {
+      console.error("Error" , err); 
       if (!err?.response) {
         setErrMsg('No Server Response');
       } else if (err.response?.status === 400) {
