@@ -5,8 +5,6 @@ import LogIn from "./pages/LogIn/LogIn"
 import MainPage from "./pages/MainPage/MainPage";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import MainPage from "./pages/MainPage/MainPage";
-
 
 function App() {
   return (
