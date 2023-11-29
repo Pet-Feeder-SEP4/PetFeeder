@@ -17,14 +17,20 @@
 }
 
 #card-about {
-  background-color: #06350db7;
+  
+  background-color: #8ba5757b;
+ 
+}
+
+.about-icons{
+  color: #728760;
 }
 
 .work-section-top h1 {
   max-width: 700px !important;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  color: black;
+  color: #728760;
 }
 
 .work-section-top {
@@ -35,8 +41,8 @@
 }
 
 .work-section-info {
-  width: 290px;
-  min-height: 350px;
+  width: 390px;
+  min-height: 200px;
   background-color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -53,7 +59,7 @@
 
 .paraph{
   font-size: small;
-  font-weight: 200;
+
 }
 
 .txxxt{
@@ -63,7 +69,9 @@
 
 .work-section-info h2 {
   margin: 1rem 0rem;
-  color: #ffffff; /* Apply the green color to titles */
+  font-size: 25px;
+  color: #728760;
+  height: 20px;
 }
 
 .work-section-bottom {
@@ -79,8 +87,8 @@
   flex: 1;
   display: flex;
   align-items: center;
-  font-weight: 600;
-  color: #f6f6f6; /* Apply the yellow color to subtitles */
+  font-weight: 500;
+  color: #728760;
 }
 
 .work-section-wrapper{
