@@ -13,4 +13,5 @@ public interface UserService {
     AuthenticationResponse saveUser(UserDTO newUser);
     UserDTO getUserById(Long userId) ;
     List<UserDTO> getAllUsers();
+    Long getIdByEmail(String email);
 }

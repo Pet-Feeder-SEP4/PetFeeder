@@ -26,7 +26,7 @@ const Register = () => {
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false); // check password match validation
-    const [ setMatchFocus] = useState(false); // wether we have focus on input field
+    const [ matchFocus, setMatchFocus] = useState(false); // wether we have focus on input field
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -75,6 +75,12 @@ const Register = () => {
             withCredentials: true
         }
         );
+
+        const token = response.data.token;
+
+        localStorage.setItem('token', token);
+
+
         console.log(JSON.stringify(response));
         setSuccess(true);
         
@@ -194,7 +200,9 @@ const Register = () => {
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />
-
+                         <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                        Must match the first password input field.
+                         </p>
                         <button  className="btn" id="bttn"disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
 
                     </form>
