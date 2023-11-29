@@ -23,9 +23,7 @@ public class PetFeeder {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "petId") // Name of the foreign key column in the pet_feeder table
     private Pet pet;
-    //ManyToOne(fetch = FetchType.EAGER)
-    //@JoinColumn(name = "scheduleId") // Name of the foreign key column in the pet_feeder table
-    //private Schedule schedule;
+
 
     public PetFeeder() {
 
@@ -36,8 +34,7 @@ public class PetFeeder {
     public void setUser(UserP user) {
         this.user = user;
     }
-   // public Schedule getSchedule() {return schedule;}
-   // public void setSchedule(Schedule schedule) {this.schedule = schedule; }
+
     public String getPetFeederLabel() {
         return petFeederLabel;
     }
