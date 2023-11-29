@@ -65,9 +65,6 @@ const LogIn = () => {
      <div className='b'>
      {success ? (
         <section>
-          <h1 >You are logged in!</h1>
-          <br />
-      
         </section>
       ) : (
         <section>
