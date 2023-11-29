@@ -41,6 +41,9 @@ const LogIn = () => {
       setUser('');
       setPwd('');
       setSuccess(true);
+
+     
+      window.location.href = '/MainPage';
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -62,9 +65,7 @@ const LogIn = () => {
         <section>
           <h1 >You are logged in!</h1>
           <br />
-          <p>
-            <a href="/MainPage">Go to HomePage</a>
-          </p>
+      
         </section>
       ) : (
         <section>
