@@ -63,10 +63,7 @@ const LogIn = () => {
   return (
     <>
      <div className='b'>
-     {success ? (
-        <section>
-        </section>
-      ) : (
+     
         <section>
           <p
             ref={errRef}
@@ -109,7 +106,7 @@ const LogIn = () => {
             </span>
           </p>
         </section>
-      )}
+      
      </div>
     </>
   );
