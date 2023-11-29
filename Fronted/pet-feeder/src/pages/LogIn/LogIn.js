@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './LogIn.css';
 import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = '/auth/authenticate';
 
 const LogIn = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
@@ -41,9 +43,9 @@ const LogIn = () => {
       setUser('');
       setPwd('');
       setSuccess(true);
-
+      navigate('/MainPage');
      
-      window.location.href = '/MainPage';
+    
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
