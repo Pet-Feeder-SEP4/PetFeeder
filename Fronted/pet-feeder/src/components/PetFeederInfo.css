@@ -11,7 +11,7 @@
   }
 
   .aboutb{
-    background-color:#1d4847 ;
+    background-color:#8ba575 ;
   }
 
   .badgeImg {
@@ -20,13 +20,17 @@
   }
   .textcontent{
     margin-bottom: 120px;
-    color:#FAF9F6 ;
+    color:white ;
+    
+    font-family: 'Poppins', sans-serif;
   }
   .texttitle{
     margin-bottom: 120px;
-    color:#40826D ;
+    color:white ;
     font-weight: bold;
+    font-family: 'Poppins', sans-serif;
   }
+  
 
 
  
