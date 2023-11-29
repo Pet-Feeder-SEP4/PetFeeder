@@ -10,13 +10,22 @@ public class Time {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long timeId;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "scheduleId") // Name of the foreign key column in the pet_feeder table
+    @JoinColumn(name = "scheduleId") // Name of the foreign key column in the schedule table
     private Schedule schedule;
-
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "portionId") // Name of the foreign key column in the Portion table
+    private Portion portion;
     private String timeLabel;
     private LocalTime time;
     public Time(){
 
+    }
+    public Portion getPortion() {
+        return portion;
+    }
+
+    public void setPortion(Portion portion) {
+        this.portion = portion;
     }
     public Schedule getSchedule() {
         return schedule;
