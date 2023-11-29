@@ -1,5 +1,5 @@
 .mottob {
-    background-color: #06350D;
+    background-color: #8ba575;
 }
 
 .logofoot {
@@ -16,17 +16,17 @@
     font-style: italic;
     font-size: 1em;
     padding: 1.2em 30px 1.2em 50px;
-    border-left: 4px solid black;
+    border-left: 4px solid #4e5c41;
     line-height: 1.6;
     position: relative;
-    background: #074110;
+    background: #728760;
     font-family: 'Poppins', sans-serif;
 }
 
 .otro-blockquote::before {
     font-family: Arial;
     content: "\201C";
-    color: black;
+    color: #4e5c41;
     font-size: 4em;
     position: absolute;
     left: 10px;
@@ -37,11 +37,11 @@
 
 .otro-blockquote span {
     display: block;
-    color: #c2bfbf;
+    color: #4e5c41;
     font-style: normal;
     font-weight: bold;
     margin-top: 3px;
 }
 .quoteTXT{
-    color: white;
+    color: #f6f6f6;
 }

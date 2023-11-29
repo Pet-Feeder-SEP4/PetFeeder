@@ -1,20 +1,21 @@
 import React from 'react';
+import { FaCalendar, FaPencilAlt, FaPaw } from 'react-icons/fa';
 import './AboutUs.css';
 
 const Aboutpage = () => {
   const workInfoData = [
     {
-      image: '/assets/calendar.png',
+      icon: <FaCalendar size={20} className='about-icons' />,
       title: "Feeding schedules",
       text: "Simplifying pet feeding routines through meticulously designed diets.",
     },
     {
-      image: '/assets/crayon.png',
+      icon: <FaPencilAlt size={20}  className='about-icons'/> ,
       title: "Feeding sessions",
       text: "At any time, through the web application, in case you want to give the pet an extra meal.",
     },
     {
-      image: '/assets/animal.png',
+      icon: <FaPaw size={20}  className='about-icons'/>,
       title: "Multiple pets at once",
       text: "Do not forget your multiple friends, add them with all their details to get a specific diet!",
     },
@@ -32,7 +33,7 @@ const Aboutpage = () => {
         {workInfoData.map((data) => (
           <div className="work-section-info white-text" id="card-about" key={data.title}>
             <div className="info-boxes-img-container">
-              <img src={process.env.PUBLIC_URL + data.image} alt={`Icon for ${data.title}`} />
+              {data.icon}
             </div>
             <h2 className='titttle'>{data.title}</h2>
             <p className='paraph'>{data.text}</p>
