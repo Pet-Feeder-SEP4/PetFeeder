@@ -4,17 +4,16 @@ import axios from "../../api/axios";
 import PetFeeders from '../../components/PetFeeders/PetFeeders';
 
 
-
-
 const MainPage = () => {
     return (
-      <div>
-        <div className="button-container">
-          <button className="top-button">ADD NEW PET</button>
-          <button className="top-button">ADD NEW FEEDER</button>
-        </div>
-  
+      <div className="main-page">
         <PetFeeders />
+        <div className="side-thing">
+        <div className="side-button-container">
+          <button className="side-button">+ PET</button>
+          <button className="side-button">+ FEEDER</button>
+        </div>
+        </div>
       </div>
     );
   };
