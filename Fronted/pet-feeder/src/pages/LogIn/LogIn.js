@@ -1,12 +1,10 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import React, { useRef, useState, useEffect } from 'react';
 import './LogIn.css';
 import axios from '../../api/axios';
 
 const LOGIN_URL = '/auth/authenticate';
 
 const LogIn = () => {
-  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -40,7 +38,6 @@ const LogIn = () => {
       localStorage.setItem("token", token);
     
 
-      setAuth({ user, pwd, token });
       setUser('');
       setPwd('');
       setSuccess(true);
@@ -66,7 +63,7 @@ const LogIn = () => {
           <h1 >You are logged in!</h1>
           <br />
           <p>
-            <a href="#">Go to HomePage</a>
+            <a href="/Welcome">Go to HomePage</a>
           </p>
         </section>
       ) : (
@@ -107,7 +104,7 @@ const LogIn = () => {
           <p>
             Not a member? <br />
             <span className="line">
-              {/* Put router link here */}
+        
               <a href="/Register">Sign Up</a>
             </span>
           </p>
