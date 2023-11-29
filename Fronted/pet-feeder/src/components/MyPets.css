@@ -1,0 +1,29 @@
+.side-button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .side-button {
+    background-color: #AAC88F;
+    color: white;
+    border-radius: 7px;
+    height: 35px;
+    width: 100px;
+    border: none;
+    padding: 2px;
+  }
+
+  .side-thing {
+    width: 400px;
+    background-color: #06350D;
+    display: flex;
+    padding: 30px;
+    flex-direction: column;
+  }
+
+  .loading {
+    color: white;
+  }
+
