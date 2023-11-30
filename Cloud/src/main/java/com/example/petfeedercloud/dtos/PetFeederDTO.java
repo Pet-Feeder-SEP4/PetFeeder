@@ -17,8 +17,10 @@ public class PetFeederDTO {
     private int foodHumidity;
     private int waterTemperture;
     private Long userId;
-   // private Long scheduleId;
+    private Long scheduleId;
     private Long petId;
+
+    private boolean active = false;
 
     public Long getPetFeederId() {
         return petFeederId;
@@ -76,9 +78,9 @@ public class PetFeederDTO {
         this.userId = userId;
     }
 
-   // public Long getScheduleId() {return scheduleId;}
+    public Long getScheduleId() {return scheduleId;}
 
-    // public void setScheduleId(Long scheduleId) {this.scheduleId = scheduleId;}
+    public void setScheduleId(Long scheduleId) {this.scheduleId = scheduleId;}
 
     public Long getPetId() {
         return petId;
@@ -86,5 +88,13 @@ public class PetFeederDTO {
 
     public void setPetId(Long petId) {
         this.petId = petId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
