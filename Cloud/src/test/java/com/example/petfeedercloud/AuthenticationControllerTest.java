@@ -31,9 +31,8 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testRegisterUser_InvalidEmail() {
-        // Test scenario where the email is invalid during user registration
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmail("invalidemail.com"); // Invalid email format
+        userDTO.setEmail("invalidemail.com");
         userDTO.setPassword("validPassword");
 
         when(userService.saveUser(userDTO)).thenThrow(new IllegalArgumentException("Invalid email"));
@@ -46,10 +45,10 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testRegisterUser_InvalidPassword() {
-        // Test scenario where the password is invalid during user registration
+
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail("validemail@example.com");
-        userDTO.setPassword("short"); // Invalid password (less than required length)
+        userDTO.setPassword("short");
 
         when(userService.saveUser(userDTO)).thenThrow(new IllegalArgumentException("Invalid password"));
 
