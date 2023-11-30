@@ -5,9 +5,7 @@
   color: #06350D;
 }
 
-.work-section-wrapper {
-  margin-top: 15rem;
-}
+
 
 .work-section-top p,
 .work-section-top h1,
@@ -15,14 +13,24 @@
 .work-section-info {
   text-align: center;
   max-width: 600px !important;
+  padding-top: 40px;
 }
 
 #card-about {
-  background-color: #06350D;
+  
+  background-color: #8ba5757b;
+ 
+}
+
+.about-icons{
+  color: #728760;
 }
 
 .work-section-top h1 {
   max-width: 700px !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: #728760;
 }
 
 .work-section-top {
@@ -33,8 +41,8 @@
 }
 
 .work-section-info {
-  width: 290px;
-  min-height: 350px;
+  width: 390px;
+  min-height: 200px;
   background-color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -45,27 +53,46 @@
   border-radius: 1rem;
   color: #505050;
   margin: 1rem 2rem;
+  font-family: 'Poppins', sans-serif;
+  
+}
+
+.paraph{
+  font-size: small;
+
+}
+
+.txxxt{
+  font-family: 'Poppins', sans-serif;
+  color: black  ;
 }
 
 .work-section-info h2 {
   margin: 1rem 0rem;
-  color: #ffffff; /* Apply the green color to titles */
+  font-size: 25px;
+  color: #728760;
+  height: 20px;
 }
 
 .work-section-bottom {
-  margin-top: 5rem;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  padding-bottom: 40px;
 }
 
 .work-section-info p {
   flex: 1;
   display: flex;
   align-items: center;
-  font-weight: 600;
-  color: #AAC88F; /* Apply the yellow color to subtitles */
+  font-weight: 500;
+  color: #728760;
+}
+
+.work-section-wrapper{
+  background-color: white;
 }
 
 @media (max-width: 600px) {

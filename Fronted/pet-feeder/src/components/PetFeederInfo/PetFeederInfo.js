@@ -10,7 +10,7 @@ const PetFeederInfo = () => {
             <img
               src="/assets/aboutUsPhoto.jpg"
               alt="Pet"
-              className="pet-image"
+              className="pet-image shadow-lg"
             />
           </div>
           <div className="col-lg-6 col-md-12 text-center font-weight-light mb-4 mt-4">
@@ -31,12 +31,12 @@ const PetFeederInfo = () => {
                 you're investing in peace of mind and the well-being of your furry family members.
               </p>
             </div>
-            <div className='card mt-5 shadow-lg award'>
-              <div className='row'>
-                <div className="col-lg-8 col-md-12">
+            <div className='card mt-5 shadow-lg award '>
+              <div className='row '>
+                <div className="col-lg-8 col-md-12 ">
                   <div className="card-body">
-                    <h5 className="card-title">Quality Guarantee</h5>
-                    <p className="card-text mt-3">
+                    <h5 className="card-title ">Quality Guarantee</h5>
+                    <p className="card-text mt-3 ">
                       Best Automated Pet Feeding Station 2023 Award
                     </p>
                     <p className="card-text">
@@ -44,11 +44,11 @@ const PetFeederInfo = () => {
                     </p>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-12 awardcont">
+                <div className="col-lg-4 col-md-12 awardcont ">
                   <img
                     src="/assets/award.png"
                     alt="badge"
-                    className='badgeImg mt-2'
+                    className='badgeImg mt-2 text-left '
                   />
                 </div>
               </div>
