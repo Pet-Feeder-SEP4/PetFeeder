@@ -1,14 +1,14 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import React, { useRef, useState, useEffect } from 'react';
 import './LogIn.css';
 import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = '/auth/authenticate';
 
 const LogIn = () => {
-  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
@@ -40,10 +40,12 @@ const LogIn = () => {
       localStorage.setItem("token", token);
     
 
-      setAuth({ user, pwd, token });
       setUser('');
       setPwd('');
       setSuccess(true);
+      navigate('/MainPage');
+     
+    
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -61,15 +63,7 @@ const LogIn = () => {
   return (
     <>
      <div className='b'>
-     {success ? (
-        <section>
-          <h1 >You are logged in!</h1>
-          <br />
-          <p>
-            <a href="#">Go to HomePage</a>
-          </p>
-        </section>
-      ) : (
+     
         <section>
           <p
             ref={errRef}
@@ -107,12 +101,12 @@ const LogIn = () => {
           <p>
             Not a member? <br />
             <span className="line">
-              {/* Put router link here */}
+        
               <a href="/Register">Sign Up</a>
             </span>
           </p>
         </section>
-      )}
+      
      </div>
     </>
   );
