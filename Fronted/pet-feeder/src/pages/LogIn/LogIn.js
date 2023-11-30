@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import './LogIn.css';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../../contexts/UserContext";
 
 const LOGIN_URL = '/auth/authenticate';
 
@@ -9,6 +10,9 @@ const LogIn = () => {
   const userRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
+
+  const { setUserContextData } = useUser();
+
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
@@ -39,6 +43,18 @@ const LogIn = () => {
       const token = response?.data?.token;
       localStorage.setItem("token", token);
 
+       // Perform a GET request to retrieve user data after successful registration
+       const userResponse = await axios.get('/auth/user', {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // Include the token in the request headers
+        },
+        withCredentials: true,
+    });
+
+    const userId = userResponse.data;
+    console.log('User Data:', userId);
+    setUserContextData(userId);
      
 
       setUser('');
@@ -96,7 +112,7 @@ const LogIn = () => {
               value={pwd}
               required
             />
-            <button className="btn" id="bttn" type="submit">Sign in</button>
+            <button className="btn" id="bttn" type="submit"  >Sign in</button>
           </form>
 
           <p>
