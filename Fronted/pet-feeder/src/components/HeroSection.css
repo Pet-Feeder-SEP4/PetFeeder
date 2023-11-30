@@ -1,11 +1,11 @@
 /* HeroSection.css */
 .hero-section {
     position: relative; 
-    background-image: url("../../public/assets/herobackground.jpg");
+    background-image: url("../../public/assets/pups.jpg");
     background-size: cover;
     background-position: center;
     color: #fff;
-    height: 500px;
+    height: 600px;
     flex-direction: column;
     justify-content: center;
     display: flex;
@@ -52,7 +52,21 @@
     color: #0a8b74;
   }
   
-  .btn {
+  .btnHero {
     width: 100px; /* Adjust the width as needed */
+    height: 32px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    outline: none;
+    background-color: #7a8f68;
+    color: #ffffff;
+  }
+  .bigT{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+  }
+  .smallT{
+    font-family: 'Poppins', sans-serif;
+    
   }
   
