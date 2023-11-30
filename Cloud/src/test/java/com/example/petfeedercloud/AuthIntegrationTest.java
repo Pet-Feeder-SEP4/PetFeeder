@@ -39,7 +39,7 @@ public class AuthIntegrationTest {
         calendar.set(Calendar.MONTH, Calendar.NOVEMBER);
         calendar.set(Calendar.DAY_OF_MONTH, 29);
 
-        Date birthdate = calendar.getTime(); // Get the Date object
+        Date birthdate = calendar.getTime();
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("John");
