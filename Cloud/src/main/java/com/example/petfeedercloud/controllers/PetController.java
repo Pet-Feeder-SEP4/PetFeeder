@@ -2,6 +2,7 @@ package com.example.petfeedercloud.controllers;
 
 import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.services.PetService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,14 @@ public class PetController {
     @Autowired
     private PetService petService;
 
+    @Operation(summary = "Get all pets", description = "Get all pets from the database")
     @GetMapping("/")
     public List<PetDTO> getAllPets() {
         return petService.getAllPets();
     }
 
     @GetMapping("/{petId}")
+    @Operation(summary = "Get pet by ID", description = "Get a Pet by the Pet ID")
     public ResponseEntity<?> getPetById(@PathVariable Long petId) {
         try {
             PetDTO pet = petService.getPetById(petId);
@@ -32,6 +35,7 @@ public class PetController {
         }
     }
     @PostMapping("/")
+    @Operation(summary = "Create Pet", description = "Create a new Pet")
     public ResponseEntity<String> savePet(@RequestBody PetDTO petDTO) {
         try {
             petService.createPet(petDTO);
@@ -46,6 +50,7 @@ public class PetController {
     }
 
     @PutMapping("/{petId}")
+    @Operation(summary = "Update existing pet", description = "Update existing pet by inserting Pet ID that you want to change")
     public ResponseEntity<String> updatePet(@PathVariable Long petId, @RequestBody PetDTO petDTO) {
         try {
             petService.updatePet(petId, petDTO);
@@ -60,6 +65,7 @@ public class PetController {
     }
 
     @DeleteMapping("/{petId}")
+    @Operation(summary = "Delete pet by id", description = "Delete a pet by its id")
     public ResponseEntity<?> deletePet(@PathVariable Long petId) {
         try {
             petService.deletePet(petId);
@@ -71,6 +77,7 @@ public class PetController {
         }
     }
     @GetMapping("/user/{userId}")
+    @Operation(summary = "Get all pets from an user", description = "Get all pets a specific user id")
     public List<PetDTO> getAllPetsByUser(@PathVariable Long userId) {
         return petService.getAllPetsByUser(userId);
     }
