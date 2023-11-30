@@ -1,7 +1,7 @@
 /* HeroSection.css */
 .hero-section {
     position: relative; 
-    background-image: url("../../public/assets/pups.jpg");
+    background-image: url("../../../public/assets/pups.jpg");
     background-size: cover;
     background-position: center;
     color: #fff;

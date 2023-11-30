@@ -1,5 +1,7 @@
 package com.example.petfeedercloud.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 public class PetDTO {

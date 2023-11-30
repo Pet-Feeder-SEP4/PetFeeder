@@ -12,10 +12,13 @@ import io.jsonwebtoken.Jwts;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,20 +30,37 @@ public class AuthenticationController {
 
     @Operation(summary = "Register user", description = "This will return a token if the user is created")
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDTO userDTO) {
-            return ResponseEntity.ok(userService.saveUser(userDTO));
+    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+        try {
+            AuthenticationResponse authenticationResponse = userService.saveUser(userDTO);
+            return ResponseEntity.ok(authenticationResponse);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Login", description = "This will return a token if the user is authenticate")
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody UserLoginDTO userDTO) {
-        return ResponseEntity.ok(userService.authenticateUser(userDTO));
+    public ResponseEntity<?> authenticate(@RequestBody UserLoginDTO userDTO) {
+        try{
+            AuthenticationResponse authenticationResponse = userService.authenticateUser(userDTO);
+            return ResponseEntity.ok(authenticationResponse);
+        }catch (AuthenticationException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+        }
+
+
     }
 
     @Operation(summary = "Get User Id by JWT", description = "This will get the user id of the user logged in!")
     @GetMapping("/user")
-    public Long getUserInfo(HttpServletRequest request) {
-        return jwtTokenProvider.extractUserId(request.getHeader("Authorization").substring(7));
+    public ResponseEntity<?> getUserInfo(HttpServletRequest request) {
+        try{
+            Long userId = jwtTokenProvider.extractUserId(request.getHeader("Authorization").substring(7));
+            return ResponseEntity.ok(userId);
+        }catch (NullPointerException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token not valid.");
+        }
     }
 
     @Operation(summary = "Logout", description = "This will logout the user")
