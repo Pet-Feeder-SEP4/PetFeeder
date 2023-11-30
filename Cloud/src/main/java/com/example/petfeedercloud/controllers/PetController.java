@@ -38,6 +38,14 @@ public class PetController {
     @Operation(summary = "Create Pet", description = "Create a new Pet")
     public ResponseEntity<String> savePet(@RequestBody PetDTO petDTO) {
         try {
+            if (petDTO.getName() == null || petDTO.getName().isEmpty()) {
+                return ResponseEntity.badRequest().body("Please provide a name for the pet.");
+            }
+
+            if (petDTO.getBirthdate() == null) {
+                return ResponseEntity.badRequest().body("Please provide the pet's birthdate.");
+            }
+
             petService.createPet(petDTO);
             return ResponseEntity.ok("Pet created successfully");
         } catch (NotFoundException ex) {
@@ -45,7 +53,7 @@ public class PetController {
         } catch (ConstraintViolationException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the pet");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the pet" + ex.getMessage());
         }
     }
 
