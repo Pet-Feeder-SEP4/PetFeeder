@@ -44,6 +44,7 @@ button.btncreate{
     background-color: #06350D;
     color:#F6f6f6;
     outline: none;
+    width:100px;
 }
 button.btncreate:hover {
     background-color: #095715; /* Your desired hover color */

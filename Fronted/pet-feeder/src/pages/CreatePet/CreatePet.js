@@ -1,42 +1,39 @@
-
 import axios from "../../api/axios";
 import NavBar from "../../components/Navbar/Navbar";
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import './CreatePet.css'
-
 import useVerifyToken from '../../hooks/useVerifyToken';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const CreatePet = () => {
-    // check user token 
-    const isTokenValid = useVerifyToken();
+    // check user token
+    const isTokenValid = useVerifyToken();   
     const navigate = useNavigate();
+    const userId = localStorage.getItem('userId');
 
-    useEffect(() => {
-        if (!isTokenValid) {
-            console.log("Invalid token, please log in")
-            // navigate('/login');  
+    useEffect(() => {    
+        if (localStorage.getItem('token')!=null) {
+            console.log("its valid bro");     
         } else {
-            // ... (your existing component logic)
+            console.log("log in bro");
+            navigate('/LogIn');
         }
     }, [isTokenValid, navigate]);
 
-
     // State to store form data
+
     const [formData, setFormData] = useState({
-        userId: 21,
-        petFeederId: 2,
+        userId: userId, 
+        petFeederId: null, //you can create pet feeder wo pet, but to associate them it need to be set to the pet feeder id 
         name: '',
         birthdate: '',
         weight: 0,
         breed: '',
     });
 
-
     // Handle input changes
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -47,34 +44,31 @@ const CreatePet = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.get('https://peefee.azurewebsites.net/auth/user', formData, {
-                headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIxLCJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDExODc0MzYsImV4cCI6MTcwMTE5MTAzNn0.j4a5tAI1gsxmCU7WkDpBP3Hzbf0Ohq631839p3d4JT4',
-                    'Content-Type': 'application/json',  // Adjust the content type if needed
-                },
-            });
 
-            console.log('Pet created successfully:', response.data);
-        } catch (error) {
-            console.error('Error creating pet:', error);
+        if (!formData.breed || !formData.name || !formData.birthdate || !formData.weight) {
+            alert("Please fill in all required fields.");
+            return;
         }
 
-        try {
-            const response = await axios.post('https://peefee.azurewebsites.net/pets/', formData, {
-                headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIxLCJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDExODc0MzYsImV4cCI6MTcwMTE5MTAzNn0.j4a5tAI1gsxmCU7WkDpBP3Hzbf0Ohq631839p3d4JT4',
-                    'Content-Type': 'application/json',  // Adjust the content type if needed
-                },
-            });
+        const storedToken = localStorage.getItem('token');
+        
+        // Check if userData exists and has the 'token' property
+        if (storedToken) {
+            try {
+                const response = await axios.post('/pets/', formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-            console.log('Pet created successfully:', response.data);
-        } catch (error) {
-            console.error('Error creating pet:', error);
+                console.log('Pet created successfully:', response.data);
+            } catch (error) {
+                console.error('Error creating pet:', error);
+            }
+        } else {
+            console.error('userData or token is null');
         }
     };
-
-
 
     return (
         <div className="bbb">
