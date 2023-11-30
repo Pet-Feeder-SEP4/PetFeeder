@@ -10,7 +10,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "API-to-DockerHub" ]
   pull_request:
     branches: [ "main" ]
 
@@ -34,7 +34,7 @@ jobs:
 
     - name: Build Docker Image
       if: success()
-      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/petfeeder:latest .
+      run: docker build -t bl1os/petfeeder:latest .
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
