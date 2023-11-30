@@ -16,6 +16,7 @@ public class PetFeeder {
     private int lowLevelFood;
     private int foodHumidity;
     private int waterTemperture;
+    private boolean active = false;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
@@ -79,5 +80,13 @@ public class PetFeeder {
     }
     public Long getPetFeederId() {
         return petFeederId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

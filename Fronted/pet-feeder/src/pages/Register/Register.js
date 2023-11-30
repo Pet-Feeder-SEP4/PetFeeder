@@ -79,9 +79,21 @@ const Register = () => {
         const token = response.data.token;
 
         localStorage.setItem('token', token);
+        
+        // Perform a GET request to retrieve user data after successful registration
+        const userResponse = await axios.get('/auth/user', {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`, // Include the token in the request headers
+            },
+            withCredentials: true,
+        });
 
+        const userId = userResponse.data;
+        console.log('User Data:', userId);
+        localStorage.setItem('userId',userId);
 
-        console.log(JSON.stringify(response));
+       // console.log(JSON.stringify(response));
         setSuccess(true);
         
        } catch (error) {
@@ -94,6 +106,8 @@ const Register = () => {
         }
         errRef.current.focus();
        }
+
+      
     };
 
     return (
