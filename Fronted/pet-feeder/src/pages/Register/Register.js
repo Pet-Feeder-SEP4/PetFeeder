@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { useUser } from "../../contexts/UserContext";
+
 import './Register.css';
 import axios from "../../api/axios";
 
@@ -15,8 +15,6 @@ const Register = () => {
     const userRef = useRef();
     // error ref - if error pops focus changes to it
     const errRef = useRef();
-
-    const { setUserContextData } = useUser();
 
     const [user, setUser] = useState('');
     const [validEmail, setValidEmail] = useState(false); // check email validation
@@ -93,8 +91,7 @@ const Register = () => {
 
         const userId = userResponse.data;
         console.log('User Data:', userId);
-        setUserContextData(userId);
-
+        localStorage.setItem('userId',userId);
 
        // console.log(JSON.stringify(response));
         setSuccess(true);

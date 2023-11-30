@@ -4,6 +4,7 @@ package com.example.petfeedercloud.models;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Schedule {
@@ -11,10 +12,22 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
     private String scheduleLabel;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "petFeederId") // Name of the foreign key column in the pet_feeder table
+    private PetFeeder petFeeder;
+
     public Schedule() {
+    }
+    public PetFeeder getPetFeeder() {
+        return petFeeder;
+    }
+    public void setPetFeeder(PetFeeder petFeeder) {
+        this.petFeeder = petFeeder;
     }
     public UserP getUser() {
         return user;
@@ -34,5 +47,6 @@ public class Schedule {
     public void setScheduleLabel(String scheduleLabel) {
         this.scheduleLabel = scheduleLabel;
     }
+
 
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import HeroSection from '../../components/HeroSection';
-import PetFeederInfo from '../../components/PetFeederInfo';
-import Motto from '../../components/Motto';
+import HeroSection from '../../components/HeroSection/HeroSection';
+import PetFeederInfo from '../../components/PetFeederInfo/PetFeederInfo';
+import Motto from '../../components/Motto/Motto';
 import Aboutpage from '../../components/AboutUs';
 
 const Welcome = () => {
@@ -11,8 +11,7 @@ const Welcome = () => {
     <PetFeederInfo/>
     <Aboutpage/>
     <Motto/>
-    </>
-    
+    </>    
   );
 };
 

@@ -42,8 +42,12 @@ public class PetServiceImpl implements PetService {
     @Override
     public PetDTO createPet(PetDTO petDTO) {
         try {
-            if (petDTO.getName() == null || petDTO.getName().isEmpty()) {
-                throw new IllegalArgumentException("Please fill out the pet name.");
+            if (petDTO.getName() == null || petDTO.getName().isEmpty() || !petDTO.getName().matches(".*\\w.*")) {
+                throw new IllegalArgumentException("Please provide a valid name for the pet. The name must contain at least one alphanumeric character.");
+            }
+
+            if (petDTO.getBirthdate() == null) {
+                throw new IllegalArgumentException("Please provide the pet's birthdate.");
             }
 
             Pet pet = convertToEntity(petDTO);
@@ -58,9 +62,9 @@ public class PetServiceImpl implements PetService {
             petRepository.save(pet);
             return convertToDto(pet);
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
-            throw ex;
+            throw new IllegalArgumentException("An error occurred while creating the pet: " + ex.getMessage());
         } catch (Exception ex) {
-            throw new RuntimeException("An error occurred while creating the pet");
+            throw new RuntimeException("An error occurred while creating the pet: " + ex.getMessage());
         }
     }
 

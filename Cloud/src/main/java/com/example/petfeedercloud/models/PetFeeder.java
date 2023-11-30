@@ -16,6 +16,7 @@ public class PetFeeder {
     private int lowLevelFood;
     private int foodHumidity;
     private int waterTemperture;
+    private boolean active = false;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
@@ -23,9 +24,7 @@ public class PetFeeder {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "petId") // Name of the foreign key column in the pet_feeder table
     private Pet pet;
-    //ManyToOne(fetch = FetchType.EAGER)
-    //@JoinColumn(name = "scheduleId") // Name of the foreign key column in the pet_feeder table
-    //private Schedule schedule;
+
 
     public PetFeeder() {
 
@@ -36,8 +35,7 @@ public class PetFeeder {
     public void setUser(UserP user) {
         this.user = user;
     }
-   // public Schedule getSchedule() {return schedule;}
-   // public void setSchedule(Schedule schedule) {this.schedule = schedule; }
+
     public String getPetFeederLabel() {
         return petFeederLabel;
     }
@@ -79,5 +77,13 @@ public class PetFeeder {
     }
     public Long getPetFeederId() {
         return petFeederId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
