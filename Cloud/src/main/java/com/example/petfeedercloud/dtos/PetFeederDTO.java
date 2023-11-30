@@ -19,6 +19,7 @@ public class PetFeederDTO {
     private Long userId;
    // private Long scheduleId;
     private Long petId;
+    private boolean active = false;
 
     public Long getPetFeederId() {
         return petFeederId;
@@ -86,5 +87,13 @@ public class PetFeederDTO {
 
     public void setPetId(Long petId) {
         this.petId = petId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
