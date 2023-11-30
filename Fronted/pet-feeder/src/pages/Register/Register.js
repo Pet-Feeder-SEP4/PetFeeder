@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-
+import { useUser } from "../../contexts/UserContext";
 import './Register.css';
 import axios from "../../api/axios";
 
@@ -15,6 +15,8 @@ const Register = () => {
     const userRef = useRef();
     // error ref - if error pops focus changes to it
     const errRef = useRef();
+
+    const { setUserContextData } = useUser();
 
     const [user, setUser] = useState('');
     const [validEmail, setValidEmail] = useState(false); // check email validation
@@ -79,9 +81,22 @@ const Register = () => {
         const token = response.data.token;
 
         localStorage.setItem('token', token);
+        
+        // Perform a GET request to retrieve user data after successful registration
+        const userResponse = await axios.get('/auth/user', {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`, // Include the token in the request headers
+            },
+            withCredentials: true,
+        });
+
+        const userId = userResponse.data;
+        console.log('User Data:', userId);
+        setUserContextData(userId);
 
 
-        console.log(JSON.stringify(response));
+       // console.log(JSON.stringify(response));
         setSuccess(true);
         
        } catch (error) {
@@ -94,6 +109,8 @@ const Register = () => {
         }
         errRef.current.focus();
        }
+
+      
     };
 
     return (

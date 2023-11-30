@@ -1,18 +1,23 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../../context/AuthProvider';
+import React, { useRef, useState, useEffect } from 'react';
 import './LogIn.css';
 import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from "../../contexts/UserContext";
 
 const LOGIN_URL = '/auth/authenticate';
 
 const LogIn = () => {
-  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
+
+  const { setUserContextData } = useUser();
+
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -38,12 +43,27 @@ const LogIn = () => {
 
       const token = response?.data?.token;
       localStorage.setItem("token", token);
-    
 
-      setAuth({ user, pwd, token });
+       // Perform a GET request to retrieve user data after successful registration
+       const userResponse = await axios.get('/auth/user', {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, // Include the token in the request headers
+        },
+        withCredentials: true,
+    });
+
+    const userId = userResponse.data;
+    console.log('User Data:', userId);
+    setUserContextData(userId);
+     
+
       setUser('');
       setPwd('');
       setSuccess(true);
+      navigate('/MainPage');
+     
+    
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -61,15 +81,7 @@ const LogIn = () => {
   return (
     <>
      <div className='b'>
-     {success ? (
-        <section>
-          <h1 >You are logged in!</h1>
-          <br />
-          <p>
-            <a href="#">Go to HomePage</a>
-          </p>
-        </section>
-      ) : (
+     
         <section>
           <p
             ref={errRef}
@@ -101,18 +113,18 @@ const LogIn = () => {
               value={pwd}
               required
             />
-            <button className="btn" id="bttn" type="submit">Sign in</button>
+            <button className="btn" id="bttn" type="submit"  >Sign in</button>
           </form>
 
           <p>
             Not a member? <br />
             <span className="line">
-              {/* Put router link here */}
+        
               <a href="/Register">Sign Up</a>
             </span>
           </p>
         </section>
-      )}
+      
      </div>
     </>
   );
