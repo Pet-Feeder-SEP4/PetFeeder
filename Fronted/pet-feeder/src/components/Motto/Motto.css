@@ -1,0 +1,47 @@
+.mottob {
+    background-color: #8ba575;
+}
+
+.logofoot {
+    width: 50%;
+    
+
+}
+
+
+
+.otro-blockquote {
+
+    margin: 20px auto;
+    font-style: italic;
+    font-size: 1em;
+    padding: 1.2em 30px 1.2em 50px;
+    border-left: 4px solid #4e5c41;
+    line-height: 1.6;
+    position: relative;
+    background: #728760;
+    font-family: 'Poppins', sans-serif;
+}
+
+.otro-blockquote::before {
+    font-family: Arial;
+    content: "\201C";
+    color: #4e5c41;
+    font-size: 4em;
+    position: absolute;
+    left: 10px;
+    top: -10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.otro-blockquote span {
+    display: block;
+    color: #4e5c41;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 3px;
+}
+.quoteTXT{
+    color: #f6f6f6;
+}

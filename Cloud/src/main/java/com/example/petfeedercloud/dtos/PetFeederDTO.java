@@ -12,13 +12,15 @@ import java.util.Date;
 public class PetFeederDTO {
     private Long petFeederId;
     private String petFeederLabel;
-    private String foodLevel;
-    private String lowLevelFood;
-    private String foodHumidity;
-    private String waterTemperture;
+    private int foodLevel;
+    private int lowLevelFood;
+    private int foodHumidity;
+    private int waterTemperture;
     private Long userId;
     private Long scheduleId;
     private Long petId;
+
+    private boolean active = false;
 
     public Long getPetFeederId() {
         return petFeederId;
@@ -36,35 +38,35 @@ public class PetFeederDTO {
         this.petFeederLabel = petFeederLabel;
     }
 
-    public String getFoodLevel() {
+    public int getFoodLevel() {
         return foodLevel;
     }
 
-    public void setFoodLevel(String foodLevel) {
+    public void setFoodLevel(int foodLevel) {
         this.foodLevel = foodLevel;
     }
 
-    public String getLowLevelFood() {
+    public int getLowLevelFood() {
         return lowLevelFood;
     }
 
-    public void setLowLevelFood(String lowLevelFood) {
+    public void setLowLevelFood(int lowLevelFood) {
         this.lowLevelFood = lowLevelFood;
     }
 
-    public String getFoodHumidity() {
+    public int getFoodHumidity() {
         return foodHumidity;
     }
 
-    public void setFoodHumidity(String foodHumidity) {
+    public void setFoodHumidity(int foodHumidity) {
         this.foodHumidity = foodHumidity;
     }
 
-    public String getWaterTemperture() {
+    public int getWaterTemperture() {
         return waterTemperture;
     }
 
-    public void setWaterTemperture(String waterTemperture) {
+    public void setWaterTemperture(int waterTemperture) {
         this.waterTemperture = waterTemperture;
     }
 
@@ -76,13 +78,9 @@ public class PetFeederDTO {
         this.userId = userId;
     }
 
-    public Long getScheduleId() {
-        return scheduleId;
-    }
+    public Long getScheduleId() {return scheduleId;}
 
-    public void setScheduleId(Long scheduleId) {
-        this.scheduleId = scheduleId;
-    }
+    public void setScheduleId(Long scheduleId) {this.scheduleId = scheduleId;}
 
     public Long getPetId() {
         return petId;
@@ -90,5 +88,13 @@ public class PetFeederDTO {
 
     public void setPetId(Long petId) {
         this.petId = petId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

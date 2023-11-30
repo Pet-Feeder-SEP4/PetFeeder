@@ -26,7 +26,7 @@ const Register = () => {
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false); // check password match validation
-    const [ setMatchFocus] = useState(false); // wether we have focus on input field
+    const [ matchFocus, setMatchFocus] = useState(false); // wether we have focus on input field
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -75,7 +75,25 @@ const Register = () => {
             withCredentials: true
         }
         );
-        console.log(JSON.stringify(response));
+
+        const token = response.data.token;
+
+        localStorage.setItem('token', token);
+        
+        // Perform a GET request to retrieve user data after successful registration
+        const userResponse = await axios.get('/auth/user', {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`, // Include the token in the request headers
+            },
+            withCredentials: true,
+        });
+
+        const userId = userResponse.data;
+        console.log('User Data:', userId);
+        localStorage.setItem('userId',userId);
+
+       // console.log(JSON.stringify(response));
         setSuccess(true);
         
        } catch (error) {
@@ -88,6 +106,8 @@ const Register = () => {
         }
         errRef.current.focus();
        }
+
+      
     };
 
     return (
@@ -194,7 +214,9 @@ const Register = () => {
                             onFocus={() => setMatchFocus(true)}
                             onBlur={() => setMatchFocus(false)}
                         />
-
+                         <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                        Must match the first password input field.
+                         </p>
                         <button  className="btn" id="bttn"disabled={!validEmail || !validPwd || !validMatch || !firstName || !lastName ? true : false}>Sign Up</button>
 
                     </form>
