@@ -25,7 +25,7 @@ const CreatePet = () => {
 
     const [formData, setFormData] = useState({
         userId: userId, 
-        petFeederId: null, //you can create pet feeder wo pet, but to associate them it need to be set to the pet feeder id 
+        petFeederId: null, //you can create pet feeder w/o pet, but to associate them it need to be set to the pet feeder id 
         name: '',
         birthdate: '',
         weight: 0,
@@ -62,6 +62,16 @@ const CreatePet = () => {
                 });
 
                 console.log('Pet created successfully:', response.data);
+
+                alert("Pet created successfully!");
+
+                setFormData({
+                    breed: '',
+                    name: '',
+                    birthdate: '',
+                    weight: '',
+                });
+                
             } catch (error) {
                 console.error('Error creating pet:', error);
             }
