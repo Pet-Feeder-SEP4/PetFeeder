@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import './LogIn.css';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from "../../contexts/UserContext";
+
 
 const LOGIN_URL = '/auth/authenticate';
 
@@ -11,7 +11,7 @@ const LogIn = () => {
   const errRef = useRef();
   const navigate = useNavigate();
 
-  const { setUserContextData } = useUser();
+
 
 
   const [user, setUser] = useState('');
@@ -55,7 +55,7 @@ const LogIn = () => {
 
     const userId = userResponse.data;
     console.log('User Data:', userId);
-    setUserContextData(userId);
+    localStorage.setItem('userId', userId);
      
 
       setUser('');
