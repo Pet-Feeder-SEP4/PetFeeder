@@ -7,10 +7,12 @@ const MyPets = () => {
 
     const [pets, setPets] = useState([]);
     const [loading, setLoading] = useState (true);
-    //TODO change to /pets/user/userID when you can get the userId from Marta's auth
+    const [showAllPets, setShowAllPets] = useState(false);
+    //TODO change to /pets/user/userID when you can get the userId from auth
   const PETS_URL = "/pets";
+
   // todo add Marta's token here in the const token and then put this config inside of every api call (wherever there is axios, add config
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQ5LCJzdWIiOiJsYXJlYkB2aWEuZGsiLCJpYXQiOjE3MDEyODUxOTgsImV4cCI6MTcwMTI4ODc5OH0.okURAoeiewc8CLA94Nj6r-6QUORNFjBeuVjb3wj_Mek";
+  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjYyLCJzdWIiOiJob2xhMkB2aWEuZGsiLCJpYXQiOjE3MDEzNjM0NTEsImV4cCI6MTcwMTM2NzA1MX0.g0uMHetpAwG1SSqAr02v9EzgRJ1hsM0xEZxtvQ_598E";
 
     const url = 'https://peefee.azurewebsites.net/pets/';
 
@@ -45,10 +47,13 @@ const MyPets = () => {
         fetchData();
       }, []);
 
-
+      const handleTogglePets = () => {
+        setShowAllPets(!showAllPets);
+      };
+    
       
 
-    // tell Marta that when she stores the auth,
+    // Marta that wheb she stores the auth,
     // the auth also needs to have the userId so we can pass it to the API calls
       return (
         
@@ -57,14 +62,34 @@ const MyPets = () => {
             <button className="side-button">+ PET</button>
             <button className="side-button">+ FEEDER</button>
           </div>
-          {/** add here the "Your Pets" header */}
+         
+      <div className="my-pets-header">
+        <h5 className="mytitleforpets">Your Pets</h5>
+        <div className="buttonsforactions">
+      
+          <button className="edit-button">&#9998;</button>
+        
+          <button className="remove-button">X</button>
+        </div>
+      </div>
+       
 
-          {
-                loading ? <div className="loading">loading... style if needed</div> 
-                : pets.map((p) => <Pet pet={p}/>)
-            }
+ 
+       {loading ? (
+         <div className="loading">Loading pets...</div>
+        ) : (
+        <div onClick={handleTogglePets} className="pet-box">
+        <Pet pet={pets[0]} />
+  
+        {showAllPets &&
+          pets.slice(1).map((p) => <Pet key={p.id} pet={p} />)}
+          <div className="listext">
+          {showAllPets ? "Show Less" : "Show More"}
           </div>
-      );
-    };
+       </div>
+)}
+</div>
+);
+};
     
     export default MyPets;

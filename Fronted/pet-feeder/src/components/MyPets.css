@@ -24,6 +24,54 @@
   }
 
   .loading {
+    margin-top: 70px;
     color: white;
+    
   }
 
+  .listext{
+    color: white;
+    
+  }
+
+  .mytitleforpets{
+    margin-top: 40px;
+    margin-bottom: 50px;
+    color: white;
+    font-size: 18px;
+    
+  }
+
+
+  .my-pets-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .buttonsforactions {
+    display: flex;
+  }
+  
+  .edit-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Adjust the font size as needed */
+    margin-left: 10px; /* Adjust the margin as needed */
+    color: #ffffff; /* Adjust the color as needed */
+  }
+
+  .remove-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Adjust the font size as needed */
+    margin-left: 10px; /* Adjust the margin as needed */
+    color: #ffffff !important; /* Adjust the color as needed */
+  }
+  
+  .edit-button:hover,
+  .remove-button:hover {
+    color: #AAC88F; 
+  }

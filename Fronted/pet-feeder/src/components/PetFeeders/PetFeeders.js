@@ -7,8 +7,16 @@ import './PetFeeders.css';
 
 const NotFound = () => (
     <div>
-      <h1>Not Found FUCKERSSS</h1>
-      {/* Add any additional content for the NotFound component */}
+      <h4 className='titlepet'>Pet Feeders</h4>
+      <h5 className='subtitlepet'>No Pet Feeders Found</h5>
+      <p className='sometext'>It looks like you haven't added a pet feeder yet. To get started, click the button + FEEDER to add a new pet feeder to your account.</p>
+      
+      <img
+        src="/assets/dog.png"
+        alt="Dog"
+        className="dogphoto"
+      />
+
     </div>
   );
   
@@ -18,7 +26,7 @@ const PetFeeders = () => {
   const [loading, setLoading] = useState (true);
   const PETFEEDERS_URL = "/petfeeder/";
   // todo add Marta's token here in the const token and then put this config inside of every api call (wherever there is axios, add config
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQ5LCJzdWIiOiJsYXJlYkB2aWEuZGsiLCJpYXQiOjE3MDEyODUxOTgsImV4cCI6MTcwMTI4ODc5OH0.okURAoeiewc8CLA94Nj6r-6QUORNFjBeuVjb3wj_Mek";
+  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjYyLCJzdWIiOiJob2xhMkB2aWEuZGsiLCJpYXQiOjE3MDEzNjM0NTEsImV4cCI6MTcwMTM2NzA1MX0.g0uMHetpAwG1SSqAr02v9EzgRJ1hsM0xEZxtvQ_598E";
 
   const url = "https://peefee.azurewebsites.net/petfeeder/";
 
@@ -28,7 +36,10 @@ const PetFeeders = () => {
 
   // useEffect is the first thing that happens when a component is rendered
   useEffect(() => {
+  
   const fetchData = async ()=> {
+   
+    
     try {
       // const response = await axios.get(PETFEEDERS_URL, config);
       const response = await fetch(url, {
@@ -58,29 +69,30 @@ if (loading) {
 if (!data.length) {
   return <NotFound />;
 }
+
 const workInfoData = [
     {
-      title: "PET FEEDER NAME",
+      title: "Pet feeder name",
       subtitle: "online",
       src: `${process.env.PUBLIC_URL}/assets/feeder.png`
     },
     {
-      title: "PET FEEDER NAME",
+      title: "Pet feeder name",
       subtitle: "offline",
       src: `${process.env.PUBLIC_URL}/assets/feeder.png`
     },
     {
-      title: "PET FEEDER NAME",
+      title: "Pet feeder name",
       subtitle: "offline",
       src: `${process.env.PUBLIC_URL}/assets/feeder.png`
     },
     {
-      title: "PET FEEDER NAME",
+      title: "Pet feeder name",
       subtitle: "offline",
       src: `${process.env.PUBLIC_URL}/assets/feeder.png`
     },
     {
-      title: "PET FEEDER NAME",
+      title: "Pet feeder name",
       subtitle: "offline",
       src: `${process.env.PUBLIC_URL}/assets/feeder.png`
     },
@@ -105,7 +117,7 @@ const workInfoData = [
                 <img src={data.image} alt="" />
               </div>
               <p>{data.text}</p>
-              <button className="bottom-button">Associate a pet</button>
+              <button className="bottom-button">Associate pet</button>
             </div>
           ))}
         </div>
