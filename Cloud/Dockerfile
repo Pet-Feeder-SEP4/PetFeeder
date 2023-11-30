@@ -1,7 +1,6 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk-alpine
 EXPOSE 8080
 VOLUME /petFeederDB
 ARG JAR_FILE=target/*.jar
 COPY ./target/PetFeederCloud-0.0.1-SNAPSHOT.jar app.jar
-
 CMD ["java", "-jar", "app.jar"]
