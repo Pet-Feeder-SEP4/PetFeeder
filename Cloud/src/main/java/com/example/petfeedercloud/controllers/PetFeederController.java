@@ -73,4 +73,44 @@ public class PetFeederController {
     public List<PetFeederDTO> getAllPetsByUser(@PathVariable Long userId) {
         return petFeederService.getAllPetFeedersByUser(userId);
     }
+
+    @PostMapping("/{petfeederId}/activate")
+    @Operation(summary = "Activate pet feeder", description = "Activate a pet feeder for a specific user and pet")
+    public ResponseEntity<String> activatePetFeeder(
+            @RequestParam(required = true) Long userId,
+            @RequestParam(required = true) Long petId,
+            @RequestParam Long petFeederId) {
+        try {
+            if (userId == null || userId <= 0 || petId == null || petId <= 0) {
+                throw new IllegalArgumentException("userId and petId are required and must be greater than 0");
+            }
+
+            petFeederService.setActivePetFeeder(userId, petId, petFeederId);
+            return ResponseEntity.ok("Pet feeder activated successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/{petfeederId}/deactivate")
+    @Operation(summary = "Deactivate pet feeder", description = "Deactivate a pet feeder for a specific user and pet")
+    public ResponseEntity<String> deactivatePetFeeder(
+            @RequestParam(required = true) Long userId,
+            @RequestParam(required = true) Long petId,
+            @RequestParam Long petFeederId) {
+        try {
+            if (userId == null || userId <= 0 || petId == null || petId <= 0) {
+                throw new IllegalArgumentException("userId and petId are required and must be greater than 0");
+            }
+
+            petFeederService.deactivatePetFeeder(userId, petId, petFeederId);
+            return ResponseEntity.ok("Pet feeder deactivated successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
 }
