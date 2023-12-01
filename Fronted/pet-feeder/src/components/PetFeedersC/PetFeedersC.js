@@ -2,8 +2,10 @@
 import './PetFeedersC.css';
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
-import './PetFeedersC.css';
 
+
+
+//behaviour when it doesnt find the data
 
 const NotFound = () => (
     <div>
@@ -57,7 +59,7 @@ const PetFeedersC = () => {
     }, [userId, token]); 
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>Loading pet feeders...</div>;
       }
       
       if (!userPetFeeders.length) {
@@ -67,11 +69,11 @@ const PetFeedersC = () => {
 
     return (
         <div className='petListContainer'>
-          <h1 className='myPetsTitle'>MY PETS</h1>
-          <div className='listOfPets'>
+          <h1 className='myPetsTitle'>Pet Feeders</h1>
+          <div className='petfeederlist'>
             {userPetFeeders.map((petfeeder) => (
               <div key={petfeeder.petFeederId} className="petItem">
-                <div className="button-container">
+                <div className="buttonactions-container">
                   <button className="top-right-button">X</button>
                 </div>
                 <h3>{petfeeder.petFeederLabel}</h3>
