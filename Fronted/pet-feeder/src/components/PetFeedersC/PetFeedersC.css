@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+
+.titlepet {
+  margin-top: 100px;
+  font-size: 24px;
+  padding-left: 50px;
+  color: #333;
+}
+
+.subtitlepet {
+  margin-top: 40px;
+  font-size: 15px;
+  padding-left: 50px;
+  color: #AAC88F;
+}
+
+.sometext {
+  margin-top: 40px;
+  font-size: 16px;
+  max-width: 680px;
+  padding-left: 50px;
+  color: #777;
+}
+
+.dogphoto {
+  width: 500px;
+  margin-top: 50px;
+  margin-left: 150px;
+}
+.petListContainer {
+  overflow: auto;
+}
+
+.myPetsTitle {
+  margin-top: 20px;
+  font-size: 24px;
+  text-align: center; /* Center the title horizontally */
+  color: #333;
+}
+
+.listOfPets {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.listOfPets ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.petItem {
+  height: 285px;
+  width: 270px;
+  min-height: 200px;
+  background-color: #d9e9cb;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border-radius: 1rem;
+  color: #505050;
+}
+
+.petItem h3 {
+  margin: 1rem 0rem;
+}
+
+.petItem .subtitle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.petItem .status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.petItem .online {
+  background-color: green;
+}
+
+.petItem .offline {
+  background-color: red;
+}
+
+.petItem img {
+  margin-bottom: 12px;
+}
+.petItem .button-container {
+  margin-top: auto;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.petItem .top-right-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 8px;
+  padding: 4px;
+  background-color: #06350D;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center; /* Center the content vertically */
+  justify-content: center; /* Center the content horizontally */
+}
+
+.petItem .top-right-button span {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+
+.petItem .bottom-button {
+  background-color: #06350D;
+  color: white;
+  border-radius: 7px;
+  padding: 8px; /* Adjusted padding */
+  max-width: 100%; /* Ensure it doesn't exceed the container width */
+ 
+
+ 
+}
+
+
+@media (max-width: 600px) {
+  .home-bannerImage-container,
+  .about-background-image-container {
+    display: none;
+  }
+
+  .petItem {
+    width: calc(100% - 2rem);
+    margin: 1rem 1rem;
+  }
+}
