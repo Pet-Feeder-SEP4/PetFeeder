@@ -66,7 +66,20 @@ public class TimeController {
             return new ResponseEntity<>("An error occurred while creating the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @PostMapping("/bulk")
+    public ResponseEntity<?> createTimes(@RequestBody List<TimeDTO> timeDTOList) {
+        try {
+            for (TimeDTO timeDTO : timeDTOList) {
+                validateCreateTimeDTO(timeDTO);
+            }
+            timeService.createTimes(timeDTOList);
+            return new ResponseEntity<>(timeDTOList,HttpStatus.CREATED);
+        } catch (IllegalArgumentException | ConstraintViolationException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("An error occurred while creating the times. " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PutMapping("/{timeId}")
     public ResponseEntity<?> updateTime(@PathVariable Long timeId, @RequestBody TimeDTO timeDTO) {
         try {

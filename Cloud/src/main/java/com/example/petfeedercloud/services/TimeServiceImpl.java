@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,24 @@ public class TimeServiceImpl implements TimeService{
         timeRepository.save(existingTime);
         return mapToDTO(existingTime);
     }
+
+    public void createTimes(List<TimeDTO> timeDTOList) {
+        // Your logic for creating multiple times
+        List<Time> times = new ArrayList<>();
+
+        for (TimeDTO timeDTO : timeDTOList) {
+            // Convert TimeDTO to Time entity or use a constructor
+            Time time = new Time();
+            time.setSchedule(scheduleRepository.getById(timeDTO.getScheduleId()));
+            time.setTimeLabel(timeDTO.getTimeLabel());
+            time.setTime(timeDTO.getTime());
+            times.add(time);
+        }
+
+        // Save the list of times
+        timeRepository.saveAll(times);
+    }
+
     //helpers
     private TimeDTO mapToDTO(Time time) {
         TimeDTO timeDTO = new TimeDTO();

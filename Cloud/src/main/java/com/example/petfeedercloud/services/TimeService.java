@@ -11,4 +11,6 @@ public interface TimeService {
     void deleteTime(Long timeId);
     void createTime(TimeDTO timeDTO);
     TimeDTO updateTime(Long timeId, TimeDTO timeDTO);
+
+    void createTimes(List<TimeDTO> timeDTOList);
 }
