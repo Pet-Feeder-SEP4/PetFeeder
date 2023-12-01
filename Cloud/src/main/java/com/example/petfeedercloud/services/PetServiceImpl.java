@@ -110,10 +110,15 @@ public class PetServiceImpl implements PetService {
             throw new NotFoundException("Pet not found with ID: " + petId);
         }
     }
-    @Override
     public List<PetDTO> getAllPetsByUser(Long userId) {
-        return petRepository.findAllByUserUserId(userId).stream()
-                .map(this::convertToDto)
+        List<Pet> pets = petRepository.findAllByUserUserId(userId);
+
+        if (pets.isEmpty()) {
+            throw new NotFoundException("No pets found for user ID: " + userId);
+        }
+
+        return pets.stream()
+                .map(this::convertToDtoWithId)
                 .collect(Collectors.toList());
     }
 
