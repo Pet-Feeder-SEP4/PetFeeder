@@ -33,6 +33,7 @@ public class SecurityConfig  {
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
+            "/pets/iot/**",
             "/swagger-ui.html"};
 
     @Bean
