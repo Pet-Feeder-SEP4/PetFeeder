@@ -32,8 +32,8 @@ public class TimeController {
             return new ResponseEntity<>("An error occurred while fetching the time.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    /*
-    @GetMapping("/{scheduleId}")
+
+    @GetMapping("/schedule/{scheduleId}")
     public ResponseEntity<?> getTimeByScheduleId(@PathVariable Long scheduleId) {
         try {
             List<TimeDTO> times = timeService.getTimeByScheduleId(scheduleId);
@@ -45,7 +45,7 @@ public class TimeController {
         }
     }
 
-    */
+
 
     @PostMapping("/{scheduleId}")
     public ResponseEntity<?> createTime( @RequestBody TimeDTO timeDTO) {

@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class TimeServiceImpl implements TimeService{
     private final ScheduleRepository scheduleRepository;
     private final TimeRepository timeRepository;
-    private final PortionRepository portionRepository;
     @Override
     public List<TimeDTO> getTimeByScheduleId(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
