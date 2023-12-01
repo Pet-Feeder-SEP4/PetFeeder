@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -29,19 +31,23 @@ public class TimeController {
         } catch (NotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while fetching the time.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred while fetching the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/schedule/{scheduleId}")
     public ResponseEntity<?> getTimeByScheduleId(@PathVariable Long scheduleId) {
         try {
+            ScheduleDTO scheduleDTO = scheduleService.getScheduleById(scheduleId);
+            if (scheduleDTO == null) {
+                return new ResponseEntity<>("Schedule with id " + scheduleId + " does not exist.", HttpStatus.NOT_FOUND);
+            }
             List<TimeDTO> times = timeService.getTimeByScheduleId(scheduleId);
             return ResponseEntity.ok(times);
         } catch (NotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while fetching times.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred while fetching times. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -57,19 +63,20 @@ public class TimeController {
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while creating the time."+ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred while creating the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{timeId}")
     public ResponseEntity<?> updateTime(@PathVariable Long timeId, @RequestBody TimeDTO timeDTO) {
         try {
+            validateCreateTimeDTO(timeDTO);
             TimeDTO updatedTime = timeService.updateTime(timeId, timeDTO);
             return ResponseEntity.ok(updatedTime);
         } catch (NotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while updating the time.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred while updating the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -81,7 +88,7 @@ public class TimeController {
         } catch (NotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while deleting the time.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred while deleting the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -91,6 +98,13 @@ public class TimeController {
         }
         if (createTimeDTO.getScheduleId() == null) {
             throw new IllegalArgumentException("Schedule ID is required.");
+        }
+        //check if the time is in "HH:mm:ss" format
+        try {
+            LocalTime parsedTime = LocalTime.parse(createTimeDTO.getTime());
+            // The time is in a valid format
+        } catch (DateTimeParseException ex) {
+            throw new IllegalArgumentException("Invalid time format. Please use the format 'HH:mm:ss'.");
         }
         try {
             ScheduleDTO schedule = scheduleService.getScheduleById(createTimeDTO.getScheduleId());
