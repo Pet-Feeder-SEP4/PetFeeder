@@ -42,7 +42,7 @@ public class PetFeederServiceImpl implements PetFeederService{
 
     @Override
     public PetFeeder getPetFeederById(Long petFeederId) {
-        return petFeederRepository.findById(petFeederId).orElseThrow(() -> new NotFoundException("Pet not found with ID: " + petFeederId));
+        return petFeederRepository.findById(petFeederId).orElseThrow(() -> new NotFoundException("Pet Feeder not found with ID: " + petFeederId));
     }
 
     @Override

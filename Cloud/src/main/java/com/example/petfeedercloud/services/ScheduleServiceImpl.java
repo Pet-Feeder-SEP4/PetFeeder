@@ -34,19 +34,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleDTO> getScheduleByUserId(Long userId) {
+    public List<Schedule> getScheduleByUserId(Long userId) {
         List<Schedule> schedules = scheduleRepository.findByUserId(userId);
-        return schedules.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return schedules;
     }
 
     @Override
-    public List<ScheduleDTO> getScheduleByPetFeederId(Long petFeederId) {
+    public List<Schedule> getScheduleByPetFeederId(Long petFeederId) {
         List<Schedule> schedules = scheduleRepository.findByPetFeederId(petFeederId);
-        return schedules.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return schedules;
     }
 
     @Override
@@ -55,13 +51,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void createSchedule(ScheduleDTO scheduleDTO) {
+    public Schedule createSchedule(ScheduleDTO scheduleDTO) {
         try {
             if (scheduleDTO.getScheduleLabel() == null || scheduleDTO.getScheduleLabel().isEmpty()) {
                 throw new IllegalArgumentException("Please fill out the schedule label.");
             }
             Schedule schedule = convertToEntity(scheduleDTO);
             scheduleRepository.save(schedule);
+            return schedule;
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
