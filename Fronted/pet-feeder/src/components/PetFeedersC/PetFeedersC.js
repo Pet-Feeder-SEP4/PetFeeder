@@ -2,6 +2,7 @@
 import './PetFeedersC.css';
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
+import { Link } from 'react-router-dom';
 
 
 
@@ -46,7 +47,7 @@ const PetFeedersC = () => {
 
                     setUserPetFeeders(response.data); 
                     setLoading (false);
-                    console.log('data:', response.data);
+                   
                     
                 } catch (error) {
                     console.error('Error fetching pet feeders:', error);
@@ -72,7 +73,8 @@ const PetFeedersC = () => {
           <h1 className='myPetsTitle'>Pet Feeders</h1>
           <div className='petfeederlist'>
             {userPetFeeders.map((petfeeder) => (
-              <div key={petfeeder.petFeederId} className="petItem">
+              <Link key={petfeeder.petFeederId} to={`/dashboard/${petfeeder.petFeederId}`} style={{ textDecoration: "none"}}>
+                  <div key={petfeeder.petFeederId} className="petItem">
                 <div className="buttonactions-container">
                   <button className="top-right-button">X</button>
                 </div>
@@ -87,6 +89,8 @@ const PetFeedersC = () => {
                 </div>
                 <button className="bottom-button">Associate pet</button>
               </div>
+              </Link>
+            
             ))}
           </div>
         </div>
