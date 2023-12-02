@@ -52,10 +52,7 @@ const FeedingSchedule = () => {
     }
   };
 
-  useEffect(() => {
-    // Fetch user schedules when the component mounts
-    fetchUserSchedules();
-  }, []);
+
 
   const schedulestyle = {
     fontFamily: 'Poppins, sans-serif',
@@ -120,7 +117,7 @@ const FeedingSchedule = () => {
           <h2 style={schedulestyle}>Your Schedules:</h2>
           <div>
             {schedules.map((schedule) => (
-              <div key={schedule.scheduleId} style={{ marginBottom: '10px', border: '1px solid', borderColor: "#BBB", borderRadius:"4px", padding: '10px', width:"50%", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
+              <div key={schedule.scheduleId} style={{ marginBottom: '10px', border: '1px solid', backgroundColor:"white", borderColor: "#06350D", borderRadius:"4px", padding: '10px', width:"50%", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
                 <div style={{ marginBottom: '10px', flexBasis: "calc(50% - 10px)" }}>
                   {schedule.scheduleLabel}
                 </div>

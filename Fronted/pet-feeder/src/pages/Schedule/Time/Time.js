@@ -47,10 +47,6 @@ const Time = () => {
     }
   };
 
-  useEffect(() => {
-    // Fetch times when the component mounts
-    fetchTimes();
-  }, []);
 
   const inputStyle = {
     fontFamily: 'Poppins, sans-serif',
