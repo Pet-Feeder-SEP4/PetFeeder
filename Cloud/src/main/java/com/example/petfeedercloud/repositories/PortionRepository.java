@@ -9,5 +9,8 @@ import java.util.List;
 
 public interface PortionRepository extends JpaRepository<Portion, Long> {
 
+    @Query("SELECT p FROM Portion p WHERE p.time.timeId = :timeId")
+    List<Portion> getPortionsByTimeId(Long timeId);
+
 
 }

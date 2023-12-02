@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedules") // Replace with your base path
+@RequestMapping("/schedules")
 @RequiredArgsConstructor
 public class ScheduleController {
 
