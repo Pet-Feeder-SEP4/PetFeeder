@@ -43,9 +43,9 @@ const PetFeedersC = () => {
                         },
                     });
                     
-                    setLoading (false);
-                    setUserPetFeeders(userPetFeeders);
+
                     setUserPetFeeders(response.data); 
+                    setLoading (false);
                     console.log('data:', response.data);
                     
                 } catch (error) {
@@ -56,7 +56,7 @@ const PetFeedersC = () => {
 
         fetchPetFeeders();
 
-    }, [userId, token]); 
+    }, [userId, token, userPetFeeders]); 
 
     if (loading) {
         return <div>Loading pet feeders...</div>;
