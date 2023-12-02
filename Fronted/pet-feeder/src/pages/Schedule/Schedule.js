@@ -55,7 +55,7 @@ const FeedingSchedule = () => {
   useEffect(() => {
     // Fetch user schedules when the component mounts
     fetchUserSchedules();
-  }, [userId]);
+  }, []);
 
   const schedulestyle = {
     fontFamily: 'Poppins, sans-serif',
