@@ -56,9 +56,6 @@ public class PetServiceImpl implements PetService {
             UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
             pet.setUser(user);
 
-            Long petFeederId = petDTO.getPetFeederId();
-            pet.setPetFeederId(petFeederId);
-
             petRepository.save(pet);
             return convertToDto(pet);
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
@@ -83,11 +80,9 @@ public class PetServiceImpl implements PetService {
                 existingPet.setBreed(petDTO.getBreed());
 
                 Long userId = petDTO.getUserId();
-                UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+                UserP user = userRepository.findById(userId)
+                        .orElseThrow(() -> new NotFoundException("User not found"));
                 existingPet.setUser(user);
-
-                Long petFeederId = petDTO.getPetFeederId();
-                existingPet.setPetFeederId(petFeederId);
 
                 petRepository.save(existingPet);
             } else {
@@ -99,6 +94,7 @@ public class PetServiceImpl implements PetService {
             throw new RuntimeException("An error occurred while updating the pet");
         }
     }
+
 
 
     @Override
