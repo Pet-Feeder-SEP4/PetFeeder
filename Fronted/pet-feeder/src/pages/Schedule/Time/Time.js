@@ -50,7 +50,7 @@ const Time = () => {
   useEffect(() => {
     // Fetch times when the component mounts
     fetchTimes();
-  }, [scheduleId]);
+  }, []);
 
   const inputStyle = {
     fontFamily: 'Poppins, sans-serif',
