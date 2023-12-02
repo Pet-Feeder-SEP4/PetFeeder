@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.services;
 
+import com.example.petfeedercloud.dtos.GetDTOs.GetTimeDTO;
 import com.example.petfeedercloud.dtos.TimeDTO;
 import com.example.petfeedercloud.models.Portion;
 import com.example.petfeedercloud.models.Schedule;
@@ -41,7 +42,7 @@ public class TimeServiceImpl implements TimeService{
         timeRepository.deleteById(timeId);
     }
     @Override
-    public void createTime(TimeDTO timeDTO) {
+    public GetTimeDTO createTime(TimeDTO timeDTO) {
         Schedule schedule = scheduleRepository.findById(timeDTO.getScheduleId())
                 .orElseThrow(() -> new EntityNotFoundException("Schedule with id " + timeDTO.getScheduleId() + " not found"));
 
@@ -49,7 +50,10 @@ public class TimeServiceImpl implements TimeService{
         time.setSchedule(schedule);
         time.setTimeLabel(timeDTO.getTimeLabel());
         time.setTime(timeDTO.getTime());
-        timeRepository.save(time);
+
+        // Save the time entity and convert to GetTimeDTO
+        Time savedTime = timeRepository.save(time);
+        return convertToGetTimeDTO(savedTime);
     }
 
     @Override
@@ -89,6 +93,14 @@ public class TimeServiceImpl implements TimeService{
         timeDTO.setTimeLabel(time.getTimeLabel());
         timeDTO.setTime(time.getTime());
         return timeDTO;
+    }
+    private GetTimeDTO convertToGetTimeDTO(Time time) {
+        return new GetTimeDTO(
+                time.getTimeId(),
+                time.getSchedule().getScheduleId(),
+                time.getTimeLabel(),
+                time.getTime()
+        );
     }
 }
 

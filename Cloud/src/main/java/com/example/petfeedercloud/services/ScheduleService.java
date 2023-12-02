@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ScheduleService {
     List<Schedule> getScheduleByPetFeederId(Long petFeederId);
+    Schedule activateSchedule(Long scheduleId);
     ScheduleDTO getScheduleById(Long scheduleId);
     List<Schedule> getScheduleByUserId(Long userId);
     void deleteSchedule(Long scheduleId);
