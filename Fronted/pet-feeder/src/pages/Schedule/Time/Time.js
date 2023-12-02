@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../../../components/Navbar/Navbar';
 import axios from '../../../api/axios';
 import { useParams } from 'react-router-dom';
@@ -36,6 +36,8 @@ const Time = () => {
     }
   };
 
+
+
   const fetchTimes = async () => {
     try {
       const response = await axios.get(`/time/schedule/${scheduleId}`, {
@@ -47,7 +49,12 @@ const Time = () => {
     }
   };
 
+useEffect(()=>{
+    fetchTimes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
+  
   const inputStyle = {
     fontFamily: 'Poppins, sans-serif',
     fontSize: '16px',

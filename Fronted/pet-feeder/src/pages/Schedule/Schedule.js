@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/Navbar/Navbar';
 import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
@@ -52,6 +52,10 @@ const FeedingSchedule = () => {
     }
   };
 
+  useEffect(()=>{
+    fetchUserSchedules();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
 
   const schedulestyle = {
