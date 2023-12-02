@@ -42,7 +42,7 @@ public class PetFeederServiceImpl implements PetFeederService{
 
     @Override
     public PetFeeder getPetFeederById(Long petFeederId) {
-        return petFeederRepository.findById(petFeederId).orElseThrow(() -> new NotFoundException("Pet not found with ID: " + petFeederId));
+        return petFeederRepository.findById(petFeederId).orElseThrow(() -> new NotFoundException("Pet Feeder not found with ID: " + petFeederId));
     }
 
     @Override
@@ -107,6 +107,49 @@ public class PetFeederServiceImpl implements PetFeederService{
         return petFeederRepository.findAllByUserUserId(userId).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void setActivePetFeeder(Long userId, Long petId, Long petFeederId) {
+        try {
+            UserP user = userRepository.findById(userId)
+                    .orElseThrow(() -> new NotFoundException("User not found"));
+
+            Pet pet = petRepository.findById(petId)
+                    .orElseThrow(() -> new NotFoundException("Pet not found"));
+
+            PetFeeder petFeeder = petFeederRepository.findById(petFeederId)
+                    .orElseThrow(() -> new NotFoundException("Pet feeder not found"));
+
+            petFeeder.setUser(user);
+            petFeeder.setPet(pet);
+            petFeeder.setActive(true);
+
+            petFeederRepository.save(petFeeder);
+        } catch (NotFoundException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RuntimeException("An error occurred while setting the pet feeder as active: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void deactivatePetFeeder(Long userId, Long petId, Long petFeederId) {
+        Optional<PetFeeder> optionalPetFeeder = petFeederRepository.findById(petFeederId);
+
+        if (optionalPetFeeder.isPresent()) {
+            PetFeeder petFeeder = optionalPetFeeder.get();
+
+            // Check if the pet feeder belongs to the specified user and pet
+            if (petFeeder.getUser().getUserId().equals(userId) && petFeeder.getPet().getPetId().equals(petId)) {
+                petFeeder.setActive(false);
+                petFeederRepository.save(petFeeder);
+            } else {
+                throw new NotFoundException("Pet feeder not found for the specified user and pet");
+            }
+        } else {
+            throw new NotFoundException("Pet feeder not found with ID: " + petFeederId);
+        }
     }
 
     private PetFeederDTO convertToDto(PetFeeder pf) {

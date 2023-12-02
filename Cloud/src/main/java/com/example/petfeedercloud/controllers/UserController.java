@@ -15,10 +15,7 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
-
-
     @Operation(summary = "Get alll users", description = "This will return all users in the system")
     @GetMapping("/all")
     public  ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -26,7 +23,6 @@ public class UserController {
             List<UserDTO> users = userService.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception e) {
-            // Handle the exception, you can log it or customize the error response
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
