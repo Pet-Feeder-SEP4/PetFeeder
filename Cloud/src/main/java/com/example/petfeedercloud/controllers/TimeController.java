@@ -1,10 +1,13 @@
 package com.example.petfeedercloud.controllers;
 
 
+import com.example.petfeedercloud.dtos.GetDTOs.GetTimeDTO;
 import com.example.petfeedercloud.dtos.ScheduleDTO;
 import com.example.petfeedercloud.dtos.TimeDTO;
+import com.example.petfeedercloud.models.Time;
 import com.example.petfeedercloud.services.ScheduleService;
 import com.example.petfeedercloud.services.TimeService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,7 @@ public class TimeController {
     private final TimeService timeService;
     private final ScheduleService scheduleService;
 
+    @Operation(summary = "Get time by id", description = "Returns the time by id")
     @GetMapping("/{timeId}")
     public ResponseEntity<?> getTimeById(@PathVariable Long timeId) {
         try {
@@ -34,7 +38,7 @@ public class TimeController {
             return new ResponseEntity<>("An error occurred while fetching the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @Operation(summary = "Get time by schedule id", description = "Returns a list of time that are in the schedule")
     @GetMapping("/schedule/{scheduleId}")
     public ResponseEntity<?> getTimeByScheduleId(@PathVariable Long scheduleId) {
         try {
@@ -52,20 +56,25 @@ public class TimeController {
     }
 
 
-
-    @PostMapping("/{scheduleId}")
-    public ResponseEntity<?> createTime( @RequestBody TimeDTO timeDTO) {
+    @Operation(summary = "Creates one time for a schedule", description = "Returns the time created")
+    @PostMapping("/{timeId}")
+    public ResponseEntity<?> createTime(@RequestBody TimeDTO timeDTO) {
         try {
             // Validate the input
             validateCreateTimeDTO(timeDTO);
-            timeService.createTime(timeDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+
+            // Create the time and get the created GetTimeDTO
+            GetTimeDTO createdTime = timeService.createTime(timeDTO);
+
+            // Return the created GetTimeDTO in the response body
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTime);
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while creating the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("An error occurred while creating the time. " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @Operation(summary = "Add times in bulk to a petfeeder", description = "Returns the times created")
     @PostMapping("/bulk")
     public ResponseEntity<?> createTimes(@RequestBody List<TimeDTO> timeDTOList) {
         try {
@@ -80,6 +89,7 @@ public class TimeController {
             return new ResponseEntity<>("An error occurred while creating the times. " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @Operation(summary = "Update the time", description = "Returns the time updated")
     @PutMapping("/{timeId}")
     public ResponseEntity<?> updateTime(@PathVariable Long timeId, @RequestBody TimeDTO timeDTO) {
         try {
@@ -92,7 +102,7 @@ public class TimeController {
             return new ResponseEntity<>("An error occurred while updating the time. "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @Operation(summary = "Delete the time", description = "No return")
     @DeleteMapping("/{timeId}")
     public ResponseEntity<?> deleteTime(@PathVariable Long timeId) {
         try {
@@ -128,5 +138,13 @@ public class TimeController {
             throw new NotFoundException("Schedule not found with ID: " + createTimeDTO.getScheduleId());
         }
 
+    }
+    private GetTimeDTO convertToGetTimeDTO(Time time) {
+        return new GetTimeDTO(
+                time.getTimeId(),
+                time.getSchedule().getScheduleId(),
+                time.getTimeLabel(),
+                time.getTime()
+        );
     }
 }

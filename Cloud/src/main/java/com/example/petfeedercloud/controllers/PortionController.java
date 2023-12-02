@@ -4,6 +4,7 @@ import com.example.petfeedercloud.dtos.GetDTOs.GetPortionDTO;
 import com.example.petfeedercloud.dtos.PortionDTO;
 import com.example.petfeedercloud.models.Portion;
 import com.example.petfeedercloud.services.*;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class PortionController {
     private final TimeService timeService;
     private final PortionService portionService;
 
+    @Operation(summary = "Get portions by id", description = "Returns portion by id")
     @GetMapping("/{portionId}")
     public ResponseEntity<?> getPortionById(@PathVariable Long portionId) {
         try {
@@ -31,26 +33,18 @@ public class PortionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+    @Operation(summary = "Get portions by time", description = "Returns portion from the time")
     @GetMapping("/times/{timeId}")
-    public ResponseEntity<List<GetPortionDTO>> getPortionsByTime(@PathVariable Long timeId) {
+    public ResponseEntity<?> getPortionByTime(@PathVariable Long timeId) {
         try {
-            List<Portion> portions = portionService.getPortionsByTime(timeId);
-            List<GetPortionDTO> portionDTOs = portions.stream()
-                    .map(portion -> new GetPortionDTO(
-                            portion.getPortionId(),
-                            portion.getLabel(),
-                            portion.getPortionSize(),
-                            portion.getTime().getTimeId()
-                    ))
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(portionDTOs);
+            Portion portion = portionService.getPortionsByTime(timeId);
+            GetPortionDTO portionDTO = new GetPortionDTO(portion.getPortionId(),portion.getLabel(),portion.getPortionSize(),timeId);
+            return ResponseEntity.ok(portionDTO);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+    @Operation(summary = "Create portion", description = "Returns the portion created")
     @PostMapping
     public ResponseEntity<GetPortionDTO> createPortion(@RequestBody PortionDTO portionDTO) {
         try {
@@ -68,6 +62,7 @@ public class PortionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+    @Operation(summary = "Update portions", description = "Returns the new updated portion")
     @PutMapping("/{portionId}")
     public ResponseEntity<?> updatePortion(@PathVariable Long portionId, @RequestBody PortionDTO portionDTO) {
         try {
@@ -79,6 +74,7 @@ public class PortionController {
         }
     }
 
+    @Operation(summary = "Deletes the portion", description = "Returns a message of success")
     @DeleteMapping("/{portionId}")
     public ResponseEntity<?> deletePortion(@PathVariable Long portionId) {
         try {

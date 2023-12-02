@@ -23,7 +23,7 @@ public class PortionServiceImpl implements PortionService{
     }
 
     @Override
-    public List<Portion> getPortionsByTime(Long timeId) {
+    public Portion getPortionsByTime(Long timeId) {
         // Implement logic to fetch portions by time
         return portionRepository.getPortionsByTimeId(timeId);
     }

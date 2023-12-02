@@ -11,7 +11,7 @@ public class Portion {
     private Long portionId;
     private String Label;
     private int portionSize;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "timeId")
     private Time time;
 
