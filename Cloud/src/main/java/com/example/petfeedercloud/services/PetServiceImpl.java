@@ -56,9 +56,6 @@ public class PetServiceImpl implements PetService {
             UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
             pet.setUser(user);
 
-            Long petFeederId = petDTO.getPetFeederId();
-            pet.setPetFeederId(petFeederId);
-
             petRepository.save(pet);
             return convertToDto(pet);
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
@@ -83,11 +80,9 @@ public class PetServiceImpl implements PetService {
                 existingPet.setBreed(petDTO.getBreed());
 
                 Long userId = petDTO.getUserId();
-                UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+                UserP user = userRepository.findById(userId)
+                        .orElseThrow(() -> new NotFoundException("User not found"));
                 existingPet.setUser(user);
-
-                Long petFeederId = petDTO.getPetFeederId();
-                existingPet.setPetFeederId(petFeederId);
 
                 petRepository.save(existingPet);
             } else {
@@ -101,6 +96,7 @@ public class PetServiceImpl implements PetService {
     }
 
 
+
     @Override
     public void deletePet(Long petId) {
         Optional<Pet> petOptional = petRepository.findById(petId);
@@ -110,10 +106,15 @@ public class PetServiceImpl implements PetService {
             throw new NotFoundException("Pet not found with ID: " + petId);
         }
     }
-    @Override
     public List<PetDTO> getAllPetsByUser(Long userId) {
-        return petRepository.findAllByUserUserId(userId).stream()
-                .map(this::convertToDto)
+        List<Pet> pets = petRepository.findAllByUserUserId(userId);
+
+        if (pets.isEmpty()) {
+            throw new NotFoundException("No pets found for user ID: " + userId);
+        }
+
+        return pets.stream()
+                .map(this::convertToDtoWithId)
                 .collect(Collectors.toList());
     }
 

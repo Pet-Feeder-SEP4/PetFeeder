@@ -24,8 +24,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final UserRepository userRepository;
     private final PetFeederRepository petFeederRepository;
 
-
-
     @Override
     public ScheduleDTO getScheduleById(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
@@ -34,34 +32,54 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleDTO> getScheduleByUserId(Long userId) {
+    public List<Schedule> getScheduleByUserId(Long userId) {
         List<Schedule> schedules = scheduleRepository.findByUserId(userId);
-        return schedules.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return schedules;
     }
 
     @Override
-    public List<ScheduleDTO> getScheduleByPetFeederId(Long petFeederId) {
+    public List<Schedule> getScheduleByPetFeederId(Long petFeederId) {
         List<Schedule> schedules = scheduleRepository.findByPetFeederId(petFeederId);
-        return schedules.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return schedules;
     }
 
+    @Override
+    public Schedule activateSchedule(Long scheduleId) {
+        Optional<Schedule> activatedScheduleOptional = scheduleRepository.findById(scheduleId);
+
+        if (activatedScheduleOptional.isPresent()) {
+            Schedule activatedSchedule = activatedScheduleOptional.get();
+            Long petFeederId = activatedSchedule.getPetFeeder().getPetFeederId();
+            // deactivate all other schedules
+            List<Schedule> otherSchedules = scheduleRepository.findByPetFeederId(petFeederId);
+            for (Schedule otherSchedule : otherSchedules) {
+                if (!otherSchedule.getScheduleId().equals(scheduleId)) {
+                    otherSchedule.setActive(false);
+                    scheduleRepository.save(otherSchedule);
+                }
+            }
+            // Activate the selected schedule
+            activatedSchedule.setActive(true);
+            scheduleRepository.save(activatedSchedule);
+            return activatedSchedule;
+        } else {
+            throw new NotFoundException("Schedule not found with ID: " + scheduleId);
+        }
+    }
     @Override
     public void deleteSchedule(Long scheduleId) {
         scheduleRepository.deleteById(scheduleId);
     }
 
     @Override
-    public void createSchedule(ScheduleDTO scheduleDTO) {
+    public Schedule createSchedule(ScheduleDTO scheduleDTO) {
         try {
             if (scheduleDTO.getScheduleLabel() == null || scheduleDTO.getScheduleLabel().isEmpty()) {
                 throw new IllegalArgumentException("Please fill out the schedule label.");
             }
             Schedule schedule = convertToEntity(scheduleDTO);
             scheduleRepository.save(schedule);
+            return schedule;
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -118,6 +136,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = new Schedule();
         schedule.setScheduleLabel(scheduleDTO.getScheduleLabel());
         schedule.setPetFeeder(petFeeder);
+        schedule.setActive(false);
         schedule.setUser(user);
         return schedule;
     }
