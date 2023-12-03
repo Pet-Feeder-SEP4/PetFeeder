@@ -77,6 +77,13 @@ public class ScheduleServiceImpl implements ScheduleService {
             if (scheduleDTO.getScheduleLabel() == null || scheduleDTO.getScheduleLabel().isEmpty()) {
                 throw new IllegalArgumentException("Please fill out the schedule label.");
             }
+            //this will make the first schedule that a user creates true adn the rest false
+            List<Schedule> schedulesCheck= getScheduleByPetFeederId(scheduleDTO.getPetFeederId());
+            if(schedulesCheck==null){
+                scheduleDTO.setActive(true);
+            }else{
+                scheduleDTO.setActive(false);
+            }
             Schedule schedule = convertToEntity(scheduleDTO);
             scheduleRepository.save(schedule);
             return schedule;
@@ -122,7 +129,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private ScheduleDTO convertToDTO(Schedule schedule) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         scheduleDTO.setScheduleLabel(schedule.getScheduleLabel());
-
+        scheduleDTO.setActive(schedule.getActive());
         if(schedule.getUser()!=null)
             scheduleDTO.setUserId(schedule.getUser().getUserId());
         if(schedule.getPetFeeder()!=null)
@@ -136,7 +143,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = new Schedule();
         schedule.setScheduleLabel(scheduleDTO.getScheduleLabel());
         schedule.setPetFeeder(petFeeder);
-        schedule.setActive(false);
+        schedule.setActive(scheduleDTO.getActive());
         schedule.setUser(user);
         return schedule;
     }
