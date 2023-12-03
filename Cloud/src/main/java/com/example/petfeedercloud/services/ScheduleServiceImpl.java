@@ -77,23 +77,27 @@ public class ScheduleServiceImpl implements ScheduleService {
             if (scheduleDTO.getScheduleLabel() == null || scheduleDTO.getScheduleLabel().isEmpty()) {
                 throw new IllegalArgumentException("Please fill out the schedule label.");
             }
-            //this will make the first schedule that a user creates true adn the rest false
-            List<Schedule> schedulesCheck= getScheduleByPetFeederId(scheduleDTO.getPetFeederId());
-            if(schedulesCheck==null){
+
+            // Retrieve existing schedules for the petFeederId
+            List<Schedule> existingSchedules = scheduleRepository.findByPetFeederId(scheduleDTO.getPetFeederId());
+
+            if (existingSchedules.isEmpty()) {
+                // No existing schedules, set active to true
                 scheduleDTO.setActive(true);
-            }else{
+            } else {
+                // Existing schedules found, set active to false
                 scheduleDTO.setActive(false);
             }
+            System.out.println("herere->>>"+existingSchedules);
             Schedule schedule = convertToEntity(scheduleDTO);
             scheduleRepository.save(schedule);
             return schedule;
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new RuntimeException("An error occurred while creating the schedule =>" +ex);
+            throw new RuntimeException("An error occurred while creating the schedule =>" + ex);
         }
     }
-
 
     @Override
     public ScheduleDTO updateSchedule(Long scheduleId, ScheduleDTO scheduleDTO) {
