@@ -19,3 +19,9 @@ void pc_comm_send_string_blocking(char * string){
 void pc_comm_send_array_nonBlocking(uint8_t * data, uint16_t length){
     uart_send_array_nonBlocking(USART_PC_COMM, data,  length);
 }
+
+void pc_comm_send_int_blocking(int value) {
+    char buffer[12];  // Assuming a 32-bit integer (including sign and null terminator)
+    sprintf(buffer, "%d", value);
+    pc_comm_send_string_blocking(buffer);
+}
