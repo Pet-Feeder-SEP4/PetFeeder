@@ -15,8 +15,24 @@
   }
 
   .buttonsinMain {
-    z-index: 2;
+    font-family: 'Poppins', sans-serif;
     position: absolute;
-   
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the left position as needed */
+    z-index: 2;
+    margin-left: auto;
+    justify-content: space-between; /* Ensure buttons appear on top of other content */
   }
+  
+  
+  #btnAdd {
+   
+    margin-bottom: 10px;
+    margin-right: 10px;
+    background-color: #AAC88F;
+    color:#06350D ;
+    border:none ;
 
+    /* Add any additional styling as needed */
+  }
+  
