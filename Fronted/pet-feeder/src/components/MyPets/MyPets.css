@@ -2,6 +2,8 @@
     font-family: 'Poppins', sans-serif;
     color:#fff;
     font-size: 30px;
+    width:200px;
+    margin-bottom: 30px;
 }
 
 .listOfPets {
@@ -16,12 +18,14 @@
     padding-left: 40px;
     padding-top: 150px;
     padding-bottom: 40px;
-    width: fit-content;
-    height: max-content;
+    
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     background-color: #06350D;
+
+
    
 }
 
@@ -30,6 +34,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+    width: 420px;
     
 
 }

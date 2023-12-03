@@ -54,11 +54,11 @@
   padding: 0;
 }
 
-.petItem {
+.petfeederItem {
   margin: 40px; 
 }
 
-.petItem {
+.petfeederItem {
   height: 285px;
   width: 270px;
   min-height: 200px;
@@ -75,18 +75,18 @@
   border: 2px solid #ccc; 
 }
 
-.petItem h3 {
+.petfeederItem h3 {
   margin: 1rem 0rem;
 }
 
-.petItem .subtitle-container {
+.petfeederItem .subtitle-container {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.petItem .status-indicator {
+.petfeederItem .status-indicator {
   width: 10px;
   height: 10px;
   margin-top: -7px;
@@ -94,22 +94,22 @@
   margin-right: 8px;
 }
 
-.petItem .online {
+.petfeederItem .online {
   background-color: rgb(61, 142, 61);
 }
 
-.petItem .offline {
+.petfeederItem .offline {
   background-color: rgb(207, 67, 67);
 }
 
-.petItem .button-container {
+.petfeederItem .button-container {
   margin-top: auto;
   display: flex;
   justify-content: center; 
   align-items: center;
 }
 
-.petItem .bottom-button {
+.petfeederItem .bottom-button {
   margin-top: 10px;
   background-color: #06350D;
   color: white;
@@ -120,24 +120,24 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
 
-.petItem img {
+.petfeederItem img {
   margin-bottom: 12px;
 }
-.petItem .buttonactions-container {
+.petfeederItem .buttonactions-container {
   margin-top: auto;
   display: flex;
   justify-content: center; 
   align-items: center; 
 }
 
-.petItem .buttonactions-container {
+.petfeederItem .buttonactions-container {
   margin-top: auto;
   display: flex;
   justify-content: center;
   align-self: flex-end;
 }
 
-.petItem .top-right-button {
+.petfeederItem .top-right-button {
   width: 21px;
   height: 23px;
   border-radius: 8px;
@@ -150,7 +150,7 @@
   justify-content: center;
 }
 
-.petItem .top-right-button span {
+.petfeederItem .top-right-button span {
   display: inline-flex;
   align-items: center;
   height: 100%;
