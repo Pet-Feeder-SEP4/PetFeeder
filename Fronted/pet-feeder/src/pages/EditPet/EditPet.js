@@ -5,6 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import './EditPet.css'
 import useVerifyToken from '../../hooks/useVerifyToken';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const EditPet = () => {
     // check user token
@@ -12,8 +13,19 @@ const EditPet = () => {
     const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
-    const petId = localStorage.getItem('petId'); //figure out how to get this petID from main page and that
+    const { petId } = useParams();
 
+    // State to store form data
+    const [formData, setFormData] = useState({
+        petId: petId,
+        userId: userId,
+        petFeederId: null,
+        name: '',
+        birthdate: '',
+        weight: 0,
+        breed: '',
+    });
+    
     useEffect(() => {
         if (localStorage.getItem('token') != null) {
             console.log("its valid bro");
@@ -54,16 +66,7 @@ const EditPet = () => {
         fetchPetDetails();
     }, [isTokenValid, navigate, userId, token, petId]);
 
-    // State to store form data
-    const [formData, setFormData] = useState({
-        petId: petId,
-        userId: userId,
-        petFeederId: null,
-        name: '',
-        birthdate: '',
-        weight: 0,
-        breed: '',
-    });
+
 
     // State to store pet name
     const [petName, setPetName] = useState('');
