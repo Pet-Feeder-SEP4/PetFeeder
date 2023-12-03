@@ -7,22 +7,28 @@
 #include "servo.h"
 #include "buttons.h"
 #include "wifi.h"
-#include "sensors.h"
+#include "Sensors/sensors.h"
+#include "servo360.h"
+#include "HandleData/HandleData.h"
 
 int main() {
     pc_comm_init(9600, NULL);
     wifi_init();
     sensor_init();
     // Use a private connection
-    wifi_command_join_AP("mamalo","Iker0905");
+    wifi_command_join_AP("Redmi 9C NFC","santi32411");
     // Connect to backend server
-    wifi_command_create_TCP_connection("172.20.10.2", 24, NULL, NULL);
+    wifi_command_create_TCP_connection("192.168.43.83", 23, wifi_data_callback , received_message_buffer_static_pointer);
     
     while (1) {
-        sensor_get_data();
+        //sensor_get_data();
         //String with specified data
         //Formated data
-        wifi_command_TCP_transmit(100,"hello");
+
+        rotate(-50,10);
+
+        //wifi_command_TCP_transmit(100,"hello");
+        
         // Delay for 30 minutes 
         //sleep(30 * 60); // Sleep for 30 minutes
         _delay_ms(5000);
