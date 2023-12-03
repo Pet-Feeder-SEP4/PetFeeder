@@ -1,10 +1,10 @@
 import React from 'react';
-import MyPets from '../../components/MyPets/MyPets';
+import PetFeedersC from '../../components/PetFeedersC/PetFeedersC';import MyPets from '../../components/MyPets/MyPets';
 
 const MainPage = () => {
     return (
       <>
-      <MyPets/>
+      <PetFeedersC/><MyPets/>
       </>    
     );
   };
