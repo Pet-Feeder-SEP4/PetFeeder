@@ -77,16 +77,27 @@ public class ScheduleServiceImpl implements ScheduleService {
             if (scheduleDTO.getScheduleLabel() == null || scheduleDTO.getScheduleLabel().isEmpty()) {
                 throw new IllegalArgumentException("Please fill out the schedule label.");
             }
+
+            // Retrieve existing schedules for the petFeederId
+            List<Schedule> existingSchedules = scheduleRepository.findByPetFeederId(scheduleDTO.getPetFeederId());
+
+            if (existingSchedules.isEmpty()) {
+                // No existing schedules, set active to true
+                scheduleDTO.setActive(true);
+            } else {
+                // Existing schedules found, set active to false
+                scheduleDTO.setActive(false);
+            }
+            System.out.println("herere->>>"+existingSchedules);
             Schedule schedule = convertToEntity(scheduleDTO);
             scheduleRepository.save(schedule);
             return schedule;
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new RuntimeException("An error occurred while creating the schedule =>" +ex);
+            throw new RuntimeException("An error occurred while creating the schedule =>" + ex);
         }
     }
-
 
     @Override
     public ScheduleDTO updateSchedule(Long scheduleId, ScheduleDTO scheduleDTO) {
@@ -122,7 +133,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private ScheduleDTO convertToDTO(Schedule schedule) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         scheduleDTO.setScheduleLabel(schedule.getScheduleLabel());
-
+        scheduleDTO.setActive(schedule.getActive());
         if(schedule.getUser()!=null)
             scheduleDTO.setUserId(schedule.getUser().getUserId());
         if(schedule.getPetFeeder()!=null)
@@ -136,7 +147,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = new Schedule();
         schedule.setScheduleLabel(scheduleDTO.getScheduleLabel());
         schedule.setPetFeeder(petFeeder);
-        schedule.setActive(false);
+        schedule.setActive(scheduleDTO.getActive());
         schedule.setUser(user);
         return schedule;
     }

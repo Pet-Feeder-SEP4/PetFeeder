@@ -8,8 +8,17 @@ import jakarta.persistence.ManyToOne;
 public class ScheduleDTO {
     private String scheduleLabel;
     private Long userId;
-
     private Long petFeederId;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    private Boolean active;
 
     public Long getUserId() {
         return userId;

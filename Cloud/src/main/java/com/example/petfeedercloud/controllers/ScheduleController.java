@@ -39,7 +39,7 @@ public class ScheduleController {
             // Create a list of simplified DTOs
             List<GetScheduleDTO> simplifiedSchedules = new ArrayList<>();
             for (Schedule schedule : schedules) {
-                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(), schedule.getUser().getUserId(),petFeederId));
+                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(), schedule.getUser().getUserId(),petFeederId,schedule.getActive()));
             }
 
             return new ResponseEntity<>(simplifiedSchedules, HttpStatus.OK);
@@ -55,7 +55,7 @@ public class ScheduleController {
         }
         try {
             ScheduleDTO schedule = scheduleService.getScheduleById(scheduleId);
-            GetScheduleDTO simplifiedSchedule = new GetScheduleDTO(scheduleId, schedule.getScheduleLabel(), schedule.getUserId(),schedule.getPetFeederId());
+            GetScheduleDTO simplifiedSchedule = new GetScheduleDTO(scheduleId, schedule.getScheduleLabel(), schedule.getUserId(),schedule.getPetFeederId(),schedule.getActive());
             return new ResponseEntity<>(simplifiedSchedule, HttpStatus.OK);
         } catch (RuntimeException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -78,7 +78,7 @@ public class ScheduleController {
             // Create a list of simplified DTOs
             List<GetScheduleDTO> simplifiedSchedules = new ArrayList<>();
             for (Schedule schedule : schedules) {
-                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(),schedule.getUser().getUserId(),schedule.getPetFeeder().getPetFeederId()));
+                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(),schedule.getUser().getUserId(),schedule.getPetFeeder().getPetFeederId(),schedule.getActive()));
             }
 
             return new ResponseEntity<>(simplifiedSchedules, HttpStatus.OK);
@@ -109,7 +109,8 @@ public class ScheduleController {
                     createdSchedule.getScheduleId(),
                     createdSchedule.getScheduleLabel(),
                     createdSchedule.getUser().getUserId(),
-                    createdSchedule.getPetFeeder().getPetFeederId()
+                    createdSchedule.getPetFeeder().getPetFeederId(),
+                    createdSchedule.getActive()
             );
 
             return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
@@ -128,7 +129,8 @@ public class ScheduleController {
                     activatedSchedule.getScheduleId(),
                     activatedSchedule.getScheduleLabel(),
                     activatedSchedule.getUser().getUserId(),
-                    activatedSchedule.getPetFeeder().getPetFeederId()
+                    activatedSchedule.getPetFeeder().getPetFeederId(),
+                    activatedSchedule.getActive()
             );
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
         } catch (NotFoundException ex) {
