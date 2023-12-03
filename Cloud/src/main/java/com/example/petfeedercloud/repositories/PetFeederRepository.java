@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface PetFeederRepository extends JpaRepository<PetFeeder, Long> {
+    @Query("SELECT p FROM PetFeeder p WHERE p.user.userId = :userId")
     List<PetFeeder> findAllByUserUserId(Long userId);
 
     @Query("SELECT p FROM PetFeeder p WHERE p.petFeederId = :petFeederId")
