@@ -10,6 +10,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import PetFeedersC from './components/PetFeedersC/PetFeedersC';
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Time from "./pages/Schedule/Time/Time"
+import SideBar from "./components/SideBar/SideBar";
 
 
 
@@ -26,7 +27,7 @@ function App() {
       <Route path="/PetFeedersC" element={<PetFeedersC />} />
       <Route path="/dashboard/:petFeederId" element={<Dashboard />} />
       <Route path="/add-time/:scheduleId/:scheduleLabel" element={<Time />} />
-
+      <Route path="/SideBar" element={<SideBar />} />
       </Routes>
     </Router>
   );

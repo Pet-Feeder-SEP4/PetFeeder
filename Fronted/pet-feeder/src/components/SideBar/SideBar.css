@@ -1,0 +1,18 @@
+.list-group-item{
+ color:#06350D;
+ font-family: 'Poppins', sans-serif;
+
+}
+.list-group-item:hover {
+    background-color: #e9ebec; /* Change background color on hover */
+    color: #333; /* Change text color on hover */
+  }
+
+  .sidebar {
+    width: 8vw; 
+    height: 100vh; 
+}
+
+.list-group{
+    outline: none;
+}
