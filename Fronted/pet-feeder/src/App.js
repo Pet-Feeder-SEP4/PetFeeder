@@ -11,8 +11,8 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Time from "./pages/Schedule/Time/Time"
 import EditPet from "./pages/EditPet/EditPet";
 import PetFeedersC from './components/PetFeedersC/PetFeedersC';
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Time from "./pages/Schedule/Time/Time"
+
+
 
 
 
