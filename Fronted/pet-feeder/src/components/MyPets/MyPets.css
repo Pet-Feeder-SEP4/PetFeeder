@@ -14,6 +14,10 @@
     
 }
 
+.Pet-column {
+    width: 100%; /* Ensure the column takes up the full width */
+  }
+
 .petListContainer {
     padding-left: 40px;
     padding-top: 150px;
@@ -24,6 +28,7 @@
     flex-direction: column;
     align-items: flex-start;
     background-color: #06350D;
+    width: 100%;
 
 
    
@@ -60,7 +65,7 @@
 }
 
 .btnEditPet:hover {
-    background-color: #AAC88F;
+    background-color: rgb(128, 168, 134);
 }
 
 
@@ -69,12 +74,12 @@
 }
 
 .btnEditPet {
-    background-color: #095715;
+    background-color: #AAC88F;
    
 }
 
 .btnRemovePet {
-    background-color: #095715;
+    background-color: #AAC88F;
     
 }
 

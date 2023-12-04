@@ -1,18 +1,11 @@
 .MainContainer {
-    display: flex;
+    
     justify-content: space-between;
     position: relative;
     
   }
   
-  .Feeder-column{
-    width: 70vm;
-  }
 
-  .Pet-column{
-    width:30vm;
-   
-  }
 
   .buttonsinMain {
     font-family: 'Poppins', sans-serif;

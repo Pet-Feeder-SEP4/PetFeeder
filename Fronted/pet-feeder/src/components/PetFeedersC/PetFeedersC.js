@@ -1,12 +1,15 @@
-
 import './PetFeedersC.css';
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap'; // Import Bootstrap grid components
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBone } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'react-bootstrap';
 
 
-
-//behaviour when it doesnt find the data
 
 const NotFound = () => (
   <div>
@@ -19,21 +22,16 @@ const NotFound = () => (
       alt="Dog"
       className="dogphoto"
     />
-
   </div>
 );
 
-
 const PetFeedersC = () => {
-
-
   const [userPetFeeders, setUserPetFeeders] = useState([]);
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchPetFeeders = async () => {
       if (userId && token) {
         try {
@@ -44,11 +42,8 @@ const PetFeedersC = () => {
             },
           });
 
-
           setUserPetFeeders(response.data);
           setLoading(false);
-
-
         } catch (error) {
           console.error('Error fetching pet feeders:', error);
         }
@@ -56,7 +51,6 @@ const PetFeedersC = () => {
     };
 
     fetchPetFeeders();
-
   }, [userId, token, userPetFeeders]);
 
   if (loading) {
@@ -67,32 +61,32 @@ const PetFeedersC = () => {
     return <NotFound />;
   }
 
-
   return (
     <div className='petFeederContainer'>
       <h1 className='myPetsfeedersTitle'>Pet Feeders</h1>
-      <div className='petfeederlist'>
+      <Row className='petfeederlist'>
         {userPetFeeders.map((petfeeder) => (
-          <Link key={petfeeder.petFeederId} to={`/dashboard/${petfeeder.petFeederId}`} style={{ textDecoration: "none" }}>
-            <div key={petfeeder.petFeederId} className="petfeederItem">
-              <div className="buttonactions-container">
-                <button className="top-right-button">X</button>
+          <Col key={petfeeder.petFeederId} sm={6} md={4} lg={4} >
+            <Link to={`/dashboard/${petfeeder.petFeederId}`} style={{ textDecoration: "none" }}>
+              <div className="text-center shadow-lg" id="petfeederItem">
+                <div className="buttonactions-container">
+                  <button className="btn" id="top-remove-button"> <FontAwesomeIcon icon={faXmark} style={{color: "#06350D", fontSize: "18px", alignItems: "center", justifyContent: "center" }}  /></button>
+                </div>
+                <h3 className='petFeederLabel'>{petfeeder.petFeederLabel}</h3>
+                <div className="subtitle-container">
+                  <div className={`status-indicator ${petfeeder.active ? 'online' : 'offline'}`}></div>
+                  <h6 className="subtitle">{petfeeder.active ? 'Online' : 'Offline'}</h6>
+                </div>
+                <div>
+            
+                <FontAwesomeIcon icon={faBone} style={{color: "#06350D", fontSize: "32px" }}  />
+                </div>
+                <Button className="btn"  id="bottom-button" ><span className="text-lg">Associate Pet</span></Button>
               </div>
-              <h3>{petfeeder.petFeederLabel}</h3>
-              <div className="subtitle-container">
-                <div className={`status-indicator ${petfeeder.active ? 'online' : 'offline'}`}></div>
-                <h6 className="subtitle">{petfeeder.active ? 'Online' : 'Offline'}</h6>
-              </div>
-              <div className="info-boxes-img-container">
-
-                <img src="\assets\feeder.png" alt="" />
-              </div>
-              <button className="bottom-button">Associate pet</button>
-            </div>
-          </Link>
-
+            </Link>
+          </Col>
         ))}
-      </div>
+      </Row>
     </div>
   );
 };

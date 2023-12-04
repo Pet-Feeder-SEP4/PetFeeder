@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import './MyPets.css';
 import { Link } from 'react-router-dom';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const MyPets = () => {
   const [userPets, setUserPets] = useState([]);
@@ -66,14 +70,14 @@ const MyPets = () => {
               <div className="btn-group-managepets">
                 <Link to={`/edit-pet/${pet?.petId}`}>  {/*edit the link to EditPet */}
                   <button type="button" className="btnEditPet">
-                    Edit
+                  <FontAwesomeIcon icon={faPenToSquare} style={{color: "#06350D", fontSize: "12px" }}  />
                   </button>
                 </Link>
                 <button
                   type="button"
                   className="btnRemovePet"
                   onClick={() => handleRemove(pet?.petId)}>
-                  Remove
+                  <FontAwesomeIcon icon={faXmark} style={{color: "#06350D", fontSize: "12px" }}  />
                 </button>
               </div>
             </li>

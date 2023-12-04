@@ -13,7 +13,7 @@ const MainPage = () => {
         {/* Buttons with absolute positioning */}
         <div className="buttonsinMain">
           <Link to={`/putActivationPageLink/`}>
-            <button type="button"  className="btn btn-success" id="btnAdd">
+            <button type="button"  className="btn btn-success " id="btnAdd">
               + Pet Feeder
             </button>
           </Link>
@@ -25,10 +25,10 @@ const MainPage = () => {
         </div>
 
         <div className="row">
-          <div className="Feeder-column col-lg-9">
+          <div className="Feeder-column col-8">
             <PetFeedersC />
           </div>
-          <div className="Pet-column col-lg-3">
+          <div className="Pet-column col">
             <MyPets />
           </div>
         </div>
