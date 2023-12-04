@@ -40,8 +40,7 @@ public class SecurityConfig  {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(WHITE_LIST_URL)
-                        .permitAll()
+                        .requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
