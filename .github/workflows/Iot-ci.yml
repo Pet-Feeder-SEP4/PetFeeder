@@ -1,0 +1,27 @@
+name: IoT Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install PlatformIO
+      run: |
+        python3 -m pip install --upgrade pip
+        pip3 install -U platformio
+
+    - name: Build and test using PlatformIO
+      run: |
+        platformio test -e native
