@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+
+.petFeederContainer{
+margin-top: 90px;
+
+
+}
+#top-remove-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+
+}
+
+.myPetsfeedersTitle{
+  font-family: 'Poppins', sans-serif;
+  margin-left: 40px;
+  font-size: 25px;
+}
+.subtitle-container, .petFeederLabel{
+  text-decoration: none;
+  color: black;
+}
+
+#bottom-button{
+  background-color: #AAC88F;
+  font-weight: 400;
+  font-size: 12px;
+  border: none;
+  margin: 9px;
+  
+}
+
+#top-remove-button{
+  background-color: transparent;
+  border-radius: 150px;
+}
+
+
+
+#petfeederItem {
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  position: relative;
+  height: auto;
+  min-height: 250px;
+  border-radius: 10px;
+  margin: 30px;/* Ensure the container takes up the full height */
+}
+
+.buttonactions-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#top-remove-button {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.petFeederLabel,
+.subtitle
+ {
+  margin-top: 10px; 
+}
+
+
+
