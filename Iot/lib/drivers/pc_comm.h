@@ -54,3 +54,5 @@ void pc_comm_send_string_blocking(char *string);
  * @param len Length of the data to send.
  */
 void pc_comm_send_array_nonBlocking(uint8_t *str, uint16_t len);
+
+void pc_comm_send_int_blocking(int value);

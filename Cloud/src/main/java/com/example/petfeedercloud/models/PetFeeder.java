@@ -21,8 +21,8 @@ public class PetFeeder {
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "petId") // Name of the foreign key column in the pet_feeder table
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "petId") // Name of the foreign key column in the pet table
     private Pet pet;
 
 
