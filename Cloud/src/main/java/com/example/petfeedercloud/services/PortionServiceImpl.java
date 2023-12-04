@@ -56,7 +56,6 @@ public class PortionServiceImpl implements PortionService{
                 .orElseThrow(() -> new NotFoundException("Portion not found with id: " + portionId));
 
         portionRepository.delete(portionToDelete);
-
         return portionToDelete;
     }
 }

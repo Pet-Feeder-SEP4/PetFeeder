@@ -11,5 +11,4 @@ public interface PortionService {
     Portion createPortion(PortionDTO portion);
     Portion updatePortion(Long portionId,PortionDTO portion);
     Portion deletePortion(Long portionId);
-
 }
