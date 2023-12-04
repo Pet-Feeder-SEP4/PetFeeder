@@ -11,7 +11,7 @@ margin-top: 90px;
   top: 0;
   right: 0;
   margin: 8px;
-  color: white; /* You can customize the text color */
+  color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -74,9 +74,8 @@ margin-top: 90px;
 .petFeederLabel,
 .subtitle
  {
-  margin-top: 10px; /* Adjust the margin as needed */
+  margin-top: 10px; 
 }
 
-/* ... (existing styles) */
 
 

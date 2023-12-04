@@ -44,6 +44,9 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticate(@RequestBody UserLoginDTO userDTO) {
         try{
             AuthenticationResponse authenticationResponse = userService.authenticateUser(userDTO);
+            if (authenticationResponse == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+            }
             return ResponseEntity.ok(authenticationResponse);
         }catch (AuthenticationException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");

@@ -85,8 +85,12 @@ public class PetController {
         }
     }
     @GetMapping("/user/{userId}")
-    @Operation(summary = "Get all pets from an user", description = "Get all pets a specific user id")
+    @Operation(summary = "Get all pets from a user", description = "Get all pets for a specific user ID")
     public List<PetDTO> getAllPetsByUser(@PathVariable Long userId) {
-        return petService.getAllPetsByUser(userId);
+        List<PetDTO> pets = petService.getAllPetsByUser(userId);
+        if (pets.isEmpty()) {
+            throw new NotFoundException("No pets found for user ID: " + userId);
+        }
+        return pets;
     }
 }
