@@ -20,7 +20,6 @@ function App() {
       <Route path="/CreatePet" element={<CreatePet />} />
       <Route path="/MainPage" element={<MainPage />} />
       <Route path="/EditPet/:petId" element={<EditPet />} />
-      
       </Routes>
     </Router>
   );
