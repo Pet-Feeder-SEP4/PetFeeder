@@ -5,6 +5,7 @@ import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.PetFeeder;
 import com.example.petfeedercloud.services.PetFeederService;
+import com.example.petfeedercloud.services.PetFeederServiceImpl;
 import com.example.petfeedercloud.services.PetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
@@ -31,8 +32,11 @@ public class WebSocketHandler extends TextWebSocketHandler {
         for(WebSocketSession webSocketSession : sessions) {
             Map value = new Gson().fromJson(message.getPayload(), Map.class);
             Map<String, Object> attributes = webSocketSession.getAttributes();
-            webSocketSession.getAttributes().put("petFeederId",String.valueOf(value.get("petFeederId")));
-            PetFeeder pf = petFeederService.getPetFeederById(Long.valueOf(String.valueOf(attributes.get("petFeederId"))));
+            PetFeeder pf = new PetFeeder();
+            if(attributes.get("petFeederId")==null || attributes.get("petFeederId").equals(""))
+                webSocketSession.getAttributes().put("petFeederId",String.valueOf(value.get("petFeederId")));
+            if(attributes.get("petFeederId")!=null || !attributes.get("petFeederId").equals(""))
+                pf = petFeederService.getPetFeederById(Long.valueOf(String.valueOf(attributes.get("petFeederId"))));
 
             PetFeederDTO pfd = new PetFeederDTO();
             pfd.setUserId(pf.getUser().getUserId());
@@ -72,6 +76,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
             Long sessionPetFeederId = Long.valueOf(String.valueOf(attributes.get("petFeederId")));
             if(petFeederId == sessionPetFeederId){
                 try{
+                    System.out.println(String.valueOf(attributes.get("petFeederId"))+"test");
                     webSocketSession.sendMessage(new TextMessage("   DIS:"+portion));
                 } catch (IOException e) {
                     e.printStackTrace();
