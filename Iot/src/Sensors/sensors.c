@@ -38,7 +38,6 @@ char* sensor_get_data(){
     //pc_comm_send_string_blocking("sensor class called\n");
     getTempandHum();
     waterMeasurement=intToString(getWaterMeasurement());
-    _delay_ms(1000);
     foodMeasurement=intToString(getFoodMeasurement());
     sprintf(str, "water= %s food= %s   %d%d%d \n\n",
                 waterMeasurement,foodMeasurement,humidity,temperature,idNumber);
@@ -49,14 +48,12 @@ char* sensor_get_data(){
 void getTempandHum(){
     // Read data from DHT11 sensor
     DHT11_ERROR_MESSAGE_t result = dht11_get(&humidity_integer, &humidity_decimal, &temperature_integer, &temperature_decimal);
-
-    if (result == DHT11_OK) {
-        temperature=temperature_integer;
-        humidity=humidity_integer;
-    } else {
-        // Print an error message if the read operation fails
-        pc_comm_send_string_blocking("Failed to read DHT11 sensor data.\n");
-    }
+    pc_comm_init(9600, NULL);
+    temperature=temperature_integer;
+    humidity=humidity_integer;
+    sprintf(str,"humidity:%d temperature:%d \n\n",
+            humidity,temperature);
+    pc_comm_send_string_blocking(str);
 }
 
 int getWaterMeasurement(){
