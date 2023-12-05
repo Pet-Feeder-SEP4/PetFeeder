@@ -2,10 +2,9 @@ package com.example.petfeedercloud.services;
 
 import com.example.petfeedercloud.dtos.GetDTOs.GetTimeDTO;
 import com.example.petfeedercloud.dtos.TimeDTO;
-import com.example.petfeedercloud.models.Portion;
+
 import com.example.petfeedercloud.models.Schedule;
 import com.example.petfeedercloud.models.Time;
-import com.example.petfeedercloud.repositories.PortionRepository;
 import com.example.petfeedercloud.repositories.ScheduleRepository;
 import com.example.petfeedercloud.repositories.TimeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -48,6 +47,8 @@ public class TimeServiceImpl implements TimeService{
 
         Time time = new Time();
         time.setSchedule(schedule);
+        if(time.getPortionSize()>0 ||time.getPortionSize()<1000 )
+            time.setPortionSize(timeDTO.getPortionSize());
         time.setTimeLabel(timeDTO.getTimeLabel());
         time.setTime(timeDTO.getTime());
 
@@ -63,6 +64,8 @@ public class TimeServiceImpl implements TimeService{
         Schedule schedule = scheduleRepository.findById(timeDTO.getScheduleId())
                 .orElseThrow(() -> new EntityNotFoundException("Schedule with id " + timeDTO.getScheduleId() + " not found"));
         existingTime.setSchedule(schedule);
+        if(timeDTO.getPortionSize()>0 ||timeDTO.getPortionSize()<1000 )
+            existingTime.setPortionSize(timeDTO.getPortionSize());
         existingTime.setTimeLabel(timeDTO.getTimeLabel());
         existingTime.setTime(timeDTO.getTime());
         timeRepository.save(existingTime);
@@ -78,6 +81,8 @@ public class TimeServiceImpl implements TimeService{
             Time time = new Time();
             time.setSchedule(scheduleRepository.getById(timeDTO.getScheduleId()));
             time.setTimeLabel(timeDTO.getTimeLabel());
+            if(timeDTO.getPortionSize()>0 ||timeDTO.getPortionSize()<1000 )
+                time.setPortionSize(timeDTO.getPortionSize());
             time.setTime(timeDTO.getTime());
             times.add(time);
         }
@@ -92,11 +97,15 @@ public class TimeServiceImpl implements TimeService{
         timeDTO.setScheduleId(time.getSchedule().getScheduleId());
         timeDTO.setTimeLabel(time.getTimeLabel());
         timeDTO.setTime(time.getTime());
+        if (time.getPortionSize() > 0 && time.getPortionSize() < 1000)
+            timeDTO.setPortionSize(time.getPortionSize());
+
         return timeDTO;
     }
     private GetTimeDTO convertToGetTimeDTO(Time time) {
         return new GetTimeDTO(
                 time.getTimeId(),
+                time.getPortionSize(),
                 time.getSchedule().getScheduleId(),
                 time.getTimeLabel(),
                 time.getTime()

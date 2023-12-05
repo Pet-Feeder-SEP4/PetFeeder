@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
@@ -12,7 +13,8 @@ public class Time {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "scheduleId")
     private Schedule schedule;
-
+    @Nullable
+    private int portionSize;
     private String timeLabel;
     private String time;
     public Time(){
@@ -50,4 +52,11 @@ public class Time {
         this.time = time;
     }
 
+    public int getPortionSize() {
+        return portionSize;
+    }
+
+    public void setPortionSize(int portionSize) {
+        this.portionSize = portionSize;
+    }
 }

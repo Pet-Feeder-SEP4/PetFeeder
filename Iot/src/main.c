@@ -13,19 +13,20 @@
 
 int main() {
     pc_comm_init(9600, NULL);
-    wifi_init();
+    /*wifi_init();
     sensor_init();
     // Use a private connection
     wifi_command_join_AP("Redmi 9C NFC","santi32411");
     // Connect to backend server
-    wifi_command_create_TCP_connection("192.168.43.83", 23, wifi_data_callback , received_message_buffer_static_pointer);
+    wifi_command_create_TCP_connection("192.168.43.83", 23, wifi_data_callback , received_message_buffer_static_pointer);*/
+    sensor_init();
     
     while (1) {
-        //sensor_get_data();
+        sensor_get_data();
         //String with specified data
         //Formated data
 
-        rotate(-50,10);
+        //rotate(-50,10);
 
         //wifi_command_TCP_transmit(100,"hello");
         

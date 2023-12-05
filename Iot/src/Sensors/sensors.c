@@ -6,6 +6,7 @@
 #include <dht11.h>
 #include <stdio.h>
 #include "hc_sr04.h"
+#include <util/delay.h>
 
 uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
 uint16_t measure;
@@ -21,21 +22,24 @@ void sensor_init();
 char* sensor_get_data();
 void getTempandHum();
 char* intToString(int value);
-int getMeasurement();
+int getWaterMeasurement();
+int getFoodMeasurement();
 
 
 void sensor_init(){
     dht11_init();
     hc_sr04_init();
+    //hc_sr04_food_init();
     idNumber=88888888;
 }
 
 char* sensor_get_data(){
     pc_comm_init(9600, NULL);
-    pc_comm_send_string_blocking("sensor class called\n");
+    //pc_comm_send_string_blocking("sensor class called\n");
     getTempandHum();
-    waterMeasurement=intToString(waterMeasurementPercentage());
-    foodMeasurement=intToString(foodMeasurementPercentage());
+    waterMeasurement=intToString(getWaterMeasurement());
+    _delay_ms(1000);
+    foodMeasurement=intToString(getFoodMeasurement());
     sprintf(str, "water= %s food= %s   %d%d%d \n\n",
                 waterMeasurement,foodMeasurement,humidity,temperature,idNumber);
     pc_comm_send_string_blocking(str);
@@ -51,13 +55,13 @@ void getTempandHum(){
         humidity=humidity_integer;
     } else {
         // Print an error message if the read operation fails
-        pc_comm_send_string_blocking("Failed to read DHT11 sensor data.");
+        pc_comm_send_string_blocking("Failed to read DHT11 sensor data.\n");
     }
 }
 
-int getMeasurement(){
+int getWaterMeasurement(){
     uint16_t temporaryMeasure;
-    temporaryMeasure = hc_sr04_takeMeasurement();
+    temporaryMeasure = hc_sr04_takeMeasurement_water();
    if (temporaryMeasure != 0)
         {
            return temporaryMeasure;
@@ -65,14 +69,28 @@ int getMeasurement(){
         else
         {
             // Print an error message if the read operation fails
-            pc_comm_send_string_blocking("Invalid measurement\n");
+            pc_comm_send_string_blocking("Invalid water measurement\n");
         }
-}
+};
+
+int getFoodMeasurement(){
+    uint16_t temporaryMeasure;
+    temporaryMeasure = hc_sr04_takeMeasurement_food();
+   if (temporaryMeasure != 0)
+        {
+           return temporaryMeasure;
+        }
+        else
+        {
+            // Print an error message if the read operation fails
+            pc_comm_send_string_blocking("Invalid food measurement\n");
+        }
+};
 
 int waterMeasurementPercentage(){
     //put height of the cup
     int capacity=1000;
-    int temporaryMeasure=getMeasurement();
+    int temporaryMeasure=getWaterMeasurement();
     int result= (temporaryMeasure*100)/ capacity;
     return result;
 }
@@ -80,7 +98,7 @@ int waterMeasurementPercentage(){
 int foodMeasurementPercentage(){
     //put height of the cup
     int capacity=1000;
-    int temporaryMeasure=getMeasurement();
+    int temporaryMeasure=getFoodMeasurement();
     int result= (temporaryMeasure*100)/ capacity;
     return result;
 }
