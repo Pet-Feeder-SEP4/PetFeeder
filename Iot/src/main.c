@@ -25,14 +25,14 @@ int main() {
         sensor_get_data();
         //String with specified data
         //Formated data
-
+        //getTempandHum();
         //rotate(-50,10);
 
         //wifi_command_TCP_transmit(100,"hello");
         
         // Delay for 30 minutes 
         //sleep(30 * 60); // Sleep for 30 minutes
-        _delay_ms(5000);
+        _delay_ms(3000);
     }
     return 0;
 }
