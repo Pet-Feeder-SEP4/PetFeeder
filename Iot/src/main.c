@@ -28,7 +28,7 @@ int main() {
         //_delay_ms(5000);
         wifi_command_TCP_transmit(sensor_get_data(),128);
         wifi_command_close_TCP_connection();
-        //sensor_get_data();
+        sensor_get_data();
         pc_comm_send_string_blocking("hello sent 2\n\n");
         _delay_ms(3000);
     }
