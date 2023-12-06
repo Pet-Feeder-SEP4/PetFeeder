@@ -9,18 +9,30 @@ const Time = () => {
   const [time, setTime] = useState('');
   const [loading, setLoading] = useState(false);
   const [times, setTimes] = useState([]);
+  const [portionSize, setPortionSize] = useState ('');
+
 
   const handleAddTime = async () => {
     try {
       setLoading(true);
 
+      if (!portionSize || isNaN(portionSize) || portionSize < 1 || portionSize> 999){
+        console.error('Portion size cannot be empty');
+        return;
+      }
+
+   
       const response = await axios.post(`/time/${scheduleId}`, {
         scheduleId: scheduleId,
         timeLabel: timeLabel,
         time: time,
+        portionSize: portionSize,
+      
+     
+
       });
 
-      console.log('Time added successfully:', response.data);
+      console.log('Data added successfully:', response.data);
 
       // Update the list of times
       fetchTimes();
@@ -131,6 +143,20 @@ useEffect(()=>{
   </div>
 </div>
 
+<div style={{ marginBottom: '10px' }}>
+  <label htmlFor="portionSize">Portion Size:</label>
+  <br />
+  <input
+    type="number"
+    id="portionSize"
+    value={portionSize}
+    onChange={(e) => setPortionSize(e.target.value)}
+    style={timeInputStyle}
+    min="1"
+    max="999"
+  />
+</div>
+
 
 <button onClick={handleAddTime} disabled={loading} style={buttonStyle}>
   {loading ? 'Adding...' : 'Add'}
@@ -144,14 +170,12 @@ useEffect(()=>{
         <div className="card-body">
           <h5 className="card-title">{timeItem.timeLabel}</h5>
           <p className="card-text">{timeItem.time}</p>
+          <p className="card-text">{timeItem.portionSize}</p>
         </div>
       </div>
     </div>
   ))}
 </div>
-
-
-
 
       </div>
     </div>
