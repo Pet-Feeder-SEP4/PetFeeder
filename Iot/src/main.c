@@ -2,7 +2,6 @@
 #include <string.h>
 #include <unistd.h> 
 #include <util/delay.h>
-#include <unistd.h>
 #include "pc_comm.h"
 #include "servo.h"
 #include "buttons.h"
@@ -15,22 +14,22 @@ int main() {
     pc_comm_init(9600, NULL);
     sensor_init();
     wifi_init();
-    // Use a private connection
-    wifi_command_join_AP("Mamalo","Iker1234");
-    // Connect to backend server
-    wifi_command_create_TCP_connection("172.20.10.2", 24, wifi_data_callback , received_message_buffer_static_pointer);
-    
+
+    //Connect to backend server
+    wifi_command_join_AP("ORBI54","fearlessbox180");
+    /*wifi_command_create_TCP_connection("192.168.1.7", 23, wifi_data_callback , received_message_buffer_static_pointer);
+    wifi_command_TCP_transmit("hello\n",5);
+    wifi_command_close_TCP_connection();*/
+    pc_comm_send_string_blocking("hello sent\n");
     
     while (1) {
-        char* sensors_data = sensor_get_data();
-        //String with specified data
-        //Formated data
-        //getTempandHum();
-        //rotate(-50,10);
-
-        wifi_command_TCP_transmit(sensors_data,110);
-        // Delay for 30 minutes 
-        //sleep(30 * 60); // Sleep for 30 minutes
+        //rotate(-50,2);
+        wifi_command_create_TCP_connection("192.168.1.7", 23, wifi_data_callback , received_message_buffer_static_pointer);
+        //_delay_ms(5000);
+        wifi_command_TCP_transmit(sensor_get_data(),128);
+        wifi_command_close_TCP_connection();
+        //sensor_get_data();
+        pc_comm_send_string_blocking("hello sent 2\n\n");
         _delay_ms(3000);
     }
     return 0;
