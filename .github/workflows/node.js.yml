@@ -33,7 +33,7 @@ jobs:
 
     - name: Install Dependencies
       run: npm install
-      working-directory: ./PetFeeder/pet-feeder
+      working-directory: ./PetFeeder/Fronted/pet-feeder
 
     - name: Build
       run: npm run build --if-present
