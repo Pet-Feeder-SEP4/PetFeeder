@@ -9,7 +9,6 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 const FeedingSchedule = () => {
   const { petFeederId } = useParams();
   const userId = localStorage.getItem('userId');
-
   const [scheduleLabel, setScheduleLabel] = useState('');
   const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useState([]);
@@ -45,7 +44,7 @@ const FeedingSchedule = () => {
 
   const fetchUserSchedules = async () => {
     try {
-      const response = await axios.get(`/schedules/user/${userId}`);
+      const response = await axios.get(`/schedules/petFeeder/${petFeederId}`);
       setSchedules(response.data);
     } catch (error) {
       console.error('Error fetching user schedules:', error);
@@ -118,38 +117,47 @@ const FeedingSchedule = () => {
           <div className="col-md-12">
             <h2 className="font-weight-bold mb-3" style={{ fontFamily: 'Poppins, sans-serif', fontSize: '15px'}}>Your Schedules</h2>
             <div>
-          
+              {schedules
+                .sort((a, b) => (b.active ? 1 : 0) - (a.active ? 1 : 0)) // Sort based on the active status
+                .map((schedule) => (
+                  <div
+                    key={schedule.scheduleId}
+                    className="shadow mb-3 p-3 d-flex align-items-center flex-wrap"
+                    style={{ border: '1px', borderRadius: '10px', alignItems: 'center', minHeight: '110px' }}
+                  >
+                    <div className="mr-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: '500'}}>{schedule.scheduleLabel}</div>
+                    <div className="mr-3">
+                      <div
+                        style={{
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '50%',
+                          backgroundColor: schedule.active ? '#AAC88F' : '#FF6961',
+                          display: 'inline-block',
+                          marginRight: '5px',
+                        }}
+                      ></div>
 
-{ schedules.map((schedule) => (
-  <div
-    key={schedule.scheduleId}
-    className="shadow mb-3 p-3 d-flex align-items-center flex-wrap"
-    style={{ border: '1px', borderRadius: '10px', alignItems: 'center', minHeight:'110px'}}
-  >
-    <div className="mr-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: '500'}}>{schedule.scheduleLabel}</div>
-    <div className="mr-3 text-nowrap" style={{ color: schedule.active ? '#06350D' : '#AAC88F', fontFamily: 'Poppins, sans-serif' }}>
-      {schedule.active ? 'Active' : 'Inactive'}
-    </div>
-    <div className="ml-auto">
-      <button
-        onClick={() => handleActivateDeactivate(schedule.scheduleId, schedule.active)}
-        className="btn"
-        style={{ fontFamily: 'Poppins, sans-serif', borderRadius: '9px', border: '1px solid #06350D', backgroundColor: 'transoarent', color: '#06350D'}}
-      >
-        {schedule.active ? 'Deactivate' : 'Activate'}
-      </button>
-      <Link
-        to={`/add-time/${schedule.scheduleId}/${encodeURIComponent(schedule.scheduleLabel)}`}
-        className="text-decoration-none"
-      >
-        <button className="btn" style={{ color: '#06350D'}}>
-          <span>+</span> <FontAwesomeIcon icon={faClock} className="me-1" />
-        </button>
-      </Link>
-    </div>
-  </div>
-))}
-
+                    </div>
+                    <div className="ml-auto">
+                      <button
+                        onClick={() => handleActivateDeactivate(schedule.scheduleId, schedule.active)}
+                        className="btn"
+                        style={{ fontFamily: 'Poppins, sans-serif', borderRadius: '9px', border: '1px solid #06350D', backgroundColor: 'transoarent', color: '#06350D'}}
+                      >
+                        {schedule.active ? 'Deactivate' : 'Activate'}
+                      </button>
+                      <Link
+                        to={`/add-time/${schedule.scheduleId}/${encodeURIComponent(schedule.scheduleLabel)}`}
+                        className="text-decoration-none"
+                      >
+                        <button className="btn" style={{ color: '#06350D'}}>
+                          <span>+</span> <FontAwesomeIcon icon={faClock} className="me-1" />
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
