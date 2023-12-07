@@ -52,6 +52,9 @@ jobs:
           cp -r ./Fronted/pet-feeder/build/* .
           git add .
           git commit -m "Deploy to GitHub Pages"
+          git branch
+          git remote -v
+          git status
           git push origin gh-pages
       
 
