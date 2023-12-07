@@ -55,6 +55,7 @@ jobs:
           git branch
           git remote -v
           git status
+          git remote show origin
           git push origin gh-pages
       
 
