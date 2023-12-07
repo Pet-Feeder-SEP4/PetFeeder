@@ -118,32 +118,38 @@ const FeedingSchedule = () => {
           <div className="col-md-12">
             <h2 className="font-weight-bold mb-3" style={{ fontFamily: 'Poppins, sans-serif', fontSize: '15px'}}>Your Schedules</h2>
             <div>
-              {schedules.map((schedule) => (
-                <div
-                  key={schedule.scheduleId}
-                  className="shadow mb-3 p-3 d-flex  align-items-center flex-wrap"
-                  style={{ border: '1px', borderRadius: '15px'}}
-                >
-                  <div className=" ">{schedule.scheduleLabel}</div>
-                  <div className=" text-nowrap" style={{ color: schedule.active ? 'green' : 'red' }}>
-                    {schedule.active ? 'Active' : 'Inactive'}
-                  </div>
-                  <button
-                    onClick={() => handleActivateDeactivate(schedule.scheduleId, schedule.active)}
-                    className="btn btn-outline-primary "
-                  >
-                    {schedule.active ? 'Deactivate' : 'Activate'}
-                  </button>
-                  <Link
-                    to={`/add-time/${schedule.scheduleId}/${encodeURIComponent(schedule.scheduleLabel)}`}
-                    className="text-decoration-none"
-                  >
-                    <button className="btn btn-outline-dark">
-                      <span>+</span> <FontAwesomeIcon icon={faClock} className="me-1" />
-                    </button>
-                  </Link>
-                </div>
-              ))}
+          
+
+{ schedules.map((schedule) => (
+  <div
+    key={schedule.scheduleId}
+    className="shadow mb-3 p-3 d-flex align-items-center flex-wrap"
+    style={{ border: '1px', borderRadius: '10px', alignItems: 'center', minHeight:'110px'}}
+  >
+    <div className="mr-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: '500'}}>{schedule.scheduleLabel}</div>
+    <div className="mr-3 text-nowrap" style={{ color: schedule.active ? '#06350D' : '#AAC88F', fontFamily: 'Poppins, sans-serif' }}>
+      {schedule.active ? 'Active' : 'Inactive'}
+    </div>
+    <div className="ml-auto">
+      <button
+        onClick={() => handleActivateDeactivate(schedule.scheduleId, schedule.active)}
+        className="btn"
+        style={{ fontFamily: 'Poppins, sans-serif', borderRadius: '9px', border: '1px solid #06350D', backgroundColor: 'transoarent', color: '#06350D'}}
+      >
+        {schedule.active ? 'Deactivate' : 'Activate'}
+      </button>
+      <Link
+        to={`/add-time/${schedule.scheduleId}/${encodeURIComponent(schedule.scheduleLabel)}`}
+        className="text-decoration-none"
+      >
+        <button className="btn" style={{ color: '#06350D'}}>
+          <span>+</span> <FontAwesomeIcon icon={faClock} className="me-1" />
+        </button>
+      </Link>
+    </div>
+  </div>
+))}
+
             </div>
           </div>
         </div>
