@@ -41,6 +41,7 @@ jobs:
 
     - name: Test
       run: npm test
+      working-directory: ./Fronted/pet-feeder
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
