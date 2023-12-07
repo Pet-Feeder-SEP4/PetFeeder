@@ -6,6 +6,7 @@ public class TimeDTO {
     private Long scheduleId;
 
     private String  time;
+    private int portionSize;
     private String timeLabel;
 
     public Long getScheduleId() {
@@ -32,5 +33,13 @@ public class TimeDTO {
 
     public void setTimeLabel(String timeLabel) {
         this.timeLabel = timeLabel;
+    }
+
+    public int getPortionSize() {
+        return portionSize;
+    }
+
+    public void setPortionSize(int portionSize) {
+        this.portionSize = portionSize;
     }
 }

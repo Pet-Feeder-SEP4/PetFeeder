@@ -5,14 +5,20 @@ public class GetScheduleDTO {
     private String scheduleLabel;
     private Long userId;
     private Long petFeederId;
-
-    public GetScheduleDTO(Long scheduleId, String scheduleLabel, Long userId,Long petFeederId) {
+    private Boolean active;
+    public GetScheduleDTO(Long scheduleId, String scheduleLabel, Long userId,Long petFeederId,Boolean active) {
         this.scheduleId = scheduleId;
         this.scheduleLabel = scheduleLabel;
         this.userId = userId;
         this.petFeederId=petFeederId;
+        this.active=active;
     }
-
+    public Boolean getActive() {
+        return active;
+    }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
     public Long getScheduleId() {
         return scheduleId;
     }

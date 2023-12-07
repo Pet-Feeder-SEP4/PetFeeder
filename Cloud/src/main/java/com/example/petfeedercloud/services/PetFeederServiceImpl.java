@@ -160,7 +160,8 @@ public class PetFeederServiceImpl implements PetFeederService{
         pfDTO.setFoodLevel(pf.getFoodLevel());
         pfDTO.setWaterTemperture(pf.getWaterTemperture());
         pfDTO.setLowLevelFood(pf.getLowLevelFood());
-        pfDTO.setPetId(pf.getPet().getPetId());
+        if(pf.getPet()!=null)
+            pfDTO.setPetId(pf.getPet().getPetId());
         //pfDTO.setScheduleId(pf.getSchedule().getScheduleId());
         pfDTO.setUserId(pf.getUser().getUserId());
         return pfDTO;

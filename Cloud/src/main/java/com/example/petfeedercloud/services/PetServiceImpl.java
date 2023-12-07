@@ -3,12 +3,15 @@ package com.example.petfeedercloud.services;
 import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.jwt.serviceJWT.JwtServiceInterface;
 import com.example.petfeedercloud.models.Pet;
+import com.example.petfeedercloud.models.PetFeeder;
 import com.example.petfeedercloud.models.UserP;
+import com.example.petfeedercloud.repositories.PetFeederRepository;
 import com.example.petfeedercloud.repositories.PetRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.List;
@@ -20,7 +23,7 @@ public class PetServiceImpl implements PetService {
     @Autowired
     private PetRepository petRepository;
     @Autowired
-    private JwtServiceInterface jwtService;
+    private PetFeederRepository petFeederRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -56,9 +59,6 @@ public class PetServiceImpl implements PetService {
             UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
             pet.setUser(user);
 
-            Long petFeederId = petDTO.getPetFeederId();
-            pet.setPetFeederId(petFeederId);
-
             petRepository.save(pet);
             return convertToDto(pet);
         } catch (IllegalArgumentException | ConstraintViolationException ex) {
@@ -83,11 +83,9 @@ public class PetServiceImpl implements PetService {
                 existingPet.setBreed(petDTO.getBreed());
 
                 Long userId = petDTO.getUserId();
-                UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+                UserP user = userRepository.findById(userId)
+                        .orElseThrow(() -> new NotFoundException("User not found"));
                 existingPet.setUser(user);
-
-                Long petFeederId = petDTO.getPetFeederId();
-                existingPet.setPetFeederId(petFeederId);
 
                 petRepository.save(existingPet);
             } else {
@@ -101,10 +99,22 @@ public class PetServiceImpl implements PetService {
     }
 
 
+
     @Override
+    @Transactional
     public void deletePet(Long petId) {
         Optional<Pet> petOptional = petRepository.findById(petId);
+
         if (petOptional.isPresent()) {
+            Pet pet = petOptional.get();
+
+            // Disassociate the Pet from its associated PetFeeder entities
+            List<PetFeeder> petFeeders = petFeederRepository.findByPet(pet);
+            for (PetFeeder petFeeder : petFeeders) {
+                petFeeder.setPet(null);
+            }
+
+            // Delete the Pet
             petRepository.deleteById(petId);
         } else {
             throw new NotFoundException("Pet not found with ID: " + petId);

@@ -2,47 +2,76 @@
 
 #include <inttypes.h>
 
-//Vcc
-#define DDR_Vcc DDRC
-#define PORT_Vcc PORTC
-#define P_Vcc PC0
 
-//GND
-#define DDR_Gnd DDRC //DDRK
-#define P_Gnd PC6 //PK7
+// Vcc
+#define DDR_VccF DDRC
+#define PORT_VccF PORTC
+#define P_VccF PC0
 
-//Trigger
-#define DDR_Trig DDRC
-#define P_Trig PC2
-#define PORT_trig PORTC
+// GND
+#define DDR_GndF DDRC
+#define P_GndF PC6
 
-//Echo
-#define PIN_Echo PINC
-#define P_Echo PC4
+// Trigger
+#define DDR_TrigF DDRC
+#define P_TrigF PC2
+#define PORT_TrigF PORTC
 
+// Echo
+#define PIN_EchoF PINC
+#define P_EchoF PC4
 
+// Additional ports
+// Vcc-
+#define DDR_VccW DDRB
+#define PORT_VccW PORTB
+#define P_VccW PB2
 
-void hc_sr04_init()
-{
-    //Vcc
-    DDR_Vcc|=(1 << P_Vcc);
-    PORT_Vcc|=(1 << P_Vcc);
+// GND
+#define DDR_GndW DDRL
+#define P_GndW PL4
 
-    //GND
-    DDR_Gnd|=(1 << P_Gnd);
+// Trigger
+#define DDR_TrigW DDRL
+#define P_TrigW PL0
+#define PORT_TrigW PORTL
 
-    //Trigger
-    DDR_Trig|=(1 << P_Trig);
-}
+// Echo
+#define PIN_EchoW PINL
+#define P_EchoW PL2
 
-uint16_t hc_sr04_takeMeasurement()
+    void hc_sr04_init()
+    {
+        // Vcc
+        DDR_VccF |= (1 << P_VccF);
+        PORT_VccF |= (1 << P_VccF);
+
+        // GND
+        DDR_GndF |= (1 << P_GndF);
+
+        // Trigger
+        DDR_TrigF |= (1 << P_TrigF);
+
+        // Vcc
+        DDR_VccW |= (1 << P_VccW);
+        PORT_VccW |= (1 << P_VccW);
+
+        // GND
+        DDR_GndW |= (1 << P_GndW);
+
+        // Trigger
+        DDR_TrigW |= (1 << P_TrigW);
+
+    }
+
+uint16_t hc_sr04_takeMeasurement_food()
 {
     uint16_t cnt = 0;
 
     _delay_us(10);
-    PORT_trig |= (1 << P_Trig); // trig is set to high for 10 us to start measurement.
+    PORT_TrigF |= (1 << P_TrigF); // trig is set to high for 10 us to start measurement.
     _delay_us(10);
-    PORT_trig &= ~(1 << P_Trig);
+    PORT_TrigF &= ~(1 << P_TrigF);
 
 
     
@@ -55,7 +84,7 @@ uint16_t hc_sr04_takeMeasurement()
 //    TCCR1B &= ~(1 << CS10);
    
 TCNT1 = 0;
-    while (!(PIN_Echo & (1 << P_Echo)))
+    while (!(PIN_EchoF & (1 << P_EchoF)))
     {
 
                 // Check for timer overflow (24 ms)
@@ -70,7 +99,7 @@ TCNT1 = 0;
 
     TCNT1 = 0; // Setting the timer to Zero. This is  messing up the display, but hopefully the reader of the display wont notice.
 
-    while (PIN_Echo & (1 << P_Echo))
+    while (PIN_EchoF & (1 << P_EchoF))
     {
         // Check for timer overflow (24 ms)
         if (TCNT1 >= (F_CPU / 256) * 0.024)
@@ -103,3 +132,49 @@ TCNT1 = 0;
     cnt = cnt * 343UL / 125UL;
     return cnt;
 }
+
+//sensor added by us manually
+uint16_t hc_sr04_takeMeasurement_water()
+    {
+        uint16_t cnt = 0;
+
+        _delay_us(10);
+        PORT_TrigW |= (1 << P_TrigW);
+        _delay_us(10);
+        PORT_TrigW &= ~(1 << P_TrigW);
+
+        // Additional ports logic
+        // You can customize the initialization and usage of additional ports as needed
+
+        uint8_t TCCR1B_state = TCCR1B;
+
+        // Set the Timer/Counter1 prescaler to 256
+        TCCR1B = (1 << CS12);
+        TCNT1 = 0;
+
+        while (!(PIN_EchoW & (1 << P_EchoW)))
+        {
+            if (TCNT1 >= (F_CPU / 256) * 0.1)
+            {
+                return 0;
+            }
+        }
+
+        TCNT1 = 0;
+
+        while (PIN_EchoW & (1 << P_EchoW))
+        {
+            if (TCNT1 >= (F_CPU / 256) * 0.024)
+            {
+                break;
+            }
+        }
+
+        cnt = TCNT1;
+
+        TCCR1B = TCCR1B_state;
+
+        // Additional ports measurement calculation
+        cnt = cnt * 343UL / 125UL;
+        return cnt;
+    }
