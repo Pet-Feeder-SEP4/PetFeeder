@@ -7,6 +7,7 @@ import FeedingSchedule from "./pages/Schedule/Schedule";
 import LogIn from "./pages/LogIn/LogIn";
 import CreatePet from "./pages/CreatePet/CreatePet";
 import MainPage from "./pages/MainPage/MainPage";
+import PetFeedersC from './components/PetFeedersC/PetFeedersC';
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Time from "./pages/Schedule/Time/Time"
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/schedule/:petFeederId" element={<FeedingSchedule />} /> 
       <Route path="/CreatePet" element={<CreatePet />} />
       <Route path="/MainPage" element={<MainPage />} />
+      <Route path="/PetFeedersC" element={<PetFeedersC />} />
       <Route path="/dashboard/:petFeederId" element={<Dashboard />} />
       <Route path="/add-time/:scheduleId/:scheduleLabel" element={<Time />} />
 

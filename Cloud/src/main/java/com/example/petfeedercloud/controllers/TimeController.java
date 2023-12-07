@@ -56,6 +56,7 @@ public class TimeController {
     }
 
 
+
     @Operation(summary = "Creates one time for a schedule", description = "Returns the time created")
     @PostMapping("/{timeId}")
     public ResponseEntity<?> createTime(@RequestBody TimeDTO timeDTO) {
@@ -142,6 +143,7 @@ public class TimeController {
     private GetTimeDTO convertToGetTimeDTO(Time time) {
         return new GetTimeDTO(
                 time.getTimeId(),
+                time.getPortionSize(),
                 time.getSchedule().getScheduleId(),
                 time.getTimeLabel(),
                 time.getTime()
