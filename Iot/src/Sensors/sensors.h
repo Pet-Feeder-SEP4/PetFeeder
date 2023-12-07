@@ -1,3 +1,3 @@
-char* sensor_get_data();
+/*char* sensor_get_data();
 void sensor_init();
-void getTempandHum();
+void getTempandHum();*/

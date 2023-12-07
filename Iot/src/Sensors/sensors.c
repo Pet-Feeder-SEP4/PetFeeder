@@ -1,4 +1,4 @@
-#include "sensors.h"
+/*#include "sensors.h"
 #include "pc_comm.h"
 #include <stdio.h>
 #include <string.h>
@@ -121,4 +121,4 @@ char* intToString(int value) {
     strcpy(resultString, buffer);
 
     return resultString;
-}
+}*/
