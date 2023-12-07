@@ -45,11 +45,12 @@ jobs:
 
     - name: Deploy to GitHub Pages
       run: |
+          cd ./Fronted/pet-feeder
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git checkout gh-pages
           git rm -r .
-          cp -r ./Fronted/pet-feeder/build .
+          cp -r /build* .
           git add .
           git commit -m "Deploy to GitHub Pages"
           git branch
