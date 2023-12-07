@@ -121,21 +121,22 @@ const FeedingSchedule = () => {
               {schedules.map((schedule) => (
                 <div
                   key={schedule.scheduleId}
-                  className="shadow-lg mb-3 p-3 d-flex justify-content-between align-items-center flex-wrap"
+                  className="shadow mb-3 p-3 d-flex  align-items-center flex-wrap"
+                  style={{ border: '1px', borderRadius: '15px'}}
                 >
-                  <div className="mb-3 flex-basis">{schedule.scheduleLabel}</div>
-                  <div className="mt-3 text-nowrap" style={{ color: schedule.active ? 'green' : 'red' }}>
+                  <div className=" ">{schedule.scheduleLabel}</div>
+                  <div className=" text-nowrap" style={{ color: schedule.active ? 'green' : 'red' }}>
                     {schedule.active ? 'Active' : 'Inactive'}
                   </div>
                   <button
                     onClick={() => handleActivateDeactivate(schedule.scheduleId, schedule.active)}
-                    className="btn btn-outline-primary mt-3"
+                    className="btn btn-outline-primary "
                   >
                     {schedule.active ? 'Deactivate' : 'Activate'}
                   </button>
                   <Link
                     to={`/add-time/${schedule.scheduleId}/${encodeURIComponent(schedule.scheduleLabel)}`}
-                    className="text-decoration-none mt-3 ms-auto"
+                    className="text-decoration-none"
                   >
                     <button className="btn btn-outline-dark">
                       <span>+</span> <FontAwesomeIcon icon={faClock} className="me-1" />
