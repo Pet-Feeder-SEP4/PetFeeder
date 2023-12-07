@@ -37,6 +37,7 @@ jobs:
 
     - name: Build
       run: npm run build --if-present
+      working-directory: ./Fronted/pet-feeder
 
     - name: Test
       run: npm test
