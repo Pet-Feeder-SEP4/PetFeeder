@@ -51,7 +51,7 @@ jobs:
           git fetch origin gh-pages
           git checkout gh-pages
           git rm -r .
-          cp -r /build* .
+          
           git add .
           git commit -m "Deploy to GitHub Pages"
           git branch
