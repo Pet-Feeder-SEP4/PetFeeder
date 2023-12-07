@@ -1,0 +1,74 @@
+.petImg{
+    margin: -5%;
+    width: 60%;
+    z-index: 10;
+    position: relative;
+}
+@media (max-width: 768px) {
+    .petImg {
+        margin: 3%;
+    }
+}
+
+
+
+#name{
+    width:400px;
+    height: 40px;
+}
+#birthdate{
+    width:400px;
+    height: 40px;
+}
+#weight{
+    width:400px;
+    height: 40px;
+}
+#breed{
+    width:400px;
+    height: 40px;
+}
+
+.editmarginthing{
+    margin-left: 17px;
+    margin-top: 7%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-control::placeholder {
+    font-size: 14px; /* Adjust the font size as needed */
+}
+
+
+button.btnsave,
+button.btncancel{
+    background-color: #95b17d;
+    color:#F6f6f6;
+    outline: none;
+    width:100px;
+}
+button.btnsave:hover,
+button.btncancel:hover{
+    background-color: #AAC88F; /* Your desired hover color */
+    color: #fff; /* Text color on hover */
+    /* Add any additional styles you need */
+}
+
+.btncancel{
+    margin-left: 15px;
+}
+
+.editPetBlock{
+    background-color: #AAC88F;
+    height:200px;
+   
+}
+.editblockText{
+    font-family: 'Poppins', sans-serif;
+    margin-left: 17%;
+    padding-top: 75px;
+    color:#F6f6f6;
+    font-size: 40px;
+
+}
+

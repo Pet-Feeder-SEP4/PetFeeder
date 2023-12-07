@@ -68,7 +68,7 @@ const MyPets = () => {
             <li key={pet?.id || index} className="petItem">
               <span className='petLine'>{pet?.name}</span>
               <div className="btn-group-managepets">
-                <Link to={`/edit-pet/${pet?.petId}`}>  {/*edit the link to EditPet */}
+                <Link to={`/EditPet/${pet?.petId}`}>  {/*edit the link to EditPet */}
                   <button type="button" className="btnEditPet">
                   <FontAwesomeIcon icon={faPenToSquare} style={{color: "#06350D", fontSize: "12px" }}  />
                   </button>
