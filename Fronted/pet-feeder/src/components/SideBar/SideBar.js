@@ -5,21 +5,24 @@ import { faClock, faBox, faPaw, faHistory } from '@fortawesome/free-solid-svg-ic
 import './SideBar.css';
 
 function SideBar() {
-    
     return (
-        <div className="sidebar" >
-            <ul className="list-group"  >
-                <Link to="/schedule/:petFeederId" className="list-group-item" >
-                    <FontAwesomeIcon icon={faClock} className='me-2 ' /> SCHEDULE
+        <div className="sidebar ">
+            <ul className="list-group ms-1">
+                <Link to="/schedule/:petFeederId" className="list-group-item mt-4" style={{ backgroundColor: "#f6f6f6" }}>
+                    <FontAwesomeIcon icon={faClock} className='me-2' />
+                    <span className="d-none d-xl-inline">SCHEDULE</span>
                 </Link>
-                <Link to="/" className="list-group-item">
-                    <FontAwesomeIcon icon={faBox} className='me-2'  /> DISPENSE
+                <Link to="/" className="list-group-item " style={{ backgroundColor: "#f6f6f6" }}> {/* add correct path */}
+                    <FontAwesomeIcon icon={faBox} className='me-2' />
+                    <span className="d-none d-xl-inline">DISPENSE</span> 
                 </Link>
-                <Link to="/" className="list-group-item">
-                    <FontAwesomeIcon icon={faPaw} className='me-2' /> PET
+                <Link to="/" className="list-group-item " style={{ backgroundColor: "#f6f6f6" }}> {/* add correct path */}
+                    <FontAwesomeIcon icon={faPaw} className='me-2' />
+                    <span className="d-none d-xl-inline">PET</span>
                 </Link>
-                <Link to="/" className="list-group-item">
-                    <FontAwesomeIcon icon={faHistory} className='me-2'  /> HISTORY
+                <Link to="/" className="list-group-item " style={{ backgroundColor: "#f6f6f6" }}> {/* add correct path */}
+                    <FontAwesomeIcon icon={faHistory} className='me-2' />
+                    <span className="d-none d-xl-inline">HISTORY</span>
                 </Link>
             </ul>
         </div>

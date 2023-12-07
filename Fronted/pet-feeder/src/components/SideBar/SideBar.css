@@ -1,18 +1,27 @@
 .list-group-item{
- color:#06350D;
- font-family: 'Poppins', sans-serif;
+  color:#06350D !important;
+  font-family: 'Poppins', sans-serif ;
+  outline: 0 !important;
+  border: none !important;
+  
 
 }
 .list-group-item:hover {
-    background-color: #e9ebec; /* Change background color on hover */
-    color: #333; /* Change text color on hover */
+    background-color: #ffffff !important; /* Change text color on hover */
+    outline: none !important;
+    
   }
 
   .sidebar {
-    width: 8vw; 
+    width: 12vw; 
     height: 100vh; 
+    background-color: #f6f6f6;
+    
 }
 
 .list-group{
-    outline: none;
+  outline-color: black;
 }
+
+
+
