@@ -46,6 +46,15 @@ public class PetFeederServiceImpl implements PetFeederService{
     }
 
     @Override
+    public void createPetFeeder(PetFeederDTO petFeederDTO) {
+        try {
+            PetFeeder petFeeder = convertToEntity(petFeederDTO);
+            petFeederRepository.save(petFeeder);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+    @Override
     public void saveOrUpdatePetFeeder(PetFeederDTO petFeeder) {
         try {
             Long id = petFeeder.getPetFeederId();
@@ -150,6 +159,28 @@ public class PetFeederServiceImpl implements PetFeederService{
         } else {
             throw new NotFoundException("Pet feeder not found with ID: " + petFeederId);
         }
+    }
+
+    private PetFeeder convertToEntity(PetFeederDTO petFeederDTO) {
+        PetFeeder petFeeder = new PetFeeder();
+        petFeeder.setPetFeederLabel(petFeederDTO.getPetFeederLabel());
+        petFeeder.setFoodLevel(petFeederDTO.getFoodLevel());
+        petFeeder.setLowLevelFood(petFeederDTO.getLowLevelFood());
+        petFeeder.setFoodHumidity(petFeederDTO.getFoodHumidity());
+        petFeeder.setWaterTemperture(petFeederDTO.getWaterTemperture());
+
+        // Fetch associated User and Pet entities
+        UserP user = userRepository.findById(petFeederDTO.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        Pet pet = petRepository.findById(petFeederDTO.getPetId())
+                .orElseThrow(() -> new NotFoundException("Pet not found"));
+
+        // Set associations
+        petFeeder.setUser(user);
+        petFeeder.setPet(pet);
+
+        return petFeeder;
     }
 
     private PetFeederDTO convertToDto(PetFeeder pf) {
