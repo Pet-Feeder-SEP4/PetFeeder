@@ -34,17 +34,15 @@ public class PetFeederController {
     }
 
     @PostMapping("/")
-    @Operation(summary = "Create pet feeder", description = "Create new pet")
-    public ResponseEntity<String> savePet(@RequestBody PetFeederDTO petFeederDTO) {
+    @Operation(summary = "Create pet feeder", description = "Create new pet feeder using DTO")
+    public ResponseEntity<String> createPetFeeder(@RequestBody PetFeederDTO petFeederDTO) {
         try {
-            petFeederService.saveOrUpdatePetFeeder(petFeederDTO);
+            petFeederService.createPetFeeder(petFeederDTO);
             return ResponseEntity.ok("PetFeeder created successfully");
         } catch (NotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + ex.getMessage());
-        } catch (ConstraintViolationException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found: " + ex.getMessage());
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
         }
     }
 

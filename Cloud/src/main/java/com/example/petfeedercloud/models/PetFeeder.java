@@ -16,11 +16,11 @@ public class PetFeeder {
     private int lowLevelFood;
     private int foodHumidity;
     private int waterTemperture;
+    private int waterLevel;
     private boolean active = false;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "petId") // Name of the foreign key column in the pet table
     private Pet pet;
@@ -28,6 +28,12 @@ public class PetFeeder {
 
     public PetFeeder() {
 
+    }
+    public int getWaterLevel() {
+        return waterLevel;
+    }
+    public void setWaterLevel(int waterLevel) {
+        this.waterLevel = waterLevel;
     }
     public UserP getUser() {
         return user;
