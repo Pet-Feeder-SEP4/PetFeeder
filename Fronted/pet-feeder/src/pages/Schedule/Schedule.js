@@ -143,7 +143,7 @@ const FeedingSchedule = () => {
                       <button
                         onClick={() => handleActivateDeactivate(schedule.scheduleId, schedule.active)}
                         className="btn"
-                        style={{ fontFamily: 'Poppins, sans-serif', borderRadius: '9px', border: '1px solid #06350D', backgroundColor: 'transoarent', color: '#06350D'}}
+                        style={{ fontFamily: 'Poppins, sans-serif', borderRadius: '9px', border: '1px solid #AAC88F', backgroundColor: '#AAC88F', color: 'white', fontSize:'12px', minWidth:'50px', fontWeight: '500'}}
                       >
                         {schedule.active ? 'Deactivate' : 'Activate'}
                       </button>
