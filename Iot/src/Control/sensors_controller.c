@@ -1,4 +1,4 @@
-/*#include "pc_comm.h"
+#include "pc_comm.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h> 
@@ -10,23 +10,15 @@
 
 uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
 uint16_t measure;
-char str[256];
 int temperature;
 int humidity;
 char* waterMeasurement;
 char* foodMeasurement;
 int idNumber;
 
-void getTempandHum();
-char* intToString(int value);
-int getWaterMeasurement();
-int getFoodMeasurement();
-int getTemp();
-
 int getTemp(){
     //pc_comm_send_string_blocking("water data called\n");
     uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
-    char str[64];
     if (dht11_get(&humidity_integer, &humidity_decimal, &temperature_integer, &temperature_decimal) == DHT11_OK) {
         return temperature_integer;
      }
@@ -34,7 +26,6 @@ int getTemp(){
 
 int getHum(){
     uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
-    char str[64];
     if (dht11_get(&humidity_integer, &humidity_decimal, &temperature_integer, &temperature_decimal) == DHT11_OK) {
         return humidity_integer;
      }
@@ -45,6 +36,8 @@ int getWaterMeasurement(){
 };
 
 int getFoodMeasurement(){
+    pc_comm_init(9600,NULL);
+    pc_comm_send_string_blocking("food called");
     return hc_sr04_takeMeasurement_food();
 };
 
@@ -82,4 +75,4 @@ char* intToString(int value) {
     strcpy(resultString, buffer);
 
     return resultString;
-}*/
+}
