@@ -8,7 +8,6 @@
 #include "hc_sr04.h"
 #include <stdlib.h>  // for malloc
 #include <util/delay.h>
-#include "wifi.h"
 
 
 uint16_t measure;
@@ -22,10 +21,11 @@ int idNumber;
 // Function prototypes
 void sensor_init();
 char* sensor_get_data();
-void getTempandHum();
 char* intToString(int value);
 int getWaterMeasurement();
 int getFoodMeasurement();
+int getHum();
+int getTemp();
 
 void sensor_init() {
     pc_comm_init(9600, NULL);  // Initialize communication at the beginning
@@ -35,23 +35,23 @@ void sensor_init() {
 }
 
 char* sensor_get_data() {
-    pc_comm_send_string_blocking("get data called\n");
-    pc_comm_send_string_blocking("hum data called\n");
-    //humidity= getHum();
-    pc_comm_send_string_blocking("temp data called\n");
-    //temperature= getTemp();
-    pc_comm_send_string_blocking("water data called\n");
-    waterMeasurement = intToString(getWaterMeasurement());
-    pc_comm_send_string_blocking("food data called\n");
-    foodMeasurement = intToString(getFoodMeasurement());
-    pc_comm_send_string_blocking("sensor data got\n");
+    //pc_comm_send_string_blocking("get data called\n");
+    //pc_comm_send_string_blocking("hum data called\n");
+    humidity= getHum();
+    //pc_comm_send_string_blocking("temp data called\n");
+    temperature= getTemp();
+    //pc_comm_send_string_blocking("water data called\n");
+    //waterMeasurement = intToString(getWaterMeasurement());
+    //pc_comm_send_string_blocking("food data called\n");
+    //foodMeasurement = intToString(getFoodMeasurement());
+    //pc_comm_send_string_blocking("sensor data got\n");
     // Create JSON string
-    sprintf(str, "{\"petFeederId\":\"%d\",\"foodLevel\":\"%s\",\"foodHumidity\":\"%d\",\"waterTemperature\":\"%d\",\"waterLevel\":\"%s\"}\n",
+    _delay_ms(3000);
+    sprintf(str, "{\"petFeederId\":\"%d\",\"foodLevel\":\"%s\",\"foodHumidity\":\"%d\",\"waterTemperature\":\"%d\",\"waterLevel\":\"%s\"}\n\n",
             idNumber, foodMeasurement, humidity, temperature, waterMeasurement);
-    pc_comm_send_string_blocking("json parsed\n");
+    //pc_comm_send_string_blocking("json parsed\n");
     pc_comm_send_string_blocking(str);
-    pc_comm_send_string_blocking("print json\n");
-    //wifi_command_TCP_transmit("hello",5);
+    //pc_comm_send_string_blocking("print json\n");
     return str;
 }
 
@@ -70,6 +70,7 @@ char* sensor_get_data() {
 }*/
 
 int getTemp(){
+    //pc_comm_send_string_blocking("water data called\n");
     uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
     char str[64];
     if (dht11_get(&humidity_integer, &humidity_decimal, &temperature_integer, &temperature_decimal) == DHT11_OK) {
@@ -86,13 +87,13 @@ int getHum(){
 }
 
 int getWaterMeasurement(){
-    pc_comm_send_string_blocking("water data called\n");
+    //pc_comm_send_string_blocking("water data called\n");
     uint16_t temporaryMeasure;
     temporaryMeasure = hc_sr04_takeMeasurement_water();
-    pc_comm_send_string_blocking("water data got\n");
+    //pc_comm_send_string_blocking("water data got\n");
    if (temporaryMeasure != 0)
         {
-            pc_comm_send_string_blocking("water data return\n");
+            //pc_comm_send_string_blocking("water data return\n");
            return temporaryMeasure;
         }
         else
@@ -103,13 +104,13 @@ int getWaterMeasurement(){
 };
 
 int getFoodMeasurement(){
-    pc_comm_send_string_blocking("food data called\n");
+    //pc_comm_send_string_blocking("food data called\n");
     uint16_t temporaryMeasure;
     temporaryMeasure = hc_sr04_takeMeasurement_food();
-    pc_comm_send_string_blocking("food data got\n");
+    //pc_comm_send_string_blocking("food data got\n");
    if (temporaryMeasure != 0)
         {
-            pc_comm_send_string_blocking("food data return\n");
+            //pc_comm_send_string_blocking("food data return\n");
            return temporaryMeasure;
         }
         else
@@ -138,7 +139,7 @@ int foodMeasurementPercentage(){
 
 //method to convert measurement result into string to pass it to cloud
 char* intToString(int value) {
-    pc_comm_send_string_blocking("convert to string called\n");
+    //pc_comm_send_string_blocking("convert to string called\n");
     char buffer[3];
 
     if(value<100){
@@ -151,6 +152,6 @@ char* intToString(int value) {
     // Allocate memory for the result string and copy the buffer
     char *resultString = malloc(strlen(buffer) + 1);
     strcpy(resultString, buffer);
-    pc_comm_send_string_blocking("convert to string return\n");
+    //pc_comm_send_string_blocking("convert to string return\n");
     return resultString;
 }
