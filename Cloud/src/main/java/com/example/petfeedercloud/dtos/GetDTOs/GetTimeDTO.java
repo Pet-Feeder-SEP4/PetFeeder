@@ -10,15 +10,21 @@ public class GetTimeDTO {
     private Long timeId;
     private Long scheduleId;
     private String timeLabel;
+    private int portionSize;
     private String time;
-
-    public GetTimeDTO(Long timeId, Long scheduleId, String timeLabel, String time) {
+    public int getPortionSize() {
+        return portionSize;
+    }
+    public void setPortionSize(int portionSize) {
+        this.portionSize = portionSize;
+    }
+    public GetTimeDTO(Long timeId,int portionSize, Long scheduleId, String timeLabel, String time) {
         this.timeId = timeId;
         this.scheduleId = scheduleId;
+        this.portionSize=portionSize;
         this.timeLabel = timeLabel;
         this.time = time;
     }
-
     public Long getTimeId() {
         return timeId;
     }

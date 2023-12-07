@@ -5,6 +5,8 @@ const instance = axios.create({
 });
 
 
+
+
 instance.interceptors.request.use(
     (config) => {
       // Exclude Authorization header for login and register requests
