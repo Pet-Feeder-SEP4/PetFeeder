@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://petfeederapi.azurewebsites.net/'
+
+    baseURL: 'https://petfeederapi.azurewebsites.net/'
+
 });
+
+
 
 
 instance.interceptors.request.use(

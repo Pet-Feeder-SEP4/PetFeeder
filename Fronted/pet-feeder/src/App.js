@@ -15,8 +15,6 @@ import EditPet from "./pages/EditPet/EditPet";
 
 
 
-
-
 function App() {
   return (
     <Router> 
