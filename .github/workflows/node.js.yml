@@ -51,7 +51,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git fetch origin gh-pages
           git checkout -B gh-pages origin/gh-pages
-          git rm -r .
+          git rm -r --ignore-unmatch .
           cp -r ./build/* .
           git add .
           git commit -m "Deploy to GitHub Pages"
