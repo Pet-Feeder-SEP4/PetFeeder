@@ -15,6 +15,7 @@ import EditPet from "./pages/EditPet/EditPet";
 
 
 
+
 function App() {
   return (
     <Router> 
@@ -29,7 +30,6 @@ function App() {
       <Route path="/PetFeedersC" element={<PetFeedersC />} />
       <Route path="/dashboard/:petFeederId" element={<Dashboard />} />
       <Route path="/add-time/:scheduleId/:scheduleLabel" element={<Time />} />
-
       </Routes>
     </Router>
   );
