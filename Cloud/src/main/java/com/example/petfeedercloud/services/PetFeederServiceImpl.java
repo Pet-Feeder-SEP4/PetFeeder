@@ -10,6 +10,7 @@ import com.example.petfeedercloud.repositories.PetRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -20,18 +21,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+
 public class PetFeederServiceImpl implements PetFeederService{
 
     @Autowired
     private PetFeederRepository petFeederRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PetRepository petRepository;
-
-    private ObjectMapper objectMapper;
 
     @Override
     public List<PetFeederDTO> getAllPetFeeders() {
@@ -46,6 +44,15 @@ public class PetFeederServiceImpl implements PetFeederService{
     }
 
     @Override
+    public void createPetFeeder(PetFeederDTO petFeederDTO) {
+        try {
+            PetFeeder petFeeder = convertToEntity(petFeederDTO);
+            petFeederRepository.save(petFeeder);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+    @Override
     public void saveOrUpdatePetFeeder(PetFeederDTO petFeeder) {
         try {
             Long id = petFeeder.getPetFeederId();
@@ -59,6 +66,7 @@ public class PetFeederServiceImpl implements PetFeederService{
                 existingPF.setFoodLevel(petFeeder.getFoodLevel());
                 existingPF.setWaterTemperture(petFeeder.getWaterTemperture());
                 existingPF.setLowLevelFood(petFeeder.getLowLevelFood());
+                existingPF.setWaterLevel(petFeeder.getWaterLevel());
 
                 Long userId = petFeeder.getUserId();
                 //Long scheduleId = petFeeder.getScheduleId();
@@ -84,6 +92,7 @@ public class PetFeederServiceImpl implements PetFeederService{
                 //When schedule is implemented change null
                // petF.setSchedule(null);
                 petF.setLowLevelFood(petFeeder.getLowLevelFood());
+                petF.setWaterLevel(petFeeder.getWaterLevel());
                 petF.setFoodLevel(petFeeder.getFoodLevel());
                 petF.setFoodHumidity(petFeeder.getFoodHumidity());
                 petF.setWaterTemperture(petFeeder.getWaterTemperture());
@@ -108,7 +117,6 @@ public class PetFeederServiceImpl implements PetFeederService{
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
     @Override
     public void setActivePetFeeder(Long userId, Long petId, Long petFeederId) {
         try {
@@ -152,10 +160,33 @@ public class PetFeederServiceImpl implements PetFeederService{
         }
     }
 
+    private PetFeeder convertToEntity(PetFeederDTO petFeederDTO) {
+        PetFeeder petFeeder = new PetFeeder();
+        petFeeder.setPetFeederLabel(petFeederDTO.getPetFeederLabel());
+        petFeeder.setFoodLevel(petFeederDTO.getFoodLevel());
+        petFeeder.setLowLevelFood(petFeederDTO.getLowLevelFood());
+        petFeeder.setFoodHumidity(petFeederDTO.getFoodHumidity());
+        petFeeder.setWaterTemperture(petFeederDTO.getWaterTemperture());
+
+        // Fetch associated User and Pet entities
+        UserP user = userRepository.findById(petFeederDTO.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        Pet pet = petRepository.findById(petFeederDTO.getPetId())
+                .orElseThrow(() -> new NotFoundException("Pet not found"));
+
+        // Set associations
+        petFeeder.setUser(user);
+        petFeeder.setPet(pet);
+
+        return petFeeder;
+    }
+
     private PetFeederDTO convertToDto(PetFeeder pf) {
         PetFeederDTO pfDTO = new PetFeederDTO();
         pfDTO.setPetFeederId(pf.getPetFeederId());
         pfDTO.setPetFeederLabel(pf.getPetFeederLabel());
+        pfDTO.setWaterLevel(pf.getWaterLevel());
         pfDTO.setFoodHumidity(pf.getFoodHumidity());
         pfDTO.setFoodLevel(pf.getFoodLevel());
         pfDTO.setWaterTemperture(pf.getWaterTemperture());

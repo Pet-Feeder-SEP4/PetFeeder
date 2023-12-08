@@ -16,12 +16,18 @@ public class PetFeederDTO {
     private int lowLevelFood;
     private int foodHumidity;
     private int waterTemperture;
+    private int waterLevel;
     private Long userId;
     private Long scheduleId;
     private Long petId;
 
     private boolean active = false;
-
+    public int getWaterLevel() {
+        return waterLevel;
+    }
+    public void setWaterLevel(int waterLevel) {
+        this.waterLevel = waterLevel;
+    }
     public Long getPetFeederId() {
         return petFeederId;
     }

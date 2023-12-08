@@ -17,7 +17,7 @@ function NavBar() {
            
           </Nav>
           <Nav>
-            <Nav.Link style={{ fontFamily: "Poppins"}} href="#home">Home</Nav.Link> {/* replace link */}
+            <Nav.Link style={{ fontFamily: "Poppins"}} href="/MainPage/">Home</Nav.Link>
             
           </Nav>
         </Navbar.Collapse>
