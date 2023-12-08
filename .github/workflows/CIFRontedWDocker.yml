@@ -42,6 +42,6 @@ jobs:
         run: |
           docker build -t martamadeira/pet-feeder:latest ./Fronted/pet-feeder
           docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
-          docker push martmadeira/pet-feeder:latest
+          docker push martamadeira/pet-feeder:latest
 
 
