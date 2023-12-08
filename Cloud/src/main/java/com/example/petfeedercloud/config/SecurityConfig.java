@@ -34,6 +34,7 @@ public class SecurityConfig{
             "/swagger-ui/**",
             "/webjars/**",
             "/",
+            "/petfeeder/info/**",
             "/swagger-ui.html"};
 
     @Bean

@@ -25,6 +25,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private PetFeederService petFeederService;
 
+    @Autowired
+    private WebSocketPetFeeder webSocketPetFeeder;
+
     private static final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Override
@@ -46,11 +49,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
             pfd.setFoodLevel(Integer.parseInt(String.valueOf(value.get("foodLevel"))));
             pfd.setFoodHumidity(Integer.parseInt(String.valueOf(value.get("foodHumidity"))));
             pfd.setWaterTemperture(Integer.parseInt(String.valueOf(value.get("waterTemperature"))));
-            //pfd.setWaterLevel(Integer.parseInt(String.valueOf(value.get("waterLevel"))));
+            pfd.setWaterLevel(Integer.parseInt(String.valueOf(value.get("waterLevel"))));
             pfd.setPetFeederId(pf.getPetFeederId());
             pfd.setLowLevelFood(pfd.getLowLevelFood());
             pfd.setPetFeederLabel(pf.getPetFeederLabel());
             petFeederService.saveOrUpdatePetFeeder(pfd);
+            webSocketPetFeeder.sendPetFeederUpdateToSessions(pfd.getPetFeederId());
         }
     }
 
@@ -84,30 +88,4 @@ public class WebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
-
-    /*public void sendPetFeederUpdateToSessions(Long petFeederId) throws JsonProcessingException {
-       PetDTO p = petService.getPetById(petFeederId);
-        String petJson = "petService.convertPetToJson(p)";
-        for (WebSocketSession session : sessions) {
-            Map<String, Object> attributes = session.getAttributes();
-            Long sessionPetFeederId = Long.valueOf(String.valueOf(attributes.get("petFeederId")));
-            if (petFeederId.equals(sessionPetFeederId)) {
-                try {
-                    session.sendMessage(new TextMessage(petJson));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
-
-    /*private String extractPetFeederIdFromUrl(WebSocketSession session) {
-        String url = session.getUri().toString();
-        String petFeederId = null;
-        int index = url.lastIndexOf("/");
-        if (index != -1 && index < url.length() - 1) {
-            petFeederId = url.substring(index + 1);
-        }
-        return petFeederId;
-    }*/
 }
