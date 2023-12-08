@@ -1,0 +1,1 @@
+void sensor_get_data();
