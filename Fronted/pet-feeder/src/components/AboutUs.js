@@ -22,7 +22,7 @@ const Aboutpage = () => {
   ];
 
   return (
-    <div className="work-section-wrapper">
+    <div className="work-section-wrapper" style={{ minHeight: '800px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <div className="work-section-top">
         <h1 className="primary-heading white-text">HOW IT WORKS</h1>
         <p className="txxxt white-text">
@@ -31,7 +31,7 @@ const Aboutpage = () => {
       </div>
       <div className="work-section-bottom">
         {workInfoData.map((data) => (
-          <div className="work-section-info white-text" id="card-about" key={data.title}>
+          <div className="work-section-info shadow-lg" id="card-about" key={data.title}>
             <div className="info-boxes-img-container">
               {data.icon}
             </div>
