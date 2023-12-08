@@ -1,0 +1,45 @@
+name: Node.js CI & Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: ./Fronted/pet-feeder/package-lock.json
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./Fronted/pet-feeder
+
+      - name: Build
+        run: npm run build --if-present
+        working-directory: ./Fronted/pet-feeder
+
+      - name: Test
+        run: npm test
+        working-directory: ./Fronted/pet-feeder
+
+       - name: Dockerize and Push
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        run: |
+          docker build -t martamadeira/pet-feeder:latest ./Fronted/pet-feeder
+          docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
+          docker push martmadeira/pet-feeder:latest
