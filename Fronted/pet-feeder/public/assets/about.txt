@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Amiri
+- Font Author: Copyright 2010-2022 The Amiri Project Authors (https://github.com/aliftype/amiri).
+- Font Source: http://fonts.gstatic.com/s/amiri/v27/J7aRnpd8CGxBHqUpvrIw74NL.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

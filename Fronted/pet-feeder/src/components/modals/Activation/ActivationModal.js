@@ -47,7 +47,7 @@ function ActivationModal({ showModal, handleClose }) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={activateAccount} style={{...fontFamilyStyles, backgroundColor: '#AAC88F', border: '1px solid #AAC88F'}}>
-          Activate Account
+          Activate 
         </Button>
       </Modal.Footer>
     </Modal>
