@@ -2,20 +2,14 @@
 FROM node:14-alpine
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /pet-feeder
 
 # Copy package.json and package-lock.json to the working directory
-COPY ./PetFeeder/Fronted/pet-feeder/package*.json ./
+COPY public/ /pet-feeder/public
+COPY src/ /pet-feeder/src
+COPY package.json /pet-feeder/
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the working directory
-COPY ./PetFeeder/Fronted/pet-feeder/src ./src
-COPY ./PetFeeder/Fronted/pet-feeder/public ./public
-
-# Build the application
-RUN npm run build
-
-# Specify the command to run on container startup
 CMD ["npm", "start"]
