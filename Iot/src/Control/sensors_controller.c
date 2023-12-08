@@ -1,3 +1,4 @@
+#include "sensor_controller.h"
 #include "pc_comm.h"
 #include <stdio.h>
 #include <string.h>
@@ -5,16 +6,25 @@
 #include <dht11.h>
 #include <stdio.h>
 #include "hc_sr04.h"
-#include <stdlib.h>  // for malloc
 #include <util/delay.h>
 
 uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
 uint16_t measure;
+char str[64];
 int temperature;
 int humidity;
-char* waterMeasurement;
-char* foodMeasurement;
+int waterMeasurement;
+int foodMeasurement;
 int idNumber;
+
+// Function prototypes
+void sensor_init();
+//char* sensor_get_data();
+int getHum();
+int getTemp();
+int getWaterMeasurement();
+int getFoodMeasurement();
+
 
 int getTemp(){
     //pc_comm_send_string_blocking("water data called\n");
@@ -32,13 +42,31 @@ int getHum(){
 }
 
 int getWaterMeasurement(){
-    return hc_sr04_takeMeasurement_water();
+    uint16_t temporaryMeasure;
+    temporaryMeasure = hc_sr04_takeMeasurement_water();
+   if (temporaryMeasure != 0)
+        {
+           return temporaryMeasure;
+        }
+        else
+        {
+            // Print an error message if the read operation fails
+            pc_comm_send_string_blocking("Invalid water measurement\n");
+        }
 };
 
 int getFoodMeasurement(){
-    pc_comm_init(9600,NULL);
-    pc_comm_send_string_blocking("food called");
-    return hc_sr04_takeMeasurement_food();
+    uint16_t temporaryMeasure;
+    temporaryMeasure = hc_sr04_takeMeasurement_food();
+   if (temporaryMeasure != 0)
+        {
+           return temporaryMeasure;
+        }
+        else
+        {
+            // Print an error message if the read operation fails
+            pc_comm_send_string_blocking("Invalid food measurement\n");
+        }
 };
 
 int waterMeasurementPercentage(){
@@ -55,24 +83,4 @@ int foodMeasurementPercentage(){
     int temporaryMeasure=getFoodMeasurement();
     int result= (temporaryMeasure*100)/ capacity;
     return result;
-}
-
-
-//method to convert measurement result into string to pass it to cloud
-char* intToString(int value) {
-    
-    char buffer[3];
-
-    if(value<100){
-        // Convert the integer to a string using sprintf with a 0 in front
-    sprintf(buffer, "0%d", value);
-    } else{
-        sprintf(buffer, "%d", value);
-    }
-    
-    // Allocate memory for the result string and copy the buffer
-    char *resultString = malloc(strlen(buffer) + 1);
-    strcpy(resultString, buffer);
-
-    return resultString;
 }
