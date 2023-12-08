@@ -12,13 +12,16 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
 
     private final WebSocketHandler webSocketHandler;
+    private final WebSocketPetFeeder webSocketPetFeeder;
 
-    public WebSocketConfig(WebSocketHandler webSocketHandler) {
+    public WebSocketConfig(WebSocketHandler webSocketHandler, WebSocketPetFeeder webSocketPetFeeder) {
         this.webSocketHandler = webSocketHandler;
+        this.webSocketPetFeeder = webSocketPetFeeder;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "").setAllowedOrigins("*");
+        registry.addHandler(webSocketPetFeeder, "/petfeeder/info/{petFeederId}").setAllowedOrigins("*");
     }
 }
