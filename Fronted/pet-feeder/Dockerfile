@@ -5,13 +5,14 @@ FROM node:14-alpine
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json to the working directory
-COPY ./Fronted/pet-feeder/package*.json ./
+COPY ./PetFeeder/Fronted/pet-feeder/package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application code to the working directory
-COPY ./Fronted/pet-feeder ./
+COPY ./PetFeeder/Fronted/pet-feeder/src ./src
+COPY ./PetFeeder/Fronted/pet-feeder/public ./public
 
 # Build the application
 RUN npm run build
