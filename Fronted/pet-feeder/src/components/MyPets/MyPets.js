@@ -43,7 +43,7 @@ const MyPets = () => {
   const handleRemove = async (petId) => {
     console.log('Pet ID to be removed:', petId);
     try {
-      await axios.delete(`https://peefee.azurewebsites.net/pets/${petId}`, {
+      await axios.delete(`/pets/${petId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
