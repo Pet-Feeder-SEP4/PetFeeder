@@ -27,7 +27,6 @@ function App() {
       <Route path="/CreatePet" element={<CreatePet />} />
       <Route path="/MainPage" element={<MainPage />} />
       <Route path="/EditPet/:petId" element={<EditPet />} />
-      <Route path="/PetFeedersC" element={<PetFeedersC />} />
       <Route path="/dashboard/:petFeederId" element={<Dashboard />} />
       <Route path="/add-time/:scheduleId/:scheduleLabel" element={<Time />} />
       </Routes>
