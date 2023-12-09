@@ -16,18 +16,18 @@ int main() {
     wifi_init();
     sensor_init();
     // Use a private connection
-    wifi_command_join_AP("Redmi 9C NFC","santi32411");
+    wifi_command_join_AP("Mamalo","Iker1234");
     // Connect to backend server
-    wifi_command_create_TCP_connection("192.168.43.83", 23, wifi_data_callback , received_message_buffer_static_pointer);
+    wifi_command_create_TCP_connection("172.20.10.2", 23, wifi_data_callback , received_message_buffer_static_pointer);
     
     while (1) {
         //sensor_get_data();
         //String with specified data
         //Formated data
 
-        rotate(-50,10);
+        //rotate(-50,10);
 
-        //wifi_command_TCP_transmit(100,"hello");
+        wifi_command_TCP_transmit(sensor_get_data(),100);
         
         // Delay for 30 minutes 
         //sleep(30 * 60); // Sleep for 30 minutes
