@@ -390,7 +390,7 @@ ISR(USART2_UDRE_vect)
     // Check if we have more data to send
     if (usart2_transmit_index < usart2_transmit_length)
     {
-        UDR2 = usart2_transmit_buffer[usart0_transmit_index++]; // Send next character and increment index
+        UDR2 = usart2_transmit_buffer[usart2_transmit_index++]; // Send next character and increment index
     }
     else
     {
