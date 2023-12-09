@@ -133,7 +133,7 @@ const Time = () => {
       </div>
       <div style={{ marginTop: '20vh', padding: '0 20px', boxSizing: 'border-box' }}>
         <div style={{ marginTop: '230px' }}>
-          <h3>
+          <h3 style={font}>
             Add a Time to <span style={{ color: '#AAC88F' }}>{scheduleLabel}</span> Schedule
           </h3>
         </div>
@@ -141,7 +141,7 @@ const Time = () => {
         {/* Add Time Form */}
         <div style={{ marginBottom: '20px' }}>
           <div style={{ marginBottom: '10px' }}>
-            <label htmlFor="timeLabel">Time Label:</label>
+            <label style={font} htmlFor="timeLabel">Time Label:</label>
             <br />
             <input
               type="text"
@@ -153,7 +153,7 @@ const Time = () => {
           </div>
 
           <div style={{ marginBottom: '10px' }}>
-            <label htmlFor="time">Time:</label>
+            <label style={font} htmlFor="time">Time:</label>
             <br />
             <input
               type="time"
@@ -167,7 +167,7 @@ const Time = () => {
         </div>
 
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="portionSize">Portion Size:</label>
+          <label style={font} htmlFor="portionSize">Portion Size:</label>
           <br />
           <input
             type="number"
