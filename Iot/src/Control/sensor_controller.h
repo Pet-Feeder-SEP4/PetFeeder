@@ -1,4 +1,6 @@
 
+void getTempandHum();
+
 int getTemp();
 
 int getHum();

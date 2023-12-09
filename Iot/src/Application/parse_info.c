@@ -20,6 +20,7 @@ int idNumber;
 void sensor_get_data(){
     pc_comm_init(9600, NULL);
     //pc_comm_send_string_blocking("sensor class called\n");
+    getTempandHum();
     temperature=getTemp();
     humidity=getHum();
     idNumber=555;
