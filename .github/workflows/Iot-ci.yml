@@ -3,10 +3,10 @@ name: IoT Test
 on:
   push:
     branches:
-      - IoT_test
+      - main
   pull_request:
     branches:
-      - IoT_test
+      - main
 
 jobs:
   test:
