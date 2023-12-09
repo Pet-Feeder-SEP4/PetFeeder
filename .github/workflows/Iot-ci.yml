@@ -36,5 +36,5 @@ jobs:
 
     - name: Run Sensor test
       run: |
-        cd IoT
+        cd Iot
         pio test -e win_test -f "test_control"
