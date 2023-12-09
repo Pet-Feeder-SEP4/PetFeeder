@@ -1,8 +1,8 @@
 package com.example.petfeedercloud.controllers;
 
+import com.example.petfeedercloud.dtos.GetDTOs.GetNotificationDTO;
 import com.example.petfeedercloud.dtos.NotificationDTO;
 import com.example.petfeedercloud.services.NotificationService;
-import com.example.petfeedercloud.services.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +38,19 @@ public class NotificationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/pet-feeder/{petFeederId}")
+    public ResponseEntity<GetNotificationDTO> getNotificationByPetFeederId(@PathVariable Long petFeederId) {
+        try {
+            GetNotificationDTO GetNotificationDTO = notificationService.getNotificationByPetFeederId(petFeederId);
+            if (GetNotificationDTO != null) {
+                return new ResponseEntity<>(GetNotificationDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PutMapping("/{notificationId}/activate")
     public ResponseEntity<Void> activateNotification(@PathVariable Long notificationId) {
         try {

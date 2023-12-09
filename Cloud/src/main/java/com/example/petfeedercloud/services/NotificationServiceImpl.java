@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.services;
 
+import com.example.petfeedercloud.dtos.GetDTOs.GetNotificationDTO;
 import com.example.petfeedercloud.dtos.NotificationDTO;
 import com.example.petfeedercloud.models.Notification;
 import com.example.petfeedercloud.models.PetFeeder;
@@ -53,6 +54,16 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
+    public GetNotificationDTO getNotificationByPetFeederId(Long petFeederId) {
+        try {
+            Notification existingNotification = notificationRepository.getNotificationByPetFeederId(petFeederId);
+            return convertToDTO(existingNotification);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
     public void deactivateNotification(Long notificationId) {
         try {
             Notification existingNotification = notificationRepository.findById(notificationId)
@@ -70,5 +81,17 @@ public class NotificationServiceImpl implements NotificationService{
         PetFeeder petFeeder = petFeederRepository.findByPetFeederId(notificationDTO.getPetFeeder());
         Notification notification = new Notification( notificationDTO.getFoodLevel(),notificationDTO.getFoodHumidity(), notificationDTO.getWaterTemperture(), notificationDTO.getWaterLevel(), petFeeder,notificationDTO.isActive());
         return notification;
+    }
+    public GetNotificationDTO convertToDTO(Notification notification){
+        GetNotificationDTO notificationDTO = new GetNotificationDTO();
+        notificationDTO.setNotificationId(notification.getNotificationId());
+        notificationDTO.setActive(notification.isActive());
+        notificationDTO.setFoodLevel(notification.getFoodLevel());
+        notificationDTO.setFoodHumidity(notification.getFoodHumidity());
+        notificationDTO.setWaterTemperture(notification.getWaterTemperture());
+        notificationDTO.setWaterLevel(notification.getWaterLevel());
+        notificationDTO.setPetFeeder(notification.getPetFeeder().getPetFeederId());
+
+        return notificationDTO;
     }
 }
