@@ -21,7 +21,7 @@ const Time = () => {
   useEffect(() => {
     if (isTokenValid === false) {
       // Redirect to login if the token is not valid
-      navigate('/LogIn'); // Replace '/login' with the actual login route
+      navigate('/LogIn'); 
     } 
   }, [isTokenValid]);
 
