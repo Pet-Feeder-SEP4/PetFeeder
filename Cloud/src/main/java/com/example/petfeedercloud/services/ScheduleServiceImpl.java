@@ -3,11 +3,9 @@ package com.example.petfeedercloud.services;
 import com.example.petfeedercloud.dtos.ScheduleDTO;
 import com.example.petfeedercloud.models.PetFeeder;
 import com.example.petfeedercloud.models.Schedule;
+import com.example.petfeedercloud.models.Time;
 import com.example.petfeedercloud.models.UserP;
-import com.example.petfeedercloud.repositories.PetFeederRepository;
-import com.example.petfeedercloud.repositories.PetRepository;
-import com.example.petfeedercloud.repositories.ScheduleRepository;
-import com.example.petfeedercloud.repositories.UserRepository;
+import com.example.petfeedercloud.repositories.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
     private final PetFeederRepository petFeederRepository;
+    private final TimeRepository timeRepository;
 
     @Override
     public ScheduleDTO getScheduleById(Long scheduleId) {
@@ -68,6 +67,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
     @Override
     public void deleteSchedule(Long scheduleId) {
+        List<Time> times = timeRepository.findByScheduleId(scheduleId);
+        for (Time time : times) {
+            timeRepository.deleteById(time.getTimeId());
+        }
         scheduleRepository.deleteById(scheduleId);
     }
 

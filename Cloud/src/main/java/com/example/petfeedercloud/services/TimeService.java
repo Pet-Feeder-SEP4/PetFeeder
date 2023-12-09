@@ -8,7 +8,7 @@ import com.example.petfeedercloud.models.Time;
 import java.util.List;
 
 public interface TimeService {
-    List<TimeDTO> getTimeByScheduleId(Long scheduleId);
+    List<GetTimeDTO> getTimeByScheduleId(Long scheduleId);
     TimeDTO getTimeById(Long timeId);
     void deleteTime(Long timeId);
     GetTimeDTO createTime(TimeDTO timeDTO);

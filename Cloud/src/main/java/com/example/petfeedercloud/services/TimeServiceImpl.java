@@ -21,11 +21,11 @@ public class TimeServiceImpl implements TimeService{
     private final ScheduleRepository scheduleRepository;
     private final TimeRepository timeRepository;
     @Override
-    public List<TimeDTO> getTimeByScheduleId(Long scheduleId) {
+    public List<GetTimeDTO> getTimeByScheduleId(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new EntityNotFoundException("Schedule with id " + scheduleId + " not found"));
         return timeRepository.findByScheduleId(schedule.getScheduleId()).stream()
-                .map(this::mapToDTO)
+                .map(this::mapToDTOTime)
                 .collect(Collectors.toList());
     }
 
@@ -92,6 +92,18 @@ public class TimeServiceImpl implements TimeService{
     }
 
     //helpers
+
+    private GetTimeDTO mapToDTOTime(Time time) {
+        GetTimeDTO timeDTO = new GetTimeDTO();
+        timeDTO.setScheduleId(time.getSchedule().getScheduleId());
+        timeDTO.setTimeLabel(time.getTimeLabel());
+        timeDTO.setTime(time.getTime());
+        timeDTO.setTimeId(time.getTimeId());
+        if (time.getPortionSize() > 0 && time.getPortionSize() < 1000)
+            timeDTO.setPortionSize(time.getPortionSize());
+
+        return timeDTO;
+    }
     private TimeDTO mapToDTO(Time time) {
         TimeDTO timeDTO = new TimeDTO();
         timeDTO.setScheduleId(time.getSchedule().getScheduleId());
