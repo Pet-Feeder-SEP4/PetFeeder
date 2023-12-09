@@ -1,5 +1,6 @@
 #ifdef WINDOWS_TEST
 #include "mock_avr_io.h"
+
 #else
 #include <avr/io.h>
 #include <avr/interrupt.h>

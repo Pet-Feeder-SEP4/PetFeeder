@@ -6,7 +6,7 @@
 #include <util/delay.h>
 #include "hc_sr04.h"
 #include "parse_info.h"
-#include "Control/sensor_controller.h"
+#include "sensor_controller.h"
 
 
 
@@ -22,8 +22,8 @@ void app_init(){
     dht11_init();
     hc_sr04_init();
     wifi_init();
-    wifi_command_join_AP("Redmi 9C NFC","santi32411");
-    wifi_command_create_TCP_connection("192.168.43.83", 23, tcpCallback, buffer);
+    wifi_command_join_AP("Mamalo","Iker1234");
+    wifi_command_create_TCP_connection("172.20.10.2", 23, tcpCallback,buffer);
 }
 
 void app_start(void){
