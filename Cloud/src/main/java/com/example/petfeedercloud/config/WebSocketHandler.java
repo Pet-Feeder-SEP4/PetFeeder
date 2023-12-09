@@ -81,7 +81,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
             if(petFeederId == sessionPetFeederId){
                 try{
                     System.out.println(String.valueOf(attributes.get("petFeederId"))+"test");
-                    webSocketSession.sendMessage(new TextMessage("   DIS:"+portion));
+                    webSocketSession.sendMessage(new TextMessage("DIS:"+portion));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
