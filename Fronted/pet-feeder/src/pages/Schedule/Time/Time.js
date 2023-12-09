@@ -118,6 +118,9 @@ useEffect(()=>{
     
   };
 
+  const font ={
+    fontFamily: 'Poppins, sans-serif',
+  }
   return (
     <div>
       <NavBar />
@@ -126,7 +129,7 @@ useEffect(()=>{
       </div>
       <div style={{ marginTop: '20vh', padding: '0 20px', boxSizing: 'border-box' }}>
         <div style={{marginTop: "230px"}}>
-          <h3 >
+          <h3 style={font}>
             Add a Time to <span style={{ color: '#AAC88F' }}>{scheduleLabel}</span> Schedule
           </h3>
         </div>
@@ -136,7 +139,7 @@ useEffect(()=>{
 {/* Add Time Form */}
 <div style={{ marginBottom: '20px' }}>
   <div style={{ marginBottom: '10px' }}>
-    <label htmlFor="timeLabel">Time Label:</label>
+    <label style={font} htmlFor="timeLabel">Time Label:</label>
     <br />
     <input
       type="text"
@@ -148,7 +151,7 @@ useEffect(()=>{
   </div>
 
   <div style={{ marginBottom: '10px' }}>
-    <label htmlFor="time">Time:</label>
+    <label style={font} htmlFor="time">Time:</label>
     <br />
     <input
       type="time"
@@ -162,7 +165,7 @@ useEffect(()=>{
 </div>
 
 <div style={{ marginBottom: '10px' }}>
-  <label htmlFor="portionSize">Portion Size:</label>
+  <label style={font} htmlFor="portionSize">Portion Size:</label>
   <br />
   <input
     type="number"
