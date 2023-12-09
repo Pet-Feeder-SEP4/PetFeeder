@@ -46,7 +46,7 @@ public class TimeController {
             if (scheduleDTO == null) {
                 return new ResponseEntity<>("Schedule with id " + scheduleId + " does not exist.", HttpStatus.NOT_FOUND);
             }
-            List<TimeDTO> times = timeService.getTimeByScheduleId(scheduleId);
+            List<GetTimeDTO> times = timeService.getTimeByScheduleId(scheduleId);
             return ResponseEntity.ok(times);
         } catch (NotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -107,8 +107,12 @@ public class TimeController {
     @DeleteMapping("/{timeId}")
     public ResponseEntity<?> deleteTime(@PathVariable Long timeId) {
         try {
+            TimeDTO existingTime = timeService.getTimeById(timeId);
+            if (existingTime == null) {
+                return new ResponseEntity<>("Time with id " + timeId + " not found.", HttpStatus.NOT_FOUND);
+            }
             timeService.deleteTime(timeId);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Time with id "+timeId+" deleted successfully");
         } catch (NotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {

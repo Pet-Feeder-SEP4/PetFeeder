@@ -87,16 +87,22 @@ public class ScheduleController {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //this is commented because if we delete the schedule we need to  delete the times
-    // and if we delete the times we need to delete the portions
-    //none of these are done
-    /*
+
     @DeleteMapping("/{scheduleId}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId) {
-        scheduleService.deleteSchedule(scheduleId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> deleteSchedule(@PathVariable Long scheduleId) {
+        try {
+            ScheduleDTO existingSchedule = scheduleService.getScheduleById(scheduleId);
+            if (existingSchedule == null) {
+                return new ResponseEntity<>("Schedule with id " + scheduleId + " not found.", HttpStatus.NOT_FOUND);
+            }
+            scheduleService.deleteSchedule(scheduleId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Schedule with id "+scheduleId+" deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting schedule");
+        }
     }
-    */
+
+
     @Operation(summary = "Create schedulee", description = "Creates the schedule and return it")
     @PostMapping
     public ResponseEntity<?> createSchedule(@RequestBody ScheduleDTO scheduleDTO) {

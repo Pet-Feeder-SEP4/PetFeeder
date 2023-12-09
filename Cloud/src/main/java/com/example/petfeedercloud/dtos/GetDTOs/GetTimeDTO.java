@@ -25,6 +25,9 @@ public class GetTimeDTO {
         this.timeLabel = timeLabel;
         this.time = time;
     }
+    public GetTimeDTO() {
+
+    }
     public Long getTimeId() {
         return timeId;
     }
