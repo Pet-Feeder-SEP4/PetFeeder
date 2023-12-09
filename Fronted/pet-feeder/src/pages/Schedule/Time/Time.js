@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../../../components/Navbar/Navbar';
 import axios from '../../../api/axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -9,11 +11,10 @@ const Time = () => {
   const { scheduleId, scheduleLabel } = useParams();
   const [timeLabel, setTimeLabel] = useState('');
   const [time, setTime] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  const [loadingRemove, setLoadingRemove] = useState(false);
   const [times, setTimes] = useState([]);
-  const [portionSize, setPortionSize] = useState ('');
- 
-
+  const [portionSize, setPortionSize] = useState('');
 
   const isTokenValid = useVerifyToken();
   const navigate = useNavigate();
@@ -28,23 +29,18 @@ const Time = () => {
 
   const handleAddTime = async () => {
     try {
-      setLoading(true);
+      setLoadingAdd(true);
 
-      if (!portionSize || isNaN(portionSize) || portionSize < 1 || portionSize> 999){
-     
+      if (!portionSize || isNaN(portionSize) || portionSize < 1 || portionSize > 999) {
         console.error('Portion size is not valid');
         return;
       }
 
-   
       const response = await axios.post(`/time/${scheduleId}`, {
         scheduleId: scheduleId,
         timeLabel: timeLabel,
         time: time,
         portionSize: portionSize,
-      
-     
-
       });
 
       console.log('Data added successfully:', response.data);
@@ -52,44 +48,53 @@ const Time = () => {
       // Update the list of times
       fetchTimes();
 
-   
-
       // You can perform any additional actions after successful time addition.
 
     } catch (error) {
       console.error('Error adding time:', error);
-
-
-      // Handle errors or show a user-friendly message.
     } finally {
-      setLoading(false);
+      setLoadingAdd(false);
     }
   };
 
+  const handleRemoveTime = async (timeId) => {
+    try {
+      setLoadingRemove(true);
 
+      // Call the endpoint to remove the specific time
+      await axios.delete(`/time/${timeId}`);
+
+      // Update the list of times
+      fetchTimes();
+
+      // Additional actions after successful removal can be performed here.
+
+    } catch (error) {
+      console.error('Error removing time:', error);
+    } finally {
+      setLoadingRemove(false);
+    }
+  };
 
   const fetchTimes = async () => {
     try {
-      const response = await axios.get(`/time/schedule/${scheduleId}`, {
-        scheduleId: scheduleId
-      });
+      const response = await axios.get(`/time/schedule/${scheduleId}`);
       setTimes(response.data);
     } catch (error) {
       console.error('Error fetching times:', error);
     }
   };
 
-useEffect(()=>{
+  useEffect(() => {
     fetchTimes();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  
   const inputStyle = {
     fontFamily: 'Poppins, sans-serif',
     fontSize: '16px',
     padding: '8px',
-    marginBottom: '10px', // Add marginBottom to create space between inputs
+    marginBottom: '10px',
     borderRadius: '4px',
     border: '1px solid #BBB',
     backgroundColor: 'white',
@@ -97,11 +102,11 @@ useEffect(()=>{
     width: '100%',
     maxWidth: '550px',
   };
-  
+
   const timeInputStyle = {
-    ...inputStyle, // Include the common styles
-    marginTop: '0', 
-    maxWidth: "150px"
+    ...inputStyle,
+    marginTop: '0',
+    maxWidth: '150px',
   };
 
   const buttonStyle = {
@@ -113,9 +118,8 @@ useEffect(()=>{
     backgroundColor: '#AAC88F',
     color: '#fff',
     cursor: 'pointer',
-    width: '100%', // Added width for responsiveness
-    maxWidth: "100px",
-    
+    width: '100%',
+    maxWidth: '100px',
   };
 
   const font ={
@@ -128,83 +132,85 @@ useEffect(()=>{
         <h1 style={{ fontFamily: "'Poppins', sans-serif", color: '#fff', fontSize: '18px' }}>FEEDING SCHEDULE</h1>
       </div>
       <div style={{ marginTop: '20vh', padding: '0 20px', boxSizing: 'border-box' }}>
-        <div style={{marginTop: "230px"}}>
-          <h3 style={font}>
+        <div style={{ marginTop: '230px' }}>
+          <h3>
             Add a Time to <span style={{ color: '#AAC88F' }}>{scheduleLabel}</span> Schedule
           </h3>
         </div>
 
-      
+        {/* Add Time Form */}
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="timeLabel">Time Label:</label>
+            <br />
+            <input
+              type="text"
+              id="timeLabel"
+              value={timeLabel}
+              onChange={(e) => setTimeLabel(e.target.value)}
+              style={inputStyle}
+            />
+          </div>
 
-{/* Add Time Form */}
-<div style={{ marginBottom: '20px' }}>
-  <div style={{ marginBottom: '10px' }}>
-    <label style={font} htmlFor="timeLabel">Time Label:</label>
-    <br />
-    <input
-      type="text"
-      id="timeLabel"
-      value={timeLabel}
-      onChange={(e) => setTimeLabel(e.target.value)}
-      style={inputStyle}
-    />
-  </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="time">Time:</label>
+            <br />
+            <input
+              type="time"
+              id="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              style={timeInputStyle}
+              step="1"
+            />
+          </div>
+        </div>
 
-  <div style={{ marginBottom: '10px' }}>
-    <label style={font} htmlFor="time">Time:</label>
-    <br />
-    <input
-      type="time"
-      id="time"
-      value={time}
-      onChange={(e) => setTime(e.target.value)}
-      style={timeInputStyle}
-      step="1"
-    />
-  </div>
-</div>
+        <div style={{ marginBottom: '10px' }}>
+          <label htmlFor="portionSize">Portion Size:</label>
+          <br />
+          <input
+            type="number"
+            id="portionSize"
+            value={portionSize}
+            onChange={(e) => setPortionSize(e.target.value)}
+            style={timeInputStyle}
+            min="1"
+            max="999"
+            maxLength="3"
+          />
+        </div>
 
-<div style={{ marginBottom: '10px' }}>
-  <label style={font} htmlFor="portionSize">Portion Size:</label>
-  <br />
-  <input
-    type="number"
-    id="portionSize"
-    value={portionSize}
-    onChange={(e) => setPortionSize(e.target.value)}
-    style={timeInputStyle}
-    min="1"
-    max="999"
-    maxLength="3"
-  />
-</div>
-
-
-<button onClick={handleAddTime} disabled={loading} style={buttonStyle}>
-  {loading ? 'Adding...' : 'Add'}
-</button>
+        <button onClick={handleAddTime} disabled={loadingAdd} style={buttonStyle}>
+          {loadingAdd ? 'Adding...' : 'Add'}
+        </button>
 
         {/* Display created times */}
         <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap' }}>
-  {times.map((timeItem, index) => (
-    <div key={timeItem.timeId} className="card-container" style={{ marginBottom: '10px', marginRight: '10px', width: '300px' }}>
-      <div className="card" style={{ width: '100%' }}>
-        <div className="card-body">
-          <h5 className="card-title">{timeItem.timeLabel}</h5>
-          <p className="card-text">{timeItem.time}</p>
-          <p className="card-portion">Portion Size: {timeItem.portionSize}</p>
-        </div>
-      </div>   
-       
-    </div>
-  ))}
-</div>
+          {times.map((timeItem) => (
+            <div key={timeItem.timeId} className="card-container" style={{ marginBottom: '10px', marginRight: '10px', width: '300px', position: 'relative' }}>
+              <div className="card" style={{ width: '100%' }}>
+                <div className="card-body">
+                  {/* X mark button to remove the time */}
+                  <button
+                    onClick={() => handleRemoveTime(timeItem.timeId)}
+                    disabled={loadingRemove}
+                    style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                  >
+                    <FontAwesomeIcon icon={faTimes} style={{ color: '#FF6868', fontSize: '20px' }} />
+                  </button>
 
+                  <h5 className="card-title">{timeItem.timeLabel}</h5>
+                  <p className="card-text">{timeItem.time}</p>
+                  <p className="card-portion">Portion Size: {timeItem.portionSize}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
-
-
 
 export default Time;
