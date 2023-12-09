@@ -8,7 +8,7 @@ function NavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" >
       <Container>
-        <Navbar.Brand href="#home"><img  src={`${process.env.PUBLIC_URL}/assets/PetBlack.png`} alt=''  className="d-inline-block align-top img-fluid"
+        <Navbar.Brand href="/MainPage"><img  src={`${process.env.PUBLIC_URL}/assets/PetBlack.png`} alt=''  className="d-inline-block align-top img-fluid"
             style={{ maxHeight: '56px' }}/></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

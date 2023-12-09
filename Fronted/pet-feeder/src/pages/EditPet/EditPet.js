@@ -12,7 +12,6 @@ const EditPet = () => {
     const isTokenValid = useVerifyToken();
     const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
     const { petId } = useParams();
 
     // State to store form data
@@ -27,22 +26,14 @@ const EditPet = () => {
     });
     
     useEffect(() => {
-        if (localStorage.getItem('token') != null) {
-            console.log("its valid bro");
-        } else {
-            console.log("log in bro");
+        if (isTokenValid === false) {
             navigate('/LogIn');
-        }
+        } 
         // get the pet data
         const fetchPetDetails = async () => {
-            if (userId && token && petId) {
+            if (userId && petId) {
                 try {
-                    const response = await axios.get(`/pets/${petId}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json',
-                        },
-                    });
+                    const response = await axios.get(`/pets/${petId}`);
 
                     const petDetails = response.data;
 
@@ -64,7 +55,7 @@ const EditPet = () => {
             }
         };
         fetchPetDetails();
-    }, [isTokenValid, navigate, userId, token, petId]);
+    }, [isTokenValid, navigate, userId, petId]);
 
 
 
