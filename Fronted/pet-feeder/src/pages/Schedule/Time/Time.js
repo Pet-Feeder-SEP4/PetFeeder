@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../../../components/Navbar/Navbar';
 import axios from '../../../api/axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import useVerifyToken from '../../../hooks/useVerifyToken'; // replace with the actual path
 
 const Time = () => {
   const { scheduleId, scheduleLabel } = useParams();
@@ -13,6 +15,17 @@ const Time = () => {
   const [loadingRemove, setLoadingRemove] = useState(false);
   const [times, setTimes] = useState([]);
   const [portionSize, setPortionSize] = useState('');
+
+  const isTokenValid = useVerifyToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isTokenValid === false) {
+      // Redirect to login if the token is not valid
+      navigate('/LogIn'); 
+    } 
+  }, [isTokenValid, navigate]);
+
 
   const handleAddTime = async () => {
     try {

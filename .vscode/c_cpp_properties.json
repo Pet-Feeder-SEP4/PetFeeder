@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Iot/lib/drivers"
             ],
             "defines": [
                 "_DEBUG",
@@ -13,7 +14,7 @@
             "cStandard": "c11",
             "cppStandard": "gnu++14",
             "intelliSenseMode": "windows-gcc-x64",
-            "compilerPath": "C:/Users/ikers/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe"
+            "compilerPath": "C:/Users/34654/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe"
         },
         {
             "name": "PlatformIO",

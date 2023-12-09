@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/Navbar/Navbar';
 import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useVerifyToken from '../../hooks/useVerifyToken';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,6 +13,17 @@ const FeedingSchedule = () => {
   const [scheduleLabel, setScheduleLabel] = useState('');
   const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useState([]);
+
+  const isTokenValid = useVerifyToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isTokenValid === false) {
+      // Redirect to login if the token is not valid
+      navigate('/LogIn'); // Replace '/login' with the actual login route
+    } 
+  }, [ isTokenValid, navigate]);
+
 
   const handleCreateSchedule = async () => {
     try {
@@ -51,10 +63,13 @@ const FeedingSchedule = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    fetchUserSchedules();
+    if (isTokenValid !== null){
+      fetchUserSchedules();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isTokenValid]);
 
   const handleActivateDeactivate = async (scheduleId, isActive) => {
     try {

@@ -3,14 +3,18 @@
 #include "pc_comm.h" 
 #include "dht11.h"
 #include <stdio.h>
+#include <util/delay.h>
 #include "hc_sr04.h"
+#include "parse_info.h"
+#include "Control/sensor_controller.h"
 
 
 
-char buffer[128];
+char buffer[8];
 
 void tcpCallback(){
-    //pc_comm_send_string_blocking(buffer);
+    pc_comm_send_string_blocking("tcpcallback called");
+    handle_received_data(buffer);
 }
 void app_init(){
     //sensor_init();
@@ -18,10 +22,13 @@ void app_init(){
     dht11_init();
     hc_sr04_init();
     wifi_init();
-    wifi_command_join_AP("ORBI54","fearlessbox180");
-    wifi_command_create_TCP_connection("192.168.1.7", 23, tcpCallback , buffer);
+    wifi_command_join_AP("Mamalo","Iker1234");
+    wifi_command_create_TCP_connection("172.20.10.2", 23, tcpCallback,buffer);
 }
 
 void app_start(void){
-
+    sensor_get_data();
+    //Delay to send data to cloud.
+    //_delay_ms(5000);
+    
 }

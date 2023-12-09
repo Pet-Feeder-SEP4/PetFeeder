@@ -10,22 +10,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const MyPets = () => {
   const [userPets, setUserPets] = useState([]);
   const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchUserPets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, token]);
+  }, [userId]);
 
   const fetchUserPets = async () => {
-    if (userId && token) {
+    if (userId) {
       try {
-        const response = await axios.get(`/pets/user/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await axios.get(`/pets/user/${userId}`);
 
         setUserPets(response.data);
         console.log('data:', response.data);
@@ -43,12 +37,9 @@ const MyPets = () => {
   const handleRemove = async (petId) => {
     console.log('Pet ID to be removed:', petId);
     try {
-      await axios.delete(`https://peefee.azurewebsites.net/pets/${petId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+
+      await axios.delete(`/pets/${petId}`);
+
 
       // Check if the deletion was successful
       setUserPets((prevPets) => prevPets.filter((pet) => pet.id !== petId));
