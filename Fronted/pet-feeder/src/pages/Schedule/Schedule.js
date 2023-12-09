@@ -1,3 +1,4 @@
+// FeedingSchedule.js
 import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/Navbar/Navbar';
 import { useParams } from 'react-router-dom';
@@ -20,10 +21,9 @@ const FeedingSchedule = () => {
   useEffect(() => {
     if (isTokenValid === false) {
       // Redirect to login if the token is not valid
-      navigate('/LogIn'); // Replace '/login' with the actual login route
-    } 
-  }, [ isTokenValid, navigate]);
-
+      navigate('/LogIn');
+    }
+  }, [isTokenValid, navigate]);
 
   const handleCreateSchedule = async () => {
     try {
@@ -63,9 +63,8 @@ const FeedingSchedule = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (isTokenValid !== null){
+    if (isTokenValid !== null) {
       fetchUserSchedules();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,6 +85,24 @@ const FeedingSchedule = () => {
 
     } catch (error) {
       console.error('Error activating/deactivating schedule:', error);
+
+      // Handle errors or show a user-friendly message.
+    }
+  };
+
+  const handleDeleteSchedule = async (scheduleId) => {
+    try {
+      await axios.delete(`/schedules/${scheduleId}`);
+
+      console.log('Schedule deleted successfully');
+
+      // Update the list of schedules
+      fetchUserSchedules();
+
+      // You can perform any additional actions after successful schedule deletion.
+
+    } catch (error) {
+      console.error('Error deleting schedule:', error);
 
       // Handle errors or show a user-friendly message.
     }
@@ -162,11 +179,20 @@ const FeedingSchedule = () => {
                       >
                         {schedule.active ? 'Deactivate' : 'Activate'}
                       </button>
+
+                      <button
+                        onClick={() => handleDeleteSchedule(schedule.scheduleId)}
+                        className="btn"
+                        style={{ fontFamily: 'Poppins, sans-serif', borderRadius: '9px', border: '1px solid #FF6961', backgroundColor: '#FF6961', color: 'white', fontSize: '12px', minWidth: '50px', marginLeft: '5px', fontWeight: '500' }}
+                      >
+                        Delete
+                      </button>
+
                       <Link
                         to={`/add-time/${schedule.scheduleId}/${encodeURIComponent(schedule.scheduleLabel)}`}
                         className="text-decoration-none"
                       >
-                        <button className="btn" style={{ color: '#06350D'}}>
+                        <button className="btn" style={{ color: '#06350D' }}>
                           <span>+</span> <FontAwesomeIcon icon={faClock} className="me-1" />
                         </button>
                       </Link>
