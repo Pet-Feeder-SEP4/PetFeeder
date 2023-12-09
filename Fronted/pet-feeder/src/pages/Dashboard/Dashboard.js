@@ -1,31 +1,70 @@
-import React from 'react';
-import {  useNavigate } from 'react-router-dom';
+
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import SideBar from '../../components/SideBar/SideBar';
 import NavBar from '../../components/Navbar/Navbar';
-import useVerifyToken from '../../hooks/useVerifyToken'; // replace with the actual path
+import DispensePop from '../../components/SideBar/DispensePop';
+import axios from "../../api/axios";
 
 const Dashboard = () => {
-  
-  const navigate = useNavigate();
-  const isTokenValid = useVerifyToken();
+  const { petFeederId } = useParams();
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const token = localStorage.getItem('token');
 
-  if (isTokenValid === null) {
-    // You can show a loading spinner or some other indication while verifying the token
-    return <p>Loading...</p>;
-  }
+  const handleDispenseClick = () => {
+    setPopupVisible(true);
+    console.log('Popup visible:', isPopupVisible);
+  };
 
-  if (!isTokenValid) {
-    // Redirect to login page if token is not valid
-    navigate('/LogIn');
-    return null;
-  }
+  const handleClosePopup = () => {
+    setPopupVisible(false);
+  };
+
+  const handleDispense = async (portionSize) => {
+    const formData = {
+      portionSize: portionSize,
+      petFeederId: petFeederId,
+    };
+    console.log('data:', formData);
+    try {
+      const response = await axios.post(
+        `petfeeder/sendPortion/${petFeederId}/${portionSize}`,
+        formData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('data2:', formData);
+      console.log('Dispense successful:', response.data);
+      alert('Dispense successful!');
+    } catch (error) {
+      console.error('Error dispensing:', error);
+      alert('Error dispensing. Please try again.');
+    }
+  };
+
+
 
   return (
     <>
       <NavBar />
-      <div>
-        <SideBar />
-        {/* Render your dashboard content here */}
+
+      {isPopupVisible && (
+        <DispensePop onClose={handleClosePopup} onDispense={handleDispense} />
+      )}
+      <div className='dash'>
+        <div className='row dashrow'>
+          <div className='col-2 sideCol'>
+            <SideBar onDispenseClick={handleDispenseClick} />
+          </div>
+          <div className='col-10'>
+
+          </div>
+        </div>
+
       </div>
     </>
   );

@@ -37,7 +37,9 @@ const MyPets = () => {
   const handleRemove = async (petId) => {
     console.log('Pet ID to be removed:', petId);
     try {
+
       await axios.delete(`/pets/${petId}`);
+
 
       // Check if the deletion was successful
       setUserPets((prevPets) => prevPets.filter((pet) => pet.id !== petId));
