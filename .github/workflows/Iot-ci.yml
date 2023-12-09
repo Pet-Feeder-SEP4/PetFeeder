@@ -3,25 +3,36 @@ name: IoT Test
 on:
   push:
     branches:
-      - main
+      - IoT_test
   pull_request:
     branches:
-      - main
+      - IoT_test
 
 jobs:
   test:
 
     runs-on: ubuntu-latest
 
+
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Install PlatformIO
-      run: |
-        python3 -m pip install --upgrade pip
-        pip3 install -U platformio
+    - name: Define cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pip
+          ~/.platformio/.cache
+        key: ${{ runner.os }}-pio
+    
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
 
-    - name: Build and test using PlatformIO
-      run: |
-        platformio test -e native
+    - name: Install PlatformIO Core
+      run: pip install --upgrade platformio
+
+    - name: Run Sensor test
+      run: pio test -e win_test -f "test_control"

@@ -6,7 +6,7 @@
 #include <util/delay.h>
 #include "hc_sr04.h"
 #include "parse_info.h"
-#include "Control/sensor_controller.h"
+#include "sensor_controller.h"
 
 
 

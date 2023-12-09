@@ -1,10 +1,10 @@
 #include "parse_info.h"
-#include "Control/sensor_controller.h"
+#include "sensor_controller.h"
 #include "pc_comm.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h> 
-#include <dht11.h>
+#include "dht11.h"
 #include <stdio.h>
 #include "hc_sr04.h"
 #include <util/delay.h>

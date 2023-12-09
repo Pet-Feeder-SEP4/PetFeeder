@@ -211,6 +211,23 @@ extern uint8_t  PORTC;
 extern uint8_t  PINC;
 #define PC4 4
 
+//Vcc
+extern uint8_t DDRB;
+extern uint8_t  PORTB;
+#define  PB2 2
+
+//GND
+extern uint8_t  DDRL; 
+#define  PL4 4
+
+//Trigger
+extern uint8_t  DDRL;
+#define  PL0 0
+extern uint8_t  PORTL;
+
+//Echo
+extern uint8_t  PINL;
+#define PL2 2
 
 //pir
 //Vcc
