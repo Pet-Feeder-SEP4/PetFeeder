@@ -9,7 +9,7 @@ public class NotificationDTO {
     private int waterTemperture;
     private int waterLevel;
     private boolean active;
-    private PetFeeder petFeeder;
+    private Long petFeederId;
 
     public int getFoodLevel() {
         return foodLevel;
@@ -51,11 +51,11 @@ public class NotificationDTO {
         this.active = active;
     }
 
-    public PetFeeder getPetFeeder() {
-        return petFeeder;
+    public Long getPetFeeder() {
+        return petFeederId;
     }
 
-    public void setPetFeeder(PetFeeder petFeeder) {
-        this.petFeeder = petFeeder;
+    public void setPetFeeder(Long petFeederId) {
+        this.petFeederId = petFeederId;
     }
 }

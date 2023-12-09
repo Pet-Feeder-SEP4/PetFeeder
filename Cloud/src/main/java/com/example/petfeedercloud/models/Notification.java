@@ -17,8 +17,7 @@ public class Notification {
     @JoinColumn(name = "petFeederId")
     private PetFeeder petFeeder;
 
-    public Notification(Long notificationId, int foodLevel, int foodHumidity, int waterTemperture, int waterLevel, PetFeeder petFeeder,boolean active) {
-        this.notificationId = notificationId;
+    public Notification( int foodLevel, int foodHumidity, int waterTemperture, int waterLevel, PetFeeder petFeeder,boolean active) {
         this.foodLevel = foodLevel;
         this.foodHumidity = foodHumidity;
         this.waterTemperture = waterTemperture;
