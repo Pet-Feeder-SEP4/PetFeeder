@@ -15,7 +15,7 @@ const HeroSection = () => {
             <div className={`hero-content ${isContentVisible ? 'fadeInRight' : ''}`}>
                 <h1 className="bigT">Forgot to feed your pet again? Try PetFeeder!</h1>
                 <p className="smallT">Automated feeding station for your best friend.</p>
-                <Link to="#"> {/* replace w lpgin*/}
+                <Link to="/Login"> {/* replace w lpgin*/}
                 <button type="button" className="btnHero btn-light btn-sm">LOG IN</button>
                 </Link>
                 <Link to="/Register">

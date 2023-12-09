@@ -150,7 +150,7 @@ const Register = () => {
                         <label htmlFor="email" className="form-label">
                             Email:
                             <span  className={validEmail ? "valid" : "hide"} />
-                            <apan  className={validEmail || !user ? "hide" : "invalid"} />
+                            <span  className={validEmail || !user ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="text"

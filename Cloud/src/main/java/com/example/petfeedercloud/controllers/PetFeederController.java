@@ -1,9 +1,8 @@
 package com.example.petfeedercloud.controllers;
 
-import com.example.petfeedercloud.dtos.PetDTO;
+import com.example.petfeedercloud.config.WebSocketHandler;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.services.PetFeederService;
-import com.example.petfeedercloud.services.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/petfeeder")
 public class PetFeederController {
+
     @Autowired
     private PetFeederService petFeederService;
+
+    @Autowired
+    private final WebSocketHandler webSocketHandler;
+
+    public PetFeederController(WebSocketHandler webSocketHandler) {
+        this.webSocketHandler = webSocketHandler;
+    }
 
     @GetMapping("/")
     @Operation(summary = "Get all pet feeders", description = "Get all pet feeders in the database")
@@ -27,17 +34,15 @@ public class PetFeederController {
     }
 
     @PostMapping("/")
-    @Operation(summary = "Create pet feeder", description = "Create new pet")
-    public ResponseEntity<String> savePet(@RequestBody PetFeederDTO petFeederDTO) {
+    @Operation(summary = "Create pet feeder", description = "Create new pet feeder using DTO")
+    public ResponseEntity<String> createPetFeeder(@RequestBody PetFeederDTO petFeederDTO) {
         try {
-            petFeederService.saveOrUpdatePetFeeder(petFeederDTO);
+            petFeederService.createPetFeeder(petFeederDTO);
             return ResponseEntity.ok("PetFeeder created successfully");
         } catch (NotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found: " + ex.getMessage());
-        } catch (ConstraintViolationException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found: " + ex.getMessage());
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
         }
     }
 
@@ -110,6 +115,21 @@ public class PetFeederController {
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/sendPortion/{petFeederId}/{portion}")
+    @Operation(summary = "Send portion to petfeeder", description = "Send portion(ggg) to a specific pet feeder")
+    public ResponseEntity<String> sendPortionToPetFeeder(@PathVariable Long petFeederId, @PathVariable String portion){
+        try{
+            if(petFeederId == null || portion == null || portion.equals(""))
+                throw new IllegalArgumentException("PetFeeder and Portion are required");
+            webSocketHandler.sendPortionToPetFeeder(petFeederId, portion);
+            return ResponseEntity.ok("Portion "+portion+" sent to petfeeder:"+petFeederId);
+        }catch (IllegalArgumentException ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }catch(Exception ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
