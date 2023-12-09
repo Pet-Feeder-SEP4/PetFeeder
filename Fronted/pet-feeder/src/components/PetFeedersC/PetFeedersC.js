@@ -36,12 +36,7 @@ const PetFeedersC = () => {
     const fetchPetFeeders = async () => {
       if (userId && token) {
         try {
-          const response = await axios.get(`/petfeeder/user/${userId}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          });
+          const response = await axios.get(`/petfeeder/user/${userId}`);
 
           setUserPetFeeders(response.data);
           setLoading(false);
