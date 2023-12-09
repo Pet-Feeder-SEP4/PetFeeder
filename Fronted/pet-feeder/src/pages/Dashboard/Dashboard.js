@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SideBar from '../../components/SideBar/SideBar';
@@ -46,9 +47,11 @@ const Dashboard = () => {
   };
 
 
+
   return (
     <>
       <NavBar />
+
       {isPopupVisible && (
         <DispensePop onClose={handleClosePopup} onDispense={handleDispense} />
       )}
@@ -61,6 +64,7 @@ const Dashboard = () => {
 
           </div>
         </div>
+
       </div>
     </>
   );

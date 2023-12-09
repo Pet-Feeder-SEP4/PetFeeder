@@ -20,7 +20,7 @@ function App() {
   return (
     <Router> 
       <Routes>
-      <Route path="/Welcome" element={<Welcome />} />
+      <Route path="/" element={<Welcome />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/Login" element={<LogIn />} />
       <Route path="/schedule/:petFeederId" element={<FeedingSchedule />} /> 
