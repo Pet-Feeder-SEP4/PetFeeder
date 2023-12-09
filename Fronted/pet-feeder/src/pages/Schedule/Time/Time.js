@@ -23,7 +23,7 @@ const Time = () => {
       // Redirect to login if the token is not valid
       navigate('/LogIn'); 
     } 
-  }, [isTokenValid]);
+  }, [isTokenValid, navigate]);
 
 
   const handleAddTime = async () => {

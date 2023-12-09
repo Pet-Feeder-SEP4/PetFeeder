@@ -29,12 +29,11 @@ const NotFound = () => (
 const PetFeedersC = () => {
   const [userPetFeeders, setUserPetFeeders] = useState([]);
   const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPetFeeders = async () => {
-      if (userId && token) {
+      if (userId) {
         try {
           const response = await axios.get(`/petfeeder/user/${userId}`);
 
@@ -47,7 +46,7 @@ const PetFeedersC = () => {
     };
 
     fetchPetFeeders();
-  }, [userId, token, userPetFeeders]);
+  }, [userId, userPetFeeders]);
 
   if (loading) {
     return <div>Loading pet feeders...</div>;

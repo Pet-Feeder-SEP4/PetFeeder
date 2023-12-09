@@ -10,15 +10,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const MyPets = () => {
   const [userPets, setUserPets] = useState([]);
   const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchUserPets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, token]);
+  }, [userId]);
 
   const fetchUserPets = async () => {
-    if (userId && token) {
+    if (userId) {
       try {
         const response = await axios.get(`/pets/user/${userId}`);
 

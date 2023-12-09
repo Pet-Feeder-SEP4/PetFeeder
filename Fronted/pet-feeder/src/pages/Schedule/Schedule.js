@@ -21,11 +21,8 @@ const FeedingSchedule = () => {
     if (isTokenValid === false) {
       // Redirect to login if the token is not valid
       navigate('/LogIn'); // Replace '/login' with the actual login route
-    } else {
-      // Fetch schedules only if the token is valid
-      fetchUserSchedules();
-    }
-  }, [isTokenValid]);
+    } 
+  }, [ isTokenValid, navigate]);
 
 
   const handleCreateSchedule = async () => {
