@@ -1,5 +1,5 @@
 #include "parse_info.h"
-#include "Control/sensor_controller.h"
+#include "sensor_controller.h"
 #include "pc_comm.h"
 #include <stdio.h>
 #include <string.h>
@@ -19,7 +19,6 @@ int idNumber;
 
 void sensor_get_data(){
     pc_comm_init(9600, NULL);
-    //pc_comm_send_string_blocking("sensor class called\n");
     getTempandHum();
     temperature=getTemp();
     humidity=getHum();
