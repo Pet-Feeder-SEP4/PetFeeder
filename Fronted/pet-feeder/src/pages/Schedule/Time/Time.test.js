@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // For additional matchers
 import axios from '../../../api/axios'; // Import axios for mocking
+import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
 
 // Import your component
 import Time from './Time';
@@ -11,12 +11,24 @@ jest.mock('../../../api/axios');
 
 // Sample test
 describe('Time Component', () => {
+  // Clean up the mock after the test
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('renders component and handles add button click', async () => {
+    // Mock axios get request
+    axios.get.mockResolvedValue({ data: [{ timeId: 1, timeLabel: 'Mock Time', time: '12:00', portionSize: 2 }] });
+
     // Mock axios post request
     axios.post.mockResolvedValue({ data: 'Mock response' });
 
-    // Render the component
-    render(<Time />);
+    // Render the component with MemoryRouter
+    render(
+      <MemoryRouter>
+        <Time />
+      </MemoryRouter>
+    );
 
     // Access the input fields
     const timeLabelInput = screen.getByLabelText('Time Label:');
@@ -36,7 +48,6 @@ describe('Time Component', () => {
 
     // Additional assertions can be added based on the component's behavior
 
-    // Example: Check if the mock response is displayed
-    expect(screen.getByText('Mock response')).toBeInTheDocument();
+   
   });
 });

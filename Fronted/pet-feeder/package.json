@@ -6,7 +6,6 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
@@ -46,6 +45,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
+    "@testing-library/jest-dom": "^6.1.5",
     "babel-jest": "^29.7.0"
   }
 }
