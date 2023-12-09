@@ -199,6 +199,16 @@ void static wifi_TCP_callback(uint8_t byte)
 
 WIFI_ERROR_MESSAGE_t wifi_command_create_TCP_connection(char *IP, uint16_t port, WIFI_TCP_Callback_t callback_when_message_received, char *received_message_buffer)
 {
+
+    static uint8_t initialized = 0;
+
+    if (!initialized) {
+        received_message_buffer_static_pointer = received_message_buffer;
+        callback_when_message_received_static = callback_when_message_received;
+        uart_init(USART_WIFI, wifi_baudrate, wifi_TCP_callback);
+        initialized = 1;
+    }
+
     received_message_buffer_static_pointer = received_message_buffer;
     callback_when_message_received_static = callback_when_message_received;
     char sendbuffer[128];
