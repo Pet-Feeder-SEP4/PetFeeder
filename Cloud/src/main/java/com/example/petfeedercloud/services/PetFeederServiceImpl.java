@@ -122,19 +122,15 @@ public class PetFeederServiceImpl implements PetFeederService{
                 .collect(Collectors.toList());
     }
     @Override
-    public void setActivePetFeeder(Long userId, Long petId, Long petFeederId) {
+    public void setActivePetFeeder(Long userId, Long petFeederId) {
         try {
             UserP user = userRepository.findById(userId)
                     .orElseThrow(() -> new NotFoundException("User not found"));
-
-            Pet pet = petRepository.findById(petId)
-                    .orElseThrow(() -> new NotFoundException("Pet not found"));
 
             PetFeeder petFeeder = petFeederRepository.findById(petFeederId)
                     .orElseThrow(() -> new NotFoundException("Pet feeder not found"));
 
             petFeeder.setUser(user);
-            petFeeder.setPet(pet);
             petFeeder.setActive(true);
 
             petFeederRepository.save(petFeeder);
@@ -192,6 +188,7 @@ public class PetFeederServiceImpl implements PetFeederService{
         pfDTO.setWaterLevel(pf.getWaterLevel());
         pfDTO.setFoodHumidity(pf.getFoodHumidity());
         pfDTO.setFoodLevel(pf.getFoodLevel());
+        pfDTO.setActive(pf.isActive());
         pfDTO.setWaterTemperture(pf.getWaterTemperture());
         if(pf.getPet()!=null)
             pfDTO.setPetId(pf.getPet().getPetId());

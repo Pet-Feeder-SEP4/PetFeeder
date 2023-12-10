@@ -21,7 +21,7 @@ public class PetFeederDTO {
     private Long scheduleId;
     private Long petId;
 
-    private boolean active = false;
+    private boolean active;
     public int getWaterLevel() {
         return waterLevel;
     }

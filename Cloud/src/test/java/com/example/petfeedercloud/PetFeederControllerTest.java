@@ -27,9 +27,9 @@ public class PetFeederControllerTest {
 
     @Test
     public void testActivatePetFeeder() {
-        doNothing().when(petFeederService).setActivePetFeeder(anyLong(), anyLong(), anyLong());
+        doNothing().when(petFeederService).setActivePetFeeder(anyLong(), anyLong());
 
-        ResponseEntity<String> response = petFeederController.activatePetFeeder(1L, 2L, 3L);
+        ResponseEntity<String> response = petFeederController.activatePetFeeder(1L, 2L);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Pet feeder activated successfully", response.getBody());

@@ -83,14 +83,13 @@ public class PetFeederController {
     @Operation(summary = "Activate pet feeder", description = "Activate a pet feeder for a specific user and pet")
     public ResponseEntity<String> activatePetFeeder(
             @RequestParam(required = true) Long userId,
-            @RequestParam(required = true) Long petId,
             @RequestParam Long petFeederId) {
         try {
-            if (userId == null || userId <= 0 || petId == null || petId <= 0) {
+            if (userId == null || userId <= 0) {
                 throw new IllegalArgumentException("userId and petId are required and must be greater than 0");
             }
 
-            petFeederService.setActivePetFeeder(userId, petId, petFeederId);
+            petFeederService.setActivePetFeeder(userId, petFeederId);
             return ResponseEntity.ok("Pet feeder activated successfully");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

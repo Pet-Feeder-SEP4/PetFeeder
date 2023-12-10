@@ -16,7 +16,7 @@ public class PetFeeder {
     private int foodHumidity;
     private int waterTemperture;
     private int waterLevel;
-    private boolean active = false;
+    private boolean active;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
