@@ -1,5 +1,5 @@
-#include "Application/app.h"
-#include "Application/parse_info.h"
+#include "app.h"
+#include "parse_info.h"
 
 int main() {
     app_init();

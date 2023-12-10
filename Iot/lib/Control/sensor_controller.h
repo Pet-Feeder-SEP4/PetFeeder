@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 
 #ifdef WINDOWS_TEST
 extern uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
@@ -13,3 +14,7 @@ int getHum();
 int getWaterMeasurement();
 
 int getFoodMeasurement();
+
+int waterMeasurementPercentage();
+
+int foodMeasurementPercentage();
