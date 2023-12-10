@@ -189,7 +189,7 @@ const Time = () => {
         <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap' }}>
           {times.map((timeItem) => (
             <div key={timeItem.timeId} className="card-container" style={{ marginBottom: '10px', marginRight: '10px', width: '300px', position: 'relative' }}>
-              <div className="card" style={{ width: '100%' }}>
+              <div className="card shadow-lg" style={{ width: '100%', borderRadius: '9px', border: '2px solid white' }}>
                 <div className="card-body">
                   {/* X mark button to remove the time */}
                   <button
