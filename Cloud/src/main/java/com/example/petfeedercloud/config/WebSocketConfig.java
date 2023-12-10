@@ -13,15 +13,18 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     private final WebSocketHandler webSocketHandler;
     private final WebSocketPetFeeder webSocketPetFeeder;
+    private final WebSocketNotification webSocketNotification;
 
-    public WebSocketConfig(WebSocketHandler webSocketHandler, WebSocketPetFeeder webSocketPetFeeder) {
+    public WebSocketConfig(WebSocketHandler webSocketHandler, WebSocketPetFeeder webSocketPetFeeder, WebSocketNotification webSocketNotification) {
         this.webSocketHandler = webSocketHandler;
         this.webSocketPetFeeder = webSocketPetFeeder;
+        this.webSocketNotification = webSocketNotification;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "").setAllowedOrigins("*");
         registry.addHandler(webSocketPetFeeder, "/petfeeder/info/{petFeederId}").setAllowedOrigins("*");
+        registry.addHandler(webSocketNotification, "/notificationsWS/{petFeederId}").setAllowedOrigins("*");
     }
 }
