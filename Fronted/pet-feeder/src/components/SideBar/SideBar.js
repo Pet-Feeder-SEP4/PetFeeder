@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faBox, faPaw, faHistory } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faBox, faPaw, faHistory, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import './SideBar.css';
 import { useParams } from 'react-router-dom';
 
-function SideBar({ onDispenseClick }) {
+function SideBar({ onDispenseClick, onEditClick }) {
     const { petFeederId } = useParams();
     return (
         <div className="sidebar ">
@@ -26,6 +26,10 @@ function SideBar({ onDispenseClick }) {
                     <FontAwesomeIcon icon={faHistory} className='me-2' />
                     <span className="d-none d-xl-inline">HISTORY</span>
                 </Link>
+                <li className="list-group-item " style={{ backgroundColor: "#F8F9FA" }}>
+                    <FontAwesomeIcon icon={faFilePen} className='me-2' />
+                    <span className="d-none d-xl-inline" onClick={onEditClick}>NOTIFICATIONS</span>
+                </li>
             </ul>
         </div>
     );
