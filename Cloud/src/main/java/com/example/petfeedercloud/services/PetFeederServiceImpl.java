@@ -2,9 +2,11 @@ package com.example.petfeedercloud.services;
 
 import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
+import com.example.petfeedercloud.models.Notification;
 import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.PetFeeder;
 import com.example.petfeedercloud.models.UserP;
+import com.example.petfeedercloud.repositories.NotificationRepository;
 import com.example.petfeedercloud.repositories.PetFeederRepository;
 import com.example.petfeedercloud.repositories.PetRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
@@ -27,6 +29,8 @@ public class PetFeederServiceImpl implements PetFeederService{
     @Autowired
     private PetFeederRepository petFeederRepository;
     @Autowired
+    private NotificationRepository notificationRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PetRepository petRepository;
@@ -47,7 +51,9 @@ public class PetFeederServiceImpl implements PetFeederService{
     public void createPetFeeder(PetFeederDTO petFeederDTO) {
         try {
             PetFeeder petFeeder = convertToEntity(petFeederDTO);
+            Notification notification = new Notification(50,70,25,40,petFeeder,true);
             petFeederRepository.save(petFeeder);
+            notificationRepository.save(notification);
         } catch (Exception ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -65,7 +71,6 @@ public class PetFeederServiceImpl implements PetFeederService{
                 existingPF.setFoodHumidity(petFeeder.getFoodHumidity());
                 existingPF.setFoodLevel(petFeeder.getFoodLevel());
                 existingPF.setWaterTemperture(petFeeder.getWaterTemperture());
-                existingPF.setLowLevelFood(petFeeder.getLowLevelFood());
                 existingPF.setWaterLevel(petFeeder.getWaterLevel());
 
                 Long userId = petFeeder.getUserId();
@@ -91,7 +96,6 @@ public class PetFeederServiceImpl implements PetFeederService{
                 petF.setPet(petRepository.findById(petFeeder.getPetId()).get());
                 //When schedule is implemented change null
                // petF.setSchedule(null);
-                petF.setLowLevelFood(petFeeder.getLowLevelFood());
                 petF.setWaterLevel(petFeeder.getWaterLevel());
                 petF.setFoodLevel(petFeeder.getFoodLevel());
                 petF.setFoodHumidity(petFeeder.getFoodHumidity());
@@ -164,7 +168,6 @@ public class PetFeederServiceImpl implements PetFeederService{
         PetFeeder petFeeder = new PetFeeder();
         petFeeder.setPetFeederLabel(petFeederDTO.getPetFeederLabel());
         petFeeder.setFoodLevel(petFeederDTO.getFoodLevel());
-        petFeeder.setLowLevelFood(petFeederDTO.getLowLevelFood());
         petFeeder.setFoodHumidity(petFeederDTO.getFoodHumidity());
         petFeeder.setWaterTemperture(petFeederDTO.getWaterTemperture());
 
@@ -190,7 +193,6 @@ public class PetFeederServiceImpl implements PetFeederService{
         pfDTO.setFoodHumidity(pf.getFoodHumidity());
         pfDTO.setFoodLevel(pf.getFoodLevel());
         pfDTO.setWaterTemperture(pf.getWaterTemperture());
-        pfDTO.setLowLevelFood(pf.getLowLevelFood());
         if(pf.getPet()!=null)
             pfDTO.setPetId(pf.getPet().getPetId());
         //pfDTO.setScheduleId(pf.getSchedule().getScheduleId());
