@@ -21,7 +21,7 @@ const Dashboard = () => {
     petFeederId: 0,
     petFeeder: 0,
   });
-  const token = localStorage.getItem('token');
+ 
 
   useEffect(() => {
     const fetchData = async () => {

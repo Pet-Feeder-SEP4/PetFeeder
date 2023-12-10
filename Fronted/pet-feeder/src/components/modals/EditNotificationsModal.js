@@ -1,7 +1,6 @@
 // EditNotifications.jsx
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
-import axios from 'axios';
 
 const EditNotifications = ({ onClose, onSaveChanges, onActivate, onDeactivate, petFeederId, notificationData }) => {
   const [formData, setFormData] = useState(notificationData);
