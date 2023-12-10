@@ -5,6 +5,7 @@ import SideBar from '../../components/SideBar/SideBar';
 import NavBar from '../../components/Navbar/Navbar';
 import DispensePop from '../../components/SideBar/DispensePop';
 import axios from "../../api/axios";
+import { SocketProvider } from '../../api/SocketContext';
 
 const Dashboard = () => {
   const { petFeederId } = useParams();
@@ -50,22 +51,24 @@ const Dashboard = () => {
 
   return (
     <>
-      <NavBar />
+      <SocketProvider petFeederId={petFeederId}>
+        <NavBar />
+        {isPopupVisible && (
+          <DispensePop onClose={handleClosePopup} onDispense={handleDispense} />
+        )}
+        
+        <div className='dash'>
+          <div className='row dashrow'>
+            <div className='col-2 sideCol'>
+              <SideBar onDispenseClick={handleDispenseClick} />
+            </div>
+            <div className='col-10'>
 
-      {isPopupVisible && (
-        <DispensePop onClose={handleClosePopup} onDispense={handleDispense} />
-      )}
-      <div className='dash'>
-        <div className='row dashrow'>
-          <div className='col-2 sideCol'>
-            <SideBar onDispenseClick={handleDispenseClick} />
+            </div>
           </div>
-          <div className='col-10'>
 
-          </div>
         </div>
-
-      </div>
+      </SocketProvider>
     </>
   );
 };
