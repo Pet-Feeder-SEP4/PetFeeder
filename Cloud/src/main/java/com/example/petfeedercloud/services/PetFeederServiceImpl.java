@@ -6,16 +6,14 @@ import com.example.petfeedercloud.models.Notification;
 import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.PetFeeder;
 import com.example.petfeedercloud.models.UserP;
-import com.example.petfeedercloud.repositories.NotificationRepository;
-import com.example.petfeedercloud.repositories.PetFeederRepository;
-import com.example.petfeedercloud.repositories.PetRepository;
-import com.example.petfeedercloud.repositories.UserRepository;
+import com.example.petfeedercloud.repositories.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.List;
@@ -29,9 +27,15 @@ public class PetFeederServiceImpl implements PetFeederService{
     @Autowired
     private PetFeederRepository petFeederRepository;
     @Autowired
+    private ScheduleRepository scheduleRepository;
+    @Autowired
     private NotificationRepository notificationRepository;
     @Autowired
+    private TimeRepository timeRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PetFeederHistoryRepository petFeederHistoryRepository;
     @Autowired
     private PetRepository petRepository;
 
@@ -111,8 +115,17 @@ public class PetFeederServiceImpl implements PetFeederService{
     }
 
     @Override
+    @Transactional
     public void deletePetFeeder(Long petFeederId) {
-        petFeederRepository.deleteById(petFeederId);
+        try {
+            notificationRepository.deleteByPetFeederId(petFeederId);
+            timeRepository.deleteTimesByPetFeederId(petFeederId);
+            scheduleRepository.deleteByPetFeederId(petFeederId);
+            petFeederHistoryRepository.deleteByPetFeederId(petFeederId);
+            petFeederRepository.deleteById(petFeederId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
