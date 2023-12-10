@@ -3,6 +3,7 @@ package com.example.petfeedercloud.repositories;
 import com.example.petfeedercloud.dtos.PetFeederHistoryDTO;
 import com.example.petfeedercloud.models.PetFeederHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,9 @@ public interface PetFeederHistoryRepository extends JpaRepository<PetFeederHisto
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
     );
+
+    @Modifying
+    @Query("DELETE FROM PetFeederHistory s WHERE s.petFeeder.petFeederId = :petFeederId")
+    void deleteByPetFeederId(Long petFeederId);
 }
 

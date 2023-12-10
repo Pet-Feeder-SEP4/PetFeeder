@@ -65,10 +65,13 @@ public class PetFeederController {
     @Operation(summary = "Delete pet feeder", description = "Delete pet Feeder by its id")
     public ResponseEntity<?> deletePet(@PathVariable Long petfeederId) {
         try {
-            petFeederService.deletePetFeeder(petfeederId);
-            return ResponseEntity.ok("Petfeeder deleted successfully");
-        } catch (NotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+            // Check if the pet feeder exists before attempting deletion
+            if (petFeederService.getPetFeederById(petfeederId)!=null) {
+                petFeederService.deletePetFeeder(petfeederId);
+                return ResponseEntity.ok("Petfeeder deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Petfeeder not found");
+            }
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the petfeeder");
         }
