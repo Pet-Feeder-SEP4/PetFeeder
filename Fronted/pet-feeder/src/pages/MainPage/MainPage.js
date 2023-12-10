@@ -18,7 +18,7 @@ const MainPage = () => {
 
   if (!isTokenValid) {
     // Redirect to login page if token is not valid
-    navigate('/LogIn');
+    navigate('/Login');
     return null;
   }
 
