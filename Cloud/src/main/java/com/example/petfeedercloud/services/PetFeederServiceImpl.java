@@ -140,6 +140,12 @@ public class PetFeederServiceImpl implements PetFeederService{
             throw new RuntimeException("An error occurred while setting the pet feeder as active: " + ex.getMessage());
         }
     }
+    @Override
+    public List<PetFeederDTO> getAllActivePetFeedersByUser(Long userId) {
+        return petFeederRepository.findAllByUserUserIdAndActiveTrue(userId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void deactivatePetFeeder(Long userId, Long petId, Long petFeederId) {

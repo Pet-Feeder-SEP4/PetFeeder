@@ -79,6 +79,12 @@ public class PetFeederController {
         return petFeederService.getAllPetFeedersByUser(userId);
     }
 
+    @GetMapping("/active/{userId}")
+    @Operation(summary = "Get all active pet feeders by user", description = "Get all active pet feeders from a user using user id")
+    public List<PetFeederDTO> getAllActivePetFeedersByUser(@PathVariable Long userId) {
+        return petFeederService.getAllActivePetFeedersByUser(userId);
+    }
+
     @PostMapping("/{petfeederId}/activate")
     @Operation(summary = "Activate pet feeder", description = "Activate a pet feeder for a specific user and pet")
     public ResponseEntity<String> activatePetFeeder(
