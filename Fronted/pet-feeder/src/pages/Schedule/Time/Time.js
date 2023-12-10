@@ -122,6 +122,9 @@ const Time = () => {
     maxWidth: '100px',
   };
 
+  const font ={
+    fontFamily: 'Poppins, sans-serif',
+  }
   return (
     <div>
       <NavBar />
@@ -130,7 +133,7 @@ const Time = () => {
       </div>
       <div style={{ marginTop: '20vh', padding: '0 20px', boxSizing: 'border-box' }}>
         <div style={{ marginTop: '230px' }}>
-          <h3>
+          <h3 style={font}>
             Add a Time to <span style={{ color: '#AAC88F' }}>{scheduleLabel}</span> Schedule
           </h3>
         </div>
@@ -138,7 +141,7 @@ const Time = () => {
         {/* Add Time Form */}
         <div style={{ marginBottom: '20px' }}>
           <div style={{ marginBottom: '10px' }}>
-            <label htmlFor="timeLabel">Time Label:</label>
+            <label style={font} htmlFor="timeLabel">Time Label:</label>
             <br />
             <input
               type="text"
@@ -150,7 +153,7 @@ const Time = () => {
           </div>
 
           <div style={{ marginBottom: '10px' }}>
-            <label htmlFor="time">Time:</label>
+            <label style={font} htmlFor="time">Time:</label>
             <br />
             <input
               type="time"
@@ -164,7 +167,7 @@ const Time = () => {
         </div>
 
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="portionSize">Portion Size:</label>
+          <label style={font} htmlFor="portionSize">Portion Size:</label>
           <br />
           <input
             type="number"
@@ -186,7 +189,7 @@ const Time = () => {
         <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap' }}>
           {times.map((timeItem) => (
             <div key={timeItem.timeId} className="card-container" style={{ marginBottom: '10px', marginRight: '10px', width: '300px', position: 'relative' }}>
-              <div className="card" style={{ width: '100%' }}>
+              <div className="card shadow-lg" style={{ width: '100%', borderRadius: '9px', border: '2px solid white' }}>
                 <div className="card-body">
                   {/* X mark button to remove the time */}
                   <button

@@ -51,7 +51,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
             pfd.setWaterTemperture(Integer.parseInt(String.valueOf(value.get("waterTemperature"))));
             pfd.setWaterLevel(Integer.parseInt(String.valueOf(value.get("waterLevel"))));
             pfd.setPetFeederId(pf.getPetFeederId());
-            pfd.setLowLevelFood(pfd.getLowLevelFood());
             pfd.setPetFeederLabel(pf.getPetFeederLabel());
             petFeederService.saveOrUpdatePetFeeder(pfd);
             webSocketPetFeeder.sendPetFeederUpdateToSessions(pfd.getPetFeederId());
@@ -81,7 +80,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
             if(petFeederId == sessionPetFeederId){
                 try{
                     System.out.println(String.valueOf(attributes.get("petFeederId"))+"test");
-                    webSocketSession.sendMessage(new TextMessage("   DIS:"+portion));
+                    webSocketSession.sendMessage(new TextMessage("DIS:"+portion));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

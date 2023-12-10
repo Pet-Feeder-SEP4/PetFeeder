@@ -6,7 +6,6 @@
 #include <dht11.h>
 #include <stdio.h>
 #include "hc_sr04.h"
-#include <util/delay.h>
 
 uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
 uint16_t measure;
@@ -16,15 +15,6 @@ int humidity;
 int waterMeasurement;
 int foodMeasurement;
 int idNumber;
-
-// Function prototypes
-void sensor_init();
-void getTempandHum();
-int getHum();
-int getTemp();
-int getWaterMeasurement();
-int getFoodMeasurement();
-
 
 void getTempandHum(){
     // Read data from DHT11 sensor
@@ -38,7 +28,6 @@ void getTempandHum(){
         pc_comm_send_string_blocking("Failed to read DHT11 sensor data.");
     }
 }
-
 int getTemp(){
     return temperature;
 }

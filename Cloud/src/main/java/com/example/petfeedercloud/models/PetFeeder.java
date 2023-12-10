@@ -13,7 +13,6 @@ public class PetFeeder {
 
     private String petFeederLabel;
     private int foodLevel;
-    private int lowLevelFood;
     private int foodHumidity;
     private int waterTemperture;
     private int waterLevel;
@@ -60,12 +59,7 @@ public class PetFeeder {
     public void setFoodLevel(int foodLevel) {
         this.foodLevel = foodLevel;
     }
-    public int getLowLevelFood() {
-        return lowLevelFood;
-    }
-    public void setLowLevelFood(int lowLevelFood) {
-        this.lowLevelFood = lowLevelFood;
-    }
+
     public int getFoodHumidity() {
         return foodHumidity;
     }
