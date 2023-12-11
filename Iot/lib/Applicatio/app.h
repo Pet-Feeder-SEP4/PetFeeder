@@ -1,6 +1,5 @@
 #pragma once
 
-
 extern char buffer[8];
 void tcpCallback();
 void app_init();
