@@ -30,11 +30,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         return convertToDTO(schedule);
     }
 
-    @Override
-    public List<Schedule> getScheduleByUserId(Long userId) {
-        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
-        return schedules;
-    }
 
     @Override
     public List<Schedule> getScheduleByPetFeederId(Long petFeederId) {
@@ -112,9 +107,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
                 existingSchedule.setScheduleLabel(scheduleDTO.getScheduleLabel());
 
-                Long userId = scheduleDTO.getUserId();
-                UserP user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
-                existingSchedule.setUser(user);
 
                 Long petFeederId = scheduleDTO.getPetFeederId();
                 PetFeeder petFeeder = petFeederRepository.findById(petFeederId).orElseThrow(() -> new NotFoundException("PetFeeder not found"));
@@ -137,21 +129,17 @@ public class ScheduleServiceImpl implements ScheduleService {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         scheduleDTO.setScheduleLabel(schedule.getScheduleLabel());
         scheduleDTO.setActive(schedule.getActive());
-        if(schedule.getUser()!=null)
-            scheduleDTO.setUserId(schedule.getUser().getUserId());
         if(schedule.getPetFeeder()!=null)
             scheduleDTO.setPetFeederId(schedule.getPetFeeder().getPetFeederId());
         return scheduleDTO;
     }
 
     private Schedule convertToEntity(ScheduleDTO scheduleDTO) {
-        UserP user = userRepository.findByUserId(scheduleDTO.getUserId());
         PetFeeder petFeeder = petFeederRepository.findByPetFeederId(scheduleDTO.getPetFeederId());
         Schedule schedule = new Schedule();
         schedule.setScheduleLabel(scheduleDTO.getScheduleLabel());
         schedule.setPetFeeder(petFeeder);
         schedule.setActive(scheduleDTO.getActive());
-        schedule.setUser(user);
         return schedule;
     }
 }
