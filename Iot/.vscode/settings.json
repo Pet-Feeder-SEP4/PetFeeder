@@ -4,7 +4,10 @@
         "includes.h": "c",
         "dht11.h": "c",
         "fff.h": "c",
-        "sensor_controller.h": "c"
+        "sensor_controller.h": "c",
+        "pc_comm.h": "c",
+        "stdint.h": "c",
+        "delay.h": "c"
     },
     "cmake.sourceDirectory": "/Users/fdepalma/Desktop/Software/PetFeeder/Iot/.pio/libdeps/target_run/Unity"
 }

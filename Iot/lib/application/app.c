@@ -1,9 +1,9 @@
+#include "include_avr_util.h"
 #include "wifi.h"
 #include "app.h"
 #include "pc_comm.h" 
 #include "dht11.h"
 #include <stdio.h>
-#include <util/delay.h>
 #include "hc_sr04.h"
 #include "parse_info.h"
 #include "sensor_controller.h"

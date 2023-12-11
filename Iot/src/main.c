@@ -1,5 +1,6 @@
 #include "app.h"
 #include "parse_info.h"
+#include <util/delay.h>
 
 int main() {
     app_init();
