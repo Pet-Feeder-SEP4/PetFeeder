@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.controllers;
 
+import com.example.petfeedercloud.PetFeederCloudApplication;
 import com.example.petfeedercloud.config.WebSocketHandler;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.services.PetFeederService;
@@ -21,10 +22,10 @@ public class PetFeederController {
     private PetFeederService petFeederService;
 
     @Autowired
-    private final WebSocketHandler webSocketHandler;
+    private final PetFeederCloudApplication petFeederCloudApplication;
 
-    public PetFeederController(WebSocketHandler webSocketHandler) {
-        this.webSocketHandler = webSocketHandler;
+    public PetFeederController(PetFeederCloudApplication petFeederCloudApplication) {
+        this.petFeederCloudApplication = petFeederCloudApplication;
     }
 
     @GetMapping("/")
@@ -127,7 +128,7 @@ public class PetFeederController {
         try{
             if(petFeederId == null || portion == null || portion.equals(""))
                 throw new IllegalArgumentException("PetFeeder and Portion are required");
-            webSocketHandler.sendPortionToPetFeeder(petFeederId, portion);
+            petFeederCloudApplication.sendPortionToPetFeeder(petFeederId, portion);
             return ResponseEntity.ok("Portion "+portion+" sent to petfeeder:"+petFeederId);
         }catch (IllegalArgumentException ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
