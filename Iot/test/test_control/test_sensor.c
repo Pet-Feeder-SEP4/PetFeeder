@@ -30,9 +30,9 @@ void setUp(void)
 
 void tearDown(void) {}
 
-void test_getTemp_call_drivers()
+void test_getTempandHum_call_drivers()
 {
-    getTemp();
+    getTempandHum();
     TEST_ASSERT_EQUAL_INT(1, dht11_get_fake.call_count);
 }
 
@@ -40,20 +40,17 @@ void test_getTemp_value()
 {
     dht11_get_fake.return_val = DHT11_OK;
     temperature_integer = 10;
+    getTempandHum();
     int temp = getTemp();
     TEST_ASSERT_EQUAL_INT(10, temp);
 }
 
-void test_getHum_call_drivers()
-{
-    getHum();
-    TEST_ASSERT_EQUAL_INT(1, dht11_get_fake.call_count);
-}
 
 void test_getHum_value()
 {
     dht11_get_fake.return_val = DHT11_OK;
     humidity_integer = 10;
+    getTempandHum();
     int hum = getHum();
     TEST_ASSERT_EQUAL_INT(10, hum);
 }
@@ -109,9 +106,8 @@ void test_foodMeasurementPercentage() {
 int main()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_getTemp_call_drivers);
+    RUN_TEST(test_getTempandHum_call_drivers);
     RUN_TEST(test_getTemp_value);
-    RUN_TEST(test_getHum_call_drivers);
     RUN_TEST(test_getHum_value);
     RUN_TEST(test_getWaterMeasurament_call);
     RUN_TEST(test_getWaterMeasurament_0);

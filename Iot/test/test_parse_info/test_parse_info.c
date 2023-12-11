@@ -17,6 +17,7 @@
 
 DEFINE_FFF_GLOBALS
 FAKE_VALUE_FUNC(WIFI_ERROR_MESSAGE_t, wifi_command_TCP_transmit, uint8_t *, uint16_t);
+FAKE_VOID_FUNC(getTempandHum);
 FAKE_VALUE_FUNC(int, getTemp);
 FAKE_VALUE_FUNC(int, getHum);
 FAKE_VALUE_FUNC(int, getWaterMeasurement);
