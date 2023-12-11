@@ -12,8 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
-    @Query("SELECT p FROM Schedule p WHERE p.user.userId = :userId")
-    List<Schedule> findByUserId(Long userId);
     @Query("SELECT p FROM Schedule p WHERE p.petFeeder.petFeederId = :petFeederId")
     List<Schedule> findByPetFeederId(Long petFeederId);
     @Modifying
