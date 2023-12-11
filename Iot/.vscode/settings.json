@@ -7,7 +7,14 @@
         "sensor_controller.h": "c",
         "pc_comm.h": "c",
         "stdint.h": "c",
-        "delay.h": "c"
+        "delay.h": "c",
+        "hc_sr04.h": "c",
+        "wifi.h": "c",
+        "app.h": "c",
+        "uart.h": "c",
+        "include_avr_util.h": "c",
+        "parse_info.h": "c",
+        "configuration.h": "c"
     },
     "cmake.sourceDirectory": "/Users/fdepalma/Desktop/Software/PetFeeder/Iot/.pio/libdeps/target_run/Unity"
 }

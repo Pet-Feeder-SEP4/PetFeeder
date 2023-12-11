@@ -5,10 +5,10 @@
 #include "dht11.h"
 #include <stdio.h>
 #include "hc_sr04.h"
-#include "parse_info.h"
+#include "configuration.h"
+
 #include "sensor_controller.h"
-
-
+#include "parse_info.h"
 
 char buffer[8];
 
@@ -22,8 +22,8 @@ void app_init(){
     dht11_init();
     hc_sr04_init();
     wifi_init();
-    wifi_command_join_AP("Redmi 9C NFC","santi32411");
-    wifi_command_create_TCP_connection("192.168.43.83", 23, tcpCallback, buffer);
+    wifi_command_join_AP(WIFI_NAME, WIFI_PASSWORD);
+    wifi_command_create_TCP_connection(IP, PORT, tcpCallback, buffer);
 }
 
 void app_start(void){

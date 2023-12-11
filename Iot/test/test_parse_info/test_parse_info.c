@@ -8,13 +8,12 @@
 
 #include "pc_comm.h"
 #include "wifi.h"
-#include "pc_comm.h"
 #include "servo360.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TEST_SENSOR_WIN
+#define TEST_PARSE_INFO_WIN
 
 DEFINE_FFF_GLOBALS
 FAKE_VALUE_FUNC(WIFI_ERROR_MESSAGE_t, wifi_command_TCP_transmit, uint8_t *, uint16_t);

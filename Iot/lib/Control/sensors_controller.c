@@ -19,12 +19,14 @@ int getTemp(){
     if (dht11_get(&humidity_integer, &humidity_decimal, &temperature_integer, &temperature_decimal) == DHT11_OK) {
         return temperature_integer;
      }
+     return -1000;
 }
 
 int getHum(){
     if (dht11_get(&humidity_integer, &humidity_decimal, &temperature_integer, &temperature_decimal) == DHT11_OK) {
         return humidity_integer;
      }
+     return -1;
 }
 
 int getWaterMeasurement(){
@@ -39,6 +41,7 @@ int getWaterMeasurement(){
             // Print an error message if the read operation fails
             pc_comm_send_string_blocking("Invalid water measurement\n");
         }
+        return -1;
 };
 
 int getFoodMeasurement(){
@@ -53,6 +56,7 @@ int getFoodMeasurement(){
             // Print an error message if the read operation fails
             pc_comm_send_string_blocking("Invalid food measurement\n");
         }
+        return -1;
 };
 
 int waterMeasurementPercentage(){

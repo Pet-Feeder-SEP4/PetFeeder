@@ -5,9 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "dht11.h"
 #include <stdio.h>
-#include "hc_sr04.h"
 #include "wifi.h"
 #include "servo360.h"
 #include <stdlib.h>
