@@ -1,14 +1,14 @@
+#include "include_avr_util.h"
 #include "wifi.h"
 #include "app.h"
 #include "pc_comm.h" 
 #include "dht11.h"
 #include <stdio.h>
-#include <util/delay.h>
 #include "hc_sr04.h"
-#include "parse_info.h"
+#include "configuration.h"
+
 #include "sensor_controller.h"
-
-
+#include "parse_info.h"
 
 char buffer[8];
 
@@ -22,8 +22,8 @@ void app_init(){
     dht11_init();
     hc_sr04_init();
     wifi_init();
-    wifi_command_join_AP("Mamalo","Iker1234");
-    wifi_command_create_TCP_connection("172.20.10.2", 23, tcpCallback,buffer);
+    wifi_command_join_AP(WIFI_NAME, WIFI_PASSWORD);
+    wifi_command_create_TCP_connection(IP, PORT, tcpCallback, buffer);
 }
 
 void app_start(void){

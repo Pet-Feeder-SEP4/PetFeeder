@@ -1,20 +1,19 @@
-#include "sensor_controller.h"
 #include "pc_comm.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h> 
-#include <dht11.h>
+#include "dht11.h"
 #include <stdio.h>
 #include "hc_sr04.h"
 
 uint8_t humidity_integer, humidity_decimal, temperature_integer, temperature_decimal;
 uint16_t measure;
-char str[64];
 int temperature;
 int humidity;
 int waterMeasurement;
 int foodMeasurement;
 int idNumber;
+
 
 void getTempandHum(){
     // Read data from DHT11 sensor
@@ -48,6 +47,7 @@ int getWaterMeasurement(){
             // Print an error message if the read operation fails
             pc_comm_send_string_blocking("Invalid water measurement\n");
         }
+        return -1;
 };
 
 int getFoodMeasurement(){
@@ -62,6 +62,7 @@ int getFoodMeasurement(){
             // Print an error message if the read operation fails
             pc_comm_send_string_blocking("Invalid food measurement\n");
         }
+        return -1;
 };
 
 int waterMeasurementPercentage(){
