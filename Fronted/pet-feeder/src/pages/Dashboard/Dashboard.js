@@ -20,7 +20,7 @@ const Dashboard = () => {
     petFeederId: 0,
     petFeeder: 0,
   });
-  const token = localStorage.getItem('token');
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,12 +54,6 @@ const Dashboard = () => {
       const response = await axios.post(
         `petfeeder/sendPortion/${petFeederId}/${portionSize}`,
         formData,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
       );
       console.log('data2:', formData);
       console.log('Dispense successful:', response.data);
