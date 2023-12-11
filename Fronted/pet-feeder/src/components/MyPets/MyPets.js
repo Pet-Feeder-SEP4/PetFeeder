@@ -57,7 +57,9 @@ const MyPets = () => {
           {userPets.map((pet, index,) => (
 
             <li key={pet?.id || index} className="petItem">
+              <Link style={{textDecoration: 'none'}} to={`/PetInfo/${pet?.petId}`}>
               <span className='petLine'>{pet?.name}</span>
+              </Link>
               <div className="btn-group-managepets">
                 <Link to={`/EditPet/${pet?.petId}`}>  {/*edit the link to EditPet */}
                   <button type="button" className="btnEditPet">

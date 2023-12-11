@@ -45,7 +45,8 @@
 
 }
 .petItem span {
-    text-decoration: underline; /* Add underline to each item in the list */
+    text-decoration: none; 
+    color: #fff;
 }
 
 .petLine{
