@@ -40,7 +40,9 @@ int getWaterMeasurement(){
     temporaryMeasure = hc_sr04_takeMeasurement_water();
    if (temporaryMeasure != 0)
         {
-           return temporaryMeasure;
+            int capacity = 300;
+            int result= (temporaryMeasure*100)/ capacity;
+            return result;
         }
         else
         {
@@ -55,7 +57,9 @@ int getFoodMeasurement(){
     temporaryMeasure = hc_sr04_takeMeasurement_food();
    if (temporaryMeasure != 0)
         {
-           return temporaryMeasure;
+            int capacity=160;
+            int result= (temporaryMeasure*100)/ capacity;
+            return result;
         }
         else
         {
@@ -65,18 +69,3 @@ int getFoodMeasurement(){
         return -1;
 };
 
-int waterMeasurementPercentage(){
-    //put height of the cup
-    int capacity=1000;
-    int temporaryMeasure=getWaterMeasurement();
-    int result= (temporaryMeasure*100)/ capacity;
-    return result;
-}
-
-int foodMeasurementPercentage(){
-    //put height of the cup
-    int capacity=1000;
-    int temporaryMeasure=getFoodMeasurement();
-    int result= (temporaryMeasure*100)/ capacity;
-    return result;
-}
