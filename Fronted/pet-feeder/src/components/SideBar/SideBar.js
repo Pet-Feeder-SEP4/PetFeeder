@@ -22,10 +22,10 @@ function SideBar({ onDispenseClick, onEditClick }) {
                     <FontAwesomeIcon icon={faPaw} className='me-2' />
                     <span className="d-none d-xl-inline">PET</span>
                 </Link>
-                <Link to="/" className="list-group-item " style={{ backgroundColor: "#F8F9FA" }}> {/* add correct path */}
-                    <FontAwesomeIcon icon={faHistory} className='me-2' />
-                    <span className="d-none d-xl-inline">HISTORY</span>
-                </Link>
+                <Link to={`/History/${petFeederId}`} className="list-group-item " style={{ backgroundColor: "#F8F9FA" }}>
+    <FontAwesomeIcon icon={faHistory} className='me-2' />
+    <span className="d-none d-xl-inline">HISTORY</span>
+</Link>
                 <li className="list-group-item " style={{ backgroundColor: "#F8F9FA" }}>
                     <FontAwesomeIcon icon={faFilePen} className='me-2' />
                     <span className="d-none d-xl-inline" onClick={onEditClick}>NOTIFICATIONS</span>
