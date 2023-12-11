@@ -1,5 +1,6 @@
 package com.example.petfeedercloud.config;
 
+import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.models.PetFeeder;
 import com.example.petfeedercloud.repositories.NotificationRepository;
 import com.example.petfeedercloud.services.NotificationService;
@@ -32,12 +33,12 @@ public class WebSocketNotification extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String petFeederId = extractPetFeederIdFromUrl(session);
-        if (petFeederId != null) {
-            session.getAttributes().put("petFeederId", petFeederId);
+        String userId = extractUserIdFromUrl(session);
+        if (userId != null) {
+            session.getAttributes().put("userId", userId);
         }
         sessions.add(session);
-        sendNotificationUpdateToSessions(Long.valueOf(petFeederId));
+        sendNotificationUpdateToSessions(Long.valueOf(userId));
     }
 
     @Override
@@ -45,15 +46,18 @@ public class WebSocketNotification extends TextWebSocketHandler {
         sessions.remove(session);
     }
 
-    public void sendNotificationUpdateToSessions(Long petFeederId) throws JsonProcessingException {
+    public void sendNotificationUpdateToSessions(Long userId) throws JsonProcessingException {
         for (WebSocketSession session : sessions) {
             Map<String, Object> attributes = session.getAttributes();
-            Long sessionPetFeederId = Long.valueOf(String.valueOf(attributes.get("petFeederId")));
-            if (petFeederId.equals(sessionPetFeederId)) {
+            Long sessionUserId = Long.valueOf(String.valueOf(attributes.get("userId")));
+            List<PetFeederDTO> petFeeders = petFeederService.getAllPetFeedersByUser(sessionUserId);
+            if (userId.equals(sessionUserId)) {
                 try {
-                    if(notificationService.isNotificationActive(sessionPetFeederId)){
-                        for (String alert: notificationService.sendAlert(sessionPetFeederId)) {
-                            session.sendMessage(new TextMessage("Pet Feeder: "+sessionPetFeederId+" "+alert));
+                    for (PetFeederDTO pf: petFeeders) {
+                        if(notificationService.isNotificationActive(pf.getPetFeederId())){
+                            for (String alert: notificationService.sendAlert(pf.getPetFeederId())) {
+                                session.sendMessage(new TextMessage("Pet Feeder: "+pf.getPetFeederId()+" "+alert));
+                            }
                         }
                     }
                 } catch (IOException e) {
@@ -63,7 +67,7 @@ public class WebSocketNotification extends TextWebSocketHandler {
         }
     }
 
-    private String extractPetFeederIdFromUrl(WebSocketSession session) {
+    private String extractUserIdFromUrl(WebSocketSession session) {
         String url = session.getUri().toString();
         String petFeederId = null;
         int index = url.lastIndexOf("/");
