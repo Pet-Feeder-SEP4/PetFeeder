@@ -152,12 +152,6 @@ public class ScheduleController {
         if (petFeederService.getPetFeederById(scheduleDTO.getPetFeederId())==null) {
             throw new IllegalArgumentException("Pet feeder not found with ID: " + scheduleDTO.getPetFeederId());
         }
-        Long userId = scheduleDTO.getUserId();
-        if (userId == null) {
-            throw new IllegalArgumentException("Please fill out the user ID.");
-        }
-        if (userService.getUserById(userId)==null) {
-            throw new IllegalArgumentException("User not found with ID: " + userId);
-        }
+
     }
 }
