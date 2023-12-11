@@ -51,7 +51,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
             pfd.setWaterTemperture(Integer.parseInt(String.valueOf(value.get("waterTemperature"))));
             pfd.setWaterLevel(Integer.parseInt(String.valueOf(value.get("waterLevel"))));
             pfd.setPetFeederId(pf.getPetFeederId());
-            pfd.setLowLevelFood(pfd.getLowLevelFood());
             pfd.setPetFeederLabel(pf.getPetFeederLabel());
             petFeederService.saveOrUpdatePetFeeder(pfd);
             webSocketPetFeeder.sendPetFeederUpdateToSessions(pfd.getPetFeederId());

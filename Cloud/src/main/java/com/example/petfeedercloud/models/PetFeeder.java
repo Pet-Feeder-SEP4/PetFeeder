@@ -13,11 +13,10 @@ public class PetFeeder {
 
     private String petFeederLabel;
     private int foodLevel;
-    private int lowLevelFood;
     private int foodHumidity;
     private int waterTemperture;
     private int waterLevel;
-    private boolean active = false;
+    private boolean active;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
@@ -60,12 +59,7 @@ public class PetFeeder {
     public void setFoodLevel(int foodLevel) {
         this.foodLevel = foodLevel;
     }
-    public int getLowLevelFood() {
-        return lowLevelFood;
-    }
-    public void setLowLevelFood(int lowLevelFood) {
-        this.lowLevelFood = lowLevelFood;
-    }
+
     public int getFoodHumidity() {
         return foodHumidity;
     }

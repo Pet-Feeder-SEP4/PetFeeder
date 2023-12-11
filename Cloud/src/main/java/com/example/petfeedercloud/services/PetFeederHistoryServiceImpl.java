@@ -55,15 +55,15 @@ public class PetFeederHistoryServiceImpl implements PetFeederHistoryService{
     }
 
     //This function is going to be executed at 1am, 7am, 1pm, 7pm OR EVERY 4 HOURS
-   // @Scheduled(fixedRate = 1000*60*60*4)
+    @Scheduled(fixedRate = 1000*60*60*4)
     private void scheduleFixedRateTask() {
         List<PetFeederDTO> petFeeders = petFeederService.getAllPetFeeders();
-        System.out.println(
-                "TESTING TEST - " +petFeeders.toString());
         for (PetFeederDTO petFeeder : petFeeders) {
             savePetFeederHistory(petFeeder);
         }
     }
+
+    //helpers
     private PetFeederHistory savePetFeederHistory(PetFeederDTO petFeederDTO) {
         try{
             // create a new history to save it to the db
