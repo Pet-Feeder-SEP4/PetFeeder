@@ -64,12 +64,15 @@ void test_getWaterMeasurament_0() {
     hc_sr04_takeMeasurement_water_fake.return_val = 0;
     getWaterMeasurement();
     TEST_ASSERT_EQUAL_INT(1, uart_send_string_blocking_fake.call_count);
+    TEST_ASSERT_EQUAL_STRING("Invalid water measurement\n", uart_send_string_blocking_fake.arg1_val);
 }
 
 void test_getWaterMeasurament_value() {
     hc_sr04_takeMeasurement_water_fake.return_val = 10;
     int value = getWaterMeasurement();
-    TEST_ASSERT_EQUAL_INT(10, value);
+     int capacity = 300;
+    int expected= (10*100)/ capacity;
+    TEST_ASSERT_EQUAL_INT(expected, value);
 }
 
 void test_getFoodMeasurament_call() {
@@ -81,27 +84,17 @@ void test_getFoodMeasurament_0() {
     hc_sr04_takeMeasurement_food_fake.return_val = 0;
     getFoodMeasurement();
     TEST_ASSERT_EQUAL_INT(1, uart_send_string_blocking_fake.call_count);
+    TEST_ASSERT_EQUAL_STRING("Invalid food measurement\n", uart_send_string_blocking_fake.arg1_val);
 }
 
 void test_getFoodMeasurament_value() {
     hc_sr04_takeMeasurement_food_fake.return_val = 10;
     int value = getFoodMeasurement();
-    TEST_ASSERT_EQUAL_INT(10, value);
+    int capacity = 160;
+    int expected= (10*100)/ capacity;
+    TEST_ASSERT_EQUAL_INT(expected, value);
 }
 
-void test_waterMeasurementPercentage() {
-     hc_sr04_takeMeasurement_water_fake.return_val = 10;
-     int value = waterMeasurementPercentage();
-     int expected = (10*100)/1000;
-     TEST_ASSERT_EQUAL_INT(expected, value);
-}
-
-void test_foodMeasurementPercentage() {
-     hc_sr04_takeMeasurement_food_fake.return_val = 10;
-     int value = foodMeasurementPercentage();
-     int expected = (10*100)/1000;
-     TEST_ASSERT_EQUAL_INT(expected, value);
-}
 
 int main()
 {
@@ -115,7 +108,5 @@ int main()
     RUN_TEST(test_getFoodMeasurament_call);
     RUN_TEST(test_getFoodMeasurament_0);
     RUN_TEST(test_getFoodMeasurament_value);
-    RUN_TEST(test_waterMeasurementPercentage);
-    RUN_TEST(test_foodMeasurementPercentage);
     return UNITY_END();
 }
