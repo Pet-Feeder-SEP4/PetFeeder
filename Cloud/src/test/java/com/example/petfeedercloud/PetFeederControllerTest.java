@@ -38,9 +38,9 @@ public class PetFeederControllerTest {
     @Test
     public void testDeactivatePetFeeder() {
 
-        doNothing().when(petFeederService).deactivatePetFeeder(anyLong(), anyLong(), anyLong());
+        doNothing().when(petFeederService).deactivatePetFeeder(anyLong(), anyLong());
 
-        ResponseEntity<String> response = petFeederController.deactivatePetFeeder(1L, 2L, 3L);
+        ResponseEntity<String> response = petFeederController.deactivatePetFeeder(1L, 2L);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Pet feeder deactivated successfully", response.getBody());
