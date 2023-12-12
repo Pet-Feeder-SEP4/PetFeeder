@@ -11,7 +11,7 @@ const WaterTemp = ({ petFeederData }) => {
         {petFeederData && (
           <div>
             <h2 className="temp-card-title text-black text-center">
-              {petFeederData.waterTemperture}&deg;K
+              {petFeederData.waterTemperture}&deg;C
             </h2>
           </div>
         )}

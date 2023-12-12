@@ -1,13 +1,13 @@
 import React from 'react';
-import './FoodLevel.css'; 
+import './WaterLevel.css'; 
 
-const FoodLevel = ({ petFeederData }) => {
+const WaterLevel = ({ petFeederData }) => {
     return (
-        <div className="level-card mt-3 ">
-            <div className="level-card-header rounded-top">
-                Food Level
+        <div className="levelwater-card mt-3 ">
+            <div className="levelwater-card-header rounded-top">
+                Water Level
             </div>
-            <div className="level-card-body">
+            <div className="levelwater-card-body">
                 {petFeederData && (
                     <div>
                         <div className="progress">
@@ -23,15 +23,15 @@ const FoodLevel = ({ petFeederData }) => {
                                     fontSize: '40px',
                                 }}
                             >
-                                {petFeederData.foodLevel}%
+                                {petFeederData.waterLevel}%
                             </div>
 
 
                             <div
                                 className="progress-bar progress-bar-striped progress-bar-animated"
                                 role="progressbar"
-                                style={{ width: `${petFeederData.foodLevel}%`, backgroundColor: '#AAC88F' }}
-                                aria-valuenow={petFeederData.foodLevel}
+                                style={{ width: `${petFeederData.waterLevel}%`, backgroundColor: '#AAC88F' }}
+                                aria-valuenow={petFeederData.waterLevel}
                                 aria-valuemin="0"
                                 aria-valuemax="100"
 
@@ -44,4 +44,4 @@ const FoodLevel = ({ petFeederData }) => {
     );
 };
 
-export default FoodLevel;
+export default WaterLevel;

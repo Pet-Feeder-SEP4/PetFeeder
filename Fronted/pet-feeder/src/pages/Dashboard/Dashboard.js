@@ -12,6 +12,7 @@ import EditNotifications from '../../components/modals/EditNotificationsModal';
 import FoodHum from '../../components/FoodHum/FoodHum';
 import FoodLevel from '../../components/FoodLevel/FoodLevel';
 import DashChart from '../../components/DashChart/DashChart';
+import WaterLevel from '../../components/WaterLevel/WaterLevel';
 
 
 const Dashboard = () => {
@@ -164,13 +165,16 @@ const Dashboard = () => {
           <div className='col-10'>
             <div class="container-upper mt-5">
               <div class="row upper">
-                <div class="col-lg-4 col-md-12 waterTemp ">
+                <div class="col-lg-3 col-md-12 waterTemp ">
                   <WaterTemp petFeederData={petFeederData} />
                 </div>
-                <div class="col-lg-4 col-md-12 foodHum">
+                <div class="col-lg-3 col-md-12 foodHum">
                   <FoodHum petFeederData={petFeederData} />
                 </div>
-                <div class="col-lg-4 col-md-12 foodLevel">
+                <div class="col-lg-3 col-md-12 foodHum">
+                  <WaterLevel petFeederData={petFeederData} />
+                </div>
+                <div class="col-lg-3 col-md-12 foodLevel">
                   <FoodLevel petFeederData={petFeederData} />
                 </div>
               </div>
