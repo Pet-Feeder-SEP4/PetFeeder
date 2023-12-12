@@ -160,7 +160,7 @@ const Dashboard = () => {
         />
       )}
 
-      <div className="dash">
+      <div className="dash container-fluid">
         <div className="row dashrow">
           <div className="col-2 sideCol">
             <SideBar
@@ -169,25 +169,25 @@ const Dashboard = () => {
             />
           </div>
           <div className="col-10">
-            <div class="container-upper mt-5">
-              <div class="row upper">
-                <div class="col-lg-3 col-md-12 waterTemp ">
+            <div className="container-upper mt-5">
+              <div className="row upper">
+                <div className="col-lg-3 col-md-6 col-sm-12 waterTemp">
                   <WaterTemp petFeederData={petFeederData} />
                 </div>
-                <div class="col-lg-3 col-md-12 foodHum">
+                <div className="col-lg-3 col-md-6 col-sm-12 foodHum">
                   <FoodHum petFeederData={petFeederData} />
                 </div>
-                <div class="col-lg-3 col-md-12 foodHum">
+                <div className="col-lg-3 col-md-6 col-sm-12 foodHum">
                   <WaterLevel petFeederData={petFeederData} />
                 </div>
-                <div class="col-lg-3 col-md-12 foodLevel">
+                <div className="col-lg-3 col-md-6 col-sm-12 foodLevel">
                   <FoodLevel petFeederData={petFeederData} />
                 </div>
               </div>
             </div>
-            <div class="container-upper mt-5">
-              <div class="row lower">
-                <div class="col-lg-12 chartt">
+            <div className="container-upper mt-5">
+              <div className="row lower">
+                <div className="col-12 chartt">
                   <DashChart petFeederId={petFeederId} />
                 </div>
               </div>
