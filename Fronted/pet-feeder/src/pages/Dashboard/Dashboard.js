@@ -7,7 +7,7 @@ import axios from "../../api/axios";
 
 import WaterTemp from "../../components/WaterTemp/WaterTemp";
 
-import EditNotifications from "../../components/modals/EditNotificationsModal";
+import EditNotifications from "../../components/modals/EditNotifications/EditNotificationsModal";
 import FoodHum from "../../components/FoodHum/FoodHum";
 import FoodLevel from "../../components/FoodLevel/FoodLevel";
 
