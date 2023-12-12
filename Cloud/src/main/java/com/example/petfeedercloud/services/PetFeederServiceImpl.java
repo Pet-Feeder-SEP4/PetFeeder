@@ -116,6 +116,24 @@ public class PetFeederServiceImpl implements PetFeederService{
     }
 
     @Override
+    public void addPetToPetFeeder(Long petFeederId, Long petId) {
+        try {
+            PetFeeder petFeeder = petFeederRepository.findById(petFeederId)
+                    .orElseThrow(() -> new NotFoundException("Pet feeder not found"));
+
+            Pet pet = petRepository.findById(petId)
+                    .orElseThrow(() -> new NotFoundException("Pet not found"));
+
+            petFeeder.setPet(pet);
+            petFeederRepository.save(petFeeder);
+        } catch (NotFoundException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RuntimeException("An error occurred while adding the pet to the pet feeder: " + ex.getMessage());
+        }
+    }
+
+    @Override
     @Transactional
     public void deletePetFeeder(Long petFeederId) {
         try {

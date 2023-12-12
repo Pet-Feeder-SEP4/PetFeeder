@@ -126,6 +126,18 @@ public class PetFeederController {
         }
     }
 
+    @PostMapping("/{petfeederId}/addPet/{petId}")
+    @Operation(summary = "Add pet to pet feeder", description = "Add a pet to a specific pet feeder")
+    public ResponseEntity<String> addPetToPetFeeder(@PathVariable Long petfeederId, @PathVariable Long petId) {
+        try {
+            petFeederService.addPetToPetFeeder(petfeederId, petId);
+            return ResponseEntity.ok("Pet added to pet feeder successfully");
+        } catch (NotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found: " + ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
+        }
+    }
     @PostMapping("/sendPortion/{petFeederId}/{portion}")
     @Operation(summary = "Send portion to petfeeder", description = "Send portion(ggg) to a specific pet feeder")
     public ResponseEntity<String> sendPortionToPetFeeder(@PathVariable Long petFeederId, @PathVariable String portion){
