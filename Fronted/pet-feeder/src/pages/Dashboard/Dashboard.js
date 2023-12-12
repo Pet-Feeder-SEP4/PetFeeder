@@ -11,6 +11,7 @@ import WaterTemp from '../../components/WaterTemp/WaterTemp';
 import EditNotifications from '../../components/modals/EditNotificationsModal';
 import FoodHum from '../../components/FoodHum/FoodHum';
 import FoodLevel from '../../components/FoodLevel/FoodLevel';
+import DashChart from '../../components/DashChart/DashChart';
 
 
 const Dashboard = () => {
@@ -171,6 +172,13 @@ const Dashboard = () => {
                 </div>
                 <div class="col-lg-4 col-md-12 foodLevel">
                   <FoodLevel petFeederData={petFeederData} />
+                </div>
+              </div>
+            </div>
+            <div class="container-upper mt-5">
+              <div class="row lower">
+                <div class="col-lg-12 chartt">
+                  <DashChart petFeederId={petFeederId} />
                 </div>
               </div>
             </div>

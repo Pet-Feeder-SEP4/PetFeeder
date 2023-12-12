@@ -11,7 +11,7 @@ const FoodHum = ({ petFeederData }) => {
                 {petFeederData && (
                     <div>
                         <h2 className="hum-card-title text-black text-center">
-                            {petFeederData.foodHumidity}&deg;C
+                            {petFeederData.foodHumidity}%
                         </h2>
                     </div>
                 )}
