@@ -59,7 +59,8 @@ public class PetFeederHistoryServiceImpl implements PetFeederHistoryService{
     private void scheduleFixedRateTask() {
         List<PetFeederDTO> petFeeders = petFeederService.getAllPetFeeders();
         for (PetFeederDTO petFeeder : petFeeders) {
-            savePetFeederHistory(petFeeder);
+            if(petFeeder.isActive())
+                savePetFeederHistory(petFeeder);
         }
     }
 

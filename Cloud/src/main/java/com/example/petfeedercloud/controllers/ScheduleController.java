@@ -39,7 +39,7 @@ public class ScheduleController {
             // Create a list of simplified DTOs
             List<GetScheduleDTO> simplifiedSchedules = new ArrayList<>();
             for (Schedule schedule : schedules) {
-                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(), schedule.getUser().getUserId(),petFeederId,schedule.getActive()));
+                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(), petFeederId,schedule.getActive()));
             }
 
             return new ResponseEntity<>(simplifiedSchedules, HttpStatus.OK);
@@ -55,38 +55,13 @@ public class ScheduleController {
         }
         try {
             ScheduleDTO schedule = scheduleService.getScheduleById(scheduleId);
-            GetScheduleDTO simplifiedSchedule = new GetScheduleDTO(scheduleId, schedule.getScheduleLabel(), schedule.getUserId(),schedule.getPetFeederId(),schedule.getActive());
+            GetScheduleDTO simplifiedSchedule = new GetScheduleDTO(scheduleId, schedule.getScheduleLabel(), schedule.getPetFeederId(),schedule.getActive());
             return new ResponseEntity<>(simplifiedSchedule, HttpStatus.OK);
         } catch (RuntimeException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @Operation(summary = "Get schedule by  user id", description = "Returns all schedules from an user")
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getScheduleByUserId(@PathVariable Long userId) {
-        if (userId == null) {
-            return new ResponseEntity<>("User ID is required", HttpStatus.BAD_REQUEST);
-        }
-        try {
-            // Check if the user with the given ID exists
-            if (userService.getUserById(userId) == null) {
-                return new ResponseEntity<>("User not found with ID: " + userId, HttpStatus.NOT_FOUND);
-            }
 
-            List<Schedule> schedules = scheduleService.getScheduleByUserId(userId);
-
-            // Create a list of simplified DTOs
-            List<GetScheduleDTO> simplifiedSchedules = new ArrayList<>();
-            for (Schedule schedule : schedules) {
-                simplifiedSchedules.add(new GetScheduleDTO(schedule.getScheduleId(), schedule.getScheduleLabel(),schedule.getUser().getUserId(),schedule.getPetFeeder().getPetFeederId(),schedule.getActive()));
-            }
-
-            return new ResponseEntity<>(simplifiedSchedules, HttpStatus.OK);
-        } catch (RuntimeException ex) {
-            // Handle the case where an unexpected error occurs
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity<?> deleteSchedule(@PathVariable Long scheduleId) {
@@ -114,7 +89,6 @@ public class ScheduleController {
             GetScheduleDTO responseDTO = new GetScheduleDTO(
                     createdSchedule.getScheduleId(),
                     createdSchedule.getScheduleLabel(),
-                    createdSchedule.getUser().getUserId(),
                     createdSchedule.getPetFeeder().getPetFeederId(),
                     createdSchedule.getActive()
             );
@@ -134,7 +108,6 @@ public class ScheduleController {
             GetScheduleDTO responseDTO = new GetScheduleDTO(
                     activatedSchedule.getScheduleId(),
                     activatedSchedule.getScheduleLabel(),
-                    activatedSchedule.getUser().getUserId(),
                     activatedSchedule.getPetFeeder().getPetFeederId(),
                     activatedSchedule.getActive()
             );
@@ -179,12 +152,6 @@ public class ScheduleController {
         if (petFeederService.getPetFeederById(scheduleDTO.getPetFeederId())==null) {
             throw new IllegalArgumentException("Pet feeder not found with ID: " + scheduleDTO.getPetFeederId());
         }
-        Long userId = scheduleDTO.getUserId();
-        if (userId == null) {
-            throw new IllegalArgumentException("Please fill out the user ID.");
-        }
-        if (userService.getUserById(userId)==null) {
-            throw new IllegalArgumentException("User not found with ID: " + userId);
-        }
+
     }
 }
