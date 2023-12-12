@@ -12,6 +12,9 @@
 #include <stdint.h>
 #include "uart.h"
 
+#ifndef WIFI_H
+#define WIFI_H
+
 /**
  * @brief Define which USART module is used for WiFi communication.
  * 
@@ -112,3 +115,5 @@ WIFI_ERROR_MESSAGE_t wifi_command_quit_AP();
  * @return WIFI_ERROR_MESSAGE_t Error message based on the response from the module.
  */
 WIFI_ERROR_MESSAGE_t wifi_command_close_TCP_connection();
+
+#endif 
