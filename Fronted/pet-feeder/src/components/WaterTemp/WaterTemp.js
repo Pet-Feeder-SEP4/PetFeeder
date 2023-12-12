@@ -1,16 +1,16 @@
 import React from 'react';
-import './WaterTemp.css'; 
+import './WaterTemp.css';
 
 const WaterTemp = ({ petFeederData }) => {
   return (
-    <div className="custom-card mt-3">
-      <div className="custom-card-header rounded-top">
+    <div className="temp-card mt-3 ">
+      <div className="temp-card-header rounded-top">
         Water Temperature
       </div>
-      <div className="custom-card-body">
+      <div className="temp-card-body">
         {petFeederData && (
           <div>
-            <h2 className="custom-card-title text-black text-center">
+            <h2 className="temp-card-title text-black text-center">
               {petFeederData.waterTemperture}&deg;C
             </h2>
           </div>

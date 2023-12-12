@@ -9,6 +9,8 @@ import axios from "../../api/axios";
 import WaterTemp from '../../components/WaterTemp/WaterTemp';
 
 import EditNotifications from '../../components/modals/EditNotificationsModal';
+import FoodHum from '../../components/FoodHum/FoodHum';
+import FoodLevel from '../../components/FoodLevel/FoodLevel';
 
 
 const Dashboard = () => {
@@ -25,7 +27,7 @@ const Dashboard = () => {
     petFeederId: 0,
     petFeeder: 0,
   });
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +38,6 @@ const Dashboard = () => {
         console.error('Error fetching notification data:', error);
       }
     };
-
     fetchData();
   }, [petFeederId]);
 
@@ -162,15 +163,14 @@ const Dashboard = () => {
           <div className='col-10'>
             <div class="container-upper mt-5">
               <div class="row upper">
-                <div class="col-4 waterTemp ">
+                <div class="col-lg-4 col-md-12 waterTemp ">
                   <WaterTemp petFeederData={petFeederData} />
                 </div>
-                <div class="col-4">
-                  
+                <div class="col-lg-4 col-md-12 foodHum">
+                  <FoodHum petFeederData={petFeederData} />
                 </div>
-                <div class="col-4">
-                  
-                
+                <div class="col-lg-4 col-md-12 foodLevel">
+                  <FoodLevel petFeederData={petFeederData} />
                 </div>
               </div>
             </div>

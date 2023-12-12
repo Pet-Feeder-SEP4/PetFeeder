@@ -1,27 +1,38 @@
-.custom-card {
-    height: 250px; 
-    width: 350px;
-    background-color: #F8F9FA; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-    border-radius: 10px; 
-    font-family: 'Poppins', sans-serif;
+.temp-card {
+  height: 250px;
+  width: 350px;
+  background-color: #F8F9FA;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.temp-card-header {
+  padding: 10px;
+  background-color: #06350D;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.temp-card-body {
+  padding: 20px;
+}
+
+.temp-card-title {
+  padding-top: 57px;
+  font-size: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .temp-card {
+    height: 200px;
+    width: 300px;
   }
-  
-  .custom-card-header {
-    padding: 10px;
-    background-color: #06350D;
-    color: #ffffff; 
-    border-top-left-radius: 10px; 
-    border-top-right-radius: 10px; 
+
+  .temp-card-title {
+    font-size: 30px;
+    padding-top: 40px;
   }
-  
-  .custom-card-body {
-    padding: 20px;
-  }
-  
-  .custom-card-title {
-    font-size: 24px; 
-    padding-top: 50px;
-    font-size: 40px;
-  }
-  
+
+}
