@@ -20,8 +20,8 @@ public class PetFeederDTO {
     private Long userId;
     private Long scheduleId;
     private Long petId;
-
     private boolean active;
+    private boolean connected;
     public int getWaterLevel() {
         return waterLevel;
     }
@@ -95,5 +95,14 @@ public class PetFeederDTO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }

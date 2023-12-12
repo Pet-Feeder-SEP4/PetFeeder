@@ -19,8 +19,8 @@ public interface PetFeederRepository extends JpaRepository<PetFeeder, Long> {
     @Query("SELECT p FROM PetFeeder p WHERE p.petFeederId = :petFeederId")
     PetFeeder findByPetFeederId(Long petFeederId);
 
-    @Query("SELECT p FROM PetFeeder p WHERE p.user.userId = :userId AND p.active = true")
-    List<PetFeeder> findAllByUserUserIdAndActiveTrue(Long userId);
+    @Query("SELECT p FROM PetFeeder p WHERE p.user.userId = :userId AND p.connected = true")
+    List<PetFeeder> findAllByUserUserIdAndConnectedTrue(Long userId);
 
     @Query("SELECT p FROM PetFeeder p WHERE p.pet = :pet")
     List<PetFeeder> findByPet(Pet pet);

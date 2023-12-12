@@ -17,6 +17,7 @@ public class PetFeeder {
     private int waterTemperture;
     private int waterLevel;
     private boolean active;
+    private boolean connected;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
     private UserP user;
@@ -85,5 +86,13 @@ public class PetFeeder {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }

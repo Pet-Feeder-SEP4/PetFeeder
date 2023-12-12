@@ -55,6 +55,7 @@ public class PetFeederServiceImpl implements PetFeederService{
     public void createPetFeeder(PetFeederDTO petFeederDTO) {
         try {
             PetFeeder petFeeder = convertToEntity(petFeederDTO);
+
             Notification notification = new Notification(50,70,25,40,petFeeder,true);
             petFeederRepository.save(petFeeder);
             notificationRepository.save(notification);
@@ -147,6 +148,9 @@ public class PetFeederServiceImpl implements PetFeederService{
             petFeeder.setActive(true);
 
             petFeederRepository.save(petFeeder);
+
+            petFeeder.setConnected(true);
+            petFeederRepository.save(petFeeder);
         } catch (NotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -154,21 +158,20 @@ public class PetFeederServiceImpl implements PetFeederService{
         }
     }
     @Override
-    public List<PetFeederDTO> getAllActivePetFeedersByUser(Long userId) {
-        return petFeederRepository.findAllByUserUserIdAndActiveTrue(userId).stream()
+    public List<PetFeederDTO> getAllConnectedPetFeedersByUser(Long userId) {
+        return petFeederRepository.findAllByUserUserIdAndConnectedTrue(userId).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void deactivatePetFeeder(Long userId, Long petId, Long petFeederId) {
+    public void deactivatePetFeeder(Long userId, Long petFeederId) {
         Optional<PetFeeder> optionalPetFeeder = petFeederRepository.findById(petFeederId);
 
         if (optionalPetFeeder.isPresent()) {
             PetFeeder petFeeder = optionalPetFeeder.get();
 
-            // Check if the pet feeder belongs to the specified user and pet
-            if (petFeeder.getUser().getUserId().equals(userId) && petFeeder.getPet().getPetId().equals(petId)) {
+            if (petFeeder.getUser().getUserId().equals(userId)) {
                 petFeeder.setActive(false);
                 petFeederRepository.save(petFeeder);
             } else {
@@ -185,17 +188,11 @@ public class PetFeederServiceImpl implements PetFeederService{
         petFeeder.setFoodLevel(petFeederDTO.getFoodLevel());
         petFeeder.setFoodHumidity(petFeederDTO.getFoodHumidity());
         petFeeder.setWaterTemperture(petFeederDTO.getWaterTemperture());
+        petFeeder.setActive(false);
+        petFeeder.setConnected(false);
 
-        // Fetch associated User and Pet entities
-        UserP user = userRepository.findById(petFeederDTO.getUserId())
-                .orElseThrow(() -> new NotFoundException("User not found"));
-
-        Pet pet = petRepository.findById(petFeederDTO.getPetId())
-                .orElseThrow(() -> new NotFoundException("Pet not found"));
-
-        // Set associations
-        petFeeder.setUser(user);
-        petFeeder.setPet(pet);
+        petFeeder.setUser(null);
+        petFeeder.setPet(null);
 
         return petFeeder;
     }
@@ -208,6 +205,7 @@ public class PetFeederServiceImpl implements PetFeederService{
         pfDTO.setFoodHumidity(pf.getFoodHumidity());
         pfDTO.setFoodLevel(pf.getFoodLevel());
         pfDTO.setActive(pf.isActive());
+        pfDTO.setConnected(pf.isConnected());
         pfDTO.setWaterTemperture(pf.getWaterTemperture());
         if(pf.getPet()!=null)
             pfDTO.setPetId(pf.getPet().getPetId());

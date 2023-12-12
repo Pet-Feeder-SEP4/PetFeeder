@@ -82,13 +82,13 @@ public class PetFeederController {
         return petFeederService.getAllPetFeedersByUser(userId);
     }
 
-    @GetMapping("/active/{userId}")
-    @Operation(summary = "Get all active pet feeders by user", description = "Get all active pet feeders from a user using user id")
+    @GetMapping("/connected/{userId}")
+    @Operation(summary = "Get all connected pet feeders by user", description = "Get all connected pet feeders from a user using user id")
     public List<PetFeederDTO> getAllActivePetFeedersByUser(@PathVariable Long userId) {
-        return petFeederService.getAllActivePetFeedersByUser(userId);
+        return petFeederService.getAllConnectedPetFeedersByUser(userId);
     }
 
-    @PostMapping("/{petfeederId}/activate")
+    @PostMapping("/{petfeederId}/connected")
     @Operation(summary = "Activate pet feeder", description = "Activate a pet feeder for a specific user and pet")
     public ResponseEntity<String> activatePetFeeder(
             @RequestParam(required = true) Long userId,
@@ -111,14 +111,13 @@ public class PetFeederController {
     @Operation(summary = "Deactivate pet feeder", description = "Deactivate a pet feeder for a specific user and pet")
     public ResponseEntity<String> deactivatePetFeeder(
             @RequestParam(required = true) Long userId,
-            @RequestParam(required = true) Long petId,
             @RequestParam Long petFeederId) {
         try {
-            if (userId == null || userId <= 0 || petId == null || petId <= 0) {
+            if (userId == null || userId <= 0) {
                 throw new IllegalArgumentException("userId and petId are required and must be greater than 0");
             }
 
-            petFeederService.deactivatePetFeeder(userId, petId, petFeederId);
+            petFeederService.deactivatePetFeeder(userId, petFeederId);
             return ResponseEntity.ok("Pet feeder deactivated successfully");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
