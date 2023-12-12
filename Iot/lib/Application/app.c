@@ -7,7 +7,6 @@
 #include "hc_sr04.h"
 #include "configuration.h"
 
-#include "sensor_controller.h"
 #include "parse_info.h"
 
 char buffer[8];
@@ -24,6 +23,8 @@ void app_init(){
     wifi_init();
     wifi_command_join_AP(WIFI_NAME, WIFI_PASSWORD);
     wifi_command_create_TCP_connection(IP, PORT, tcpCallback, buffer);
+    _delay_ms(3000);
+    
 }
 
 void app_start(void){
