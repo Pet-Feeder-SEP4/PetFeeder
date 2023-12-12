@@ -28,7 +28,7 @@ const FoodLevel = ({ petFeederData }) => {
 
 
                             <div
-                                className="progress-bar"
+                                className="progress-bar progress-bar-striped progress-bar-animated"
                                 role="progressbar"
                                 style={{ width: `${petFeederData.foodLevel}%`, backgroundColor: '#AAC88F' }}
                                 aria-valuenow={petFeederData.foodLevel}
