@@ -1,10 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import SideBar from '../../components/SideBar/SideBar';
 import NavBar from '../../components/Navbar/Navbar';
 import DispensePop from '../../components/SideBar/DispensePop';
 import axios from "../../api/axios";
+
+import WaterTemp from '../../components/WaterTemp/WaterTemp';
+
 import EditNotifications from '../../components/modals/EditNotificationsModal';
+
 
 const Dashboard = () => {
   const { petFeederId } = useParams();
@@ -35,6 +40,28 @@ const Dashboard = () => {
     fetchData();
   }, [petFeederId]);
 
+  const [petFeederData, setPetFeederData] = useState(null);
+  useEffect(() => {
+    const socket = new WebSocket('wss://petfeederapi.azurewebsites.net/petfeeder/info/' + petFeederId);
+
+    socket.addEventListener('open', (event) => {
+      console.log('WebSocket connection opened:', event);
+    });
+
+    socket.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      setPetFeederData(data);
+    });
+
+    socket.addEventListener('close', (event) => {
+      console.log('WebSocket connection closed:', event);
+    });
+
+    return () => {
+      socket.close();
+    };
+  }, [petFeederId]);
+
   const handleDispenseClick = () => {
     setPopupVisible(true);
     console.log('Popup visible:', isPopupVisible);
@@ -63,6 +90,7 @@ const Dashboard = () => {
       alert('Error dispensing. Please try again.');
     }
   };
+
 
   const handleEditClick = () => {
     setModalVisible(true);
@@ -111,7 +139,6 @@ const Dashboard = () => {
   return (
     <>
       <NavBar />
-
       {isPopupVisible && (
         <DispensePop onClose={handleClosePopup} onDispense={handleDispense} />
       )}
@@ -133,11 +160,24 @@ const Dashboard = () => {
             <SideBar onDispenseClick={handleDispenseClick} onEditClick={handleEditClick} />
           </div>
           <div className='col-10'>
-
+            <div class="container-upper mt-5">
+              <div class="row upper">
+                <div class="col-4 waterTemp ">
+                  <WaterTemp petFeederData={petFeederData} />
+                </div>
+                <div class="col-4">
+                  
+                </div>
+                <div class="col-4">
+                  
+                
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
+
     </>
   );
 };
