@@ -1,6 +1,7 @@
 package com.example.petfeedercloud.controllers;
 
 import com.example.petfeedercloud.config.WebSocketHandler;
+import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.services.PetFeederService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -133,6 +134,23 @@ public class PetFeederController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }catch(Exception ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("/{petfeederId}/pet")
+    @Operation(summary = "Get pet for pet feeder", description = "Get the pet associated with a specific pet feeder")
+    public ResponseEntity<?> getPetForPetFeeder(@PathVariable Long petfeederId) {
+        try {
+            PetDTO petDTO = petFeederService.getPetForPetFeeder(petfeederId);
+            if (petDTO != null) {
+                return ResponseEntity.ok(petDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No pet found for this pet feeder");
+            }
+        } catch (NotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet feeder not found: " + ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
         }
     }
 }

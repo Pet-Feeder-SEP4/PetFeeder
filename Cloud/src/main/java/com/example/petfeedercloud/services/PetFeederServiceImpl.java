@@ -173,6 +173,36 @@ public class PetFeederServiceImpl implements PetFeederService{
         }
     }
 
+    @Override
+    public PetDTO getPetForPetFeeder(Long petFeederId) {
+        try {
+            PetFeeder petFeeder = petFeederRepository.findById(petFeederId)
+                    .orElseThrow(() -> new NotFoundException("Pet feeder not found"));
+
+            Pet pet = petFeeder.getPet();
+            if (pet != null) {
+                return convertPetToDto(pet);
+            } else {
+                return null;
+            }
+        } catch (NotFoundException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new RuntimeException("An error occurred while retrieving the pet for the pet feeder: " + ex.getMessage());
+        }
+    }
+
+    private PetDTO convertPetToDto(Pet pet) {
+        PetDTO petDTO = new PetDTO();
+        petDTO.setPetId(pet.getPetId());
+        petDTO.setUserId(pet.getUser().getUserId());
+        petDTO.setName(pet.getName());
+        petDTO.setBirthdate(pet.getBirthdate());
+        petDTO.setWeight(pet.getWeight());
+        petDTO.setBreed(pet.getBreed());
+        return petDTO;
+    }
+
     private PetFeeder convertToEntity(PetFeederDTO petFeederDTO) {
         PetFeeder petFeeder = new PetFeeder();
         petFeeder.setPetFeederLabel(petFeederDTO.getPetFeederLabel());
