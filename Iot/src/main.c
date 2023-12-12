@@ -4,9 +4,8 @@
 
 int main() {
     app_init();
-    wifi_command_TCP_transmit("37\n", 2);
+    
     while (1) {
-        
         app_start();
         //sensor_get_data();
         _delay_ms(4000);

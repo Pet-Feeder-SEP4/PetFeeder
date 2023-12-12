@@ -23,14 +23,15 @@ void sensor_get_data()
     getTempandHum();
     temperature = getTemp();
     humidity = getHum();
-    idNumber = 37;
+    idNumber = 555;
     waterMeasurement = getWaterMeasurement();
     _delay_ms(1000);
     foodMeasurement = getFoodMeasurement();
     sprintf(str, "{\"petFeederId\":\"%d\",\"foodLevel\":\"%d\",\"foodHumidity\":\"%d\",\"waterTemperature\":\"%d\",\"waterLevel\":\"%d\"}\n",
             idNumber, foodMeasurement, humidity, temperature, waterMeasurement);
-    
-    wifi_command_TCP_transmit((uint8_t *)str, 99);
+    /*sprintf(str, "water= %d food= %d   hum=%d temp=%d id=%d \n\n",
+                waterMeasurement,foodMeasurement,humidity,temperature,idNumber);*/
+    wifi_command_TCP_transmit((uint8_t *)str, 108);
     pc_comm_send_string_blocking(str);
 }
 
