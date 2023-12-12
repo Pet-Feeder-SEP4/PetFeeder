@@ -35,7 +35,7 @@ function SideBar({ onDispenseClick, onEditClick }) {
           </span>
         </li>
         <Link
-          to="/"
+          to={`/mypet/${petFeederId}`}
           className="list-group-item "
           style={{ backgroundColor: "#F8F9FA" }}
         >
