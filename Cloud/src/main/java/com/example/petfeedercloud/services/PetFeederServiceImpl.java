@@ -100,7 +100,7 @@ public class PetFeederServiceImpl implements PetFeederService{
                 petF.setUser(userRepository.findById(petFeeder.getUserId()).get());
                 petF.setPet(petRepository.findById(petFeeder.getPetId()).get());
                 //When schedule is implemented change null
-               // petF.setSchedule(null);
+                // petF.setSchedule(null);
                 petF.setWaterLevel(petFeeder.getWaterLevel());
                 petF.setFoodLevel(petFeeder.getFoodLevel());
                 petF.setFoodHumidity(petFeeder.getFoodHumidity());
@@ -228,7 +228,7 @@ public class PetFeederServiceImpl implements PetFeederService{
         if(pf.getPet()!=null)
             pfDTO.setPetId(pf.getPet().getPetId());
         if(pf.getUser()!=null)
-        pfDTO.setUserId(pf.getUser().getUserId());
+            pfDTO.setUserId(pf.getUser().getUserId());
         return pfDTO;
     }
 }
