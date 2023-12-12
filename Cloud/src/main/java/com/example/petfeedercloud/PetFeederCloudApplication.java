@@ -71,10 +71,18 @@ public class PetFeederCloudApplication{
 
     private String waitForSignal(Socket clientSocket) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            /*BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String signal = reader.readLine();
-            System.out.println("Received signal from client: " + signal);
-            return signal;
+            System.out.println("Received signal from client: " + signal);*/
+            InputStream inputStream = clientSocket.getInputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = inputStream.read(buffer);
+            if (bytesRead != -1) {
+                String receivedData = new String(buffer, 0, bytesRead);
+                System.out.println("Received: " + receivedData);
+                return receivedData;
+            }
+            return "";
         } catch (IOException e) {
             return ""+e;
         }
@@ -84,11 +92,19 @@ public class PetFeederCloudApplication{
         try {
             InputStream inputStream = clientSocket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
+            clientSocket.getOutputStream().write("DIS:50".getBytes());
             while (true) {
+                /*
                 String receivedData = reader.readLine(); // Read a line of text
                 if (receivedData != null) {
                     System.out.println("Received from PetFeeder " + petFeederId + ": " + receivedData);
+                    processReceivedData(receivedData,petFeederId);
+                 */
+                byte[] buffer = new byte[1024];
+                int bytesRead = inputStream.read(buffer);
+                if (bytesRead != -1) {
+                    String receivedData = new String(buffer, 0, bytesRead);
+                    System.out.println("Received: " + receivedData);
                     processReceivedData(receivedData,petFeederId);
                 }
             }
