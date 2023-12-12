@@ -10,7 +10,6 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 const FeedingSchedule = () => {
   const { petFeederId } = useParams();
-  const userId = localStorage.getItem('userId');
   const [scheduleLabel, setScheduleLabel] = useState('');
   const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useState([]);
@@ -31,7 +30,6 @@ const FeedingSchedule = () => {
 
       const response = await axios.post('/schedules', {
         scheduleLabel: scheduleLabel,
-        userId: userId,
         petFeederId: petFeederId,
       });
 

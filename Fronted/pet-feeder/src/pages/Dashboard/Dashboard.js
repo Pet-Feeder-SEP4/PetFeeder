@@ -7,6 +7,13 @@ import DispensePop from "../../components/SideBar/DispensePop";
 import EditNotifications from "../../components/modals/EditNotificationsModal";
 import axios from "../../api/axios";
 
+import WaterTemp from '../../components/WaterTemp/WaterTemp';
+
+import EditNotifications from '../../components/modals/EditNotificationsModal';
+import FoodHum from '../../components/FoodHum/FoodHum';
+import FoodLevel from '../../components/FoodLevel/FoodLevel';
+
+
 const Dashboard = () => {
   const { petFeederId } = useParams();
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -33,7 +40,6 @@ const Dashboard = () => {
         console.error("Error fetching notification data:", error);
       }
     };
-
     fetchData();
   }, [petFeederId]);
 
@@ -113,13 +119,25 @@ const Dashboard = () => {
         />
       )}
 
-      <div className="dash">
-        <div className="row dashrow">
-          <div className="col-2 sideCol">
-            <SideBar
-              onDispenseClick={handleDispenseClick}
-              onEditClick={handleEditClick}
-            />
+      <div className='dash'>
+        <div className='row dashrow'>
+          <div className='col-2 sideCol'>
+            <SideBar onDispenseClick={handleDispenseClick} onEditClick={handleEditClick} />
+          </div>
+          <div className='col-10'>
+            <div class="container-upper mt-5">
+              <div class="row upper">
+                <div class="col-lg-4 col-md-12 waterTemp ">
+                  <WaterTemp petFeederData={petFeederData} />
+                </div>
+                <div class="col-lg-4 col-md-12 foodHum">
+                  <FoodHum petFeederData={petFeederData} />
+                </div>
+                <div class="col-lg-4 col-md-12 foodLevel">
+                  <FoodLevel petFeederData={petFeederData} />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-10">{/* Additional content */}</div>
         </div>
