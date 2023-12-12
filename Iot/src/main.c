@@ -1,6 +1,6 @@
 #include "app.h"
 #include "parse_info.h"
-#include <util/delay.h>
+#include "mock_delay.h"
 
 int main() {
     app_init();
