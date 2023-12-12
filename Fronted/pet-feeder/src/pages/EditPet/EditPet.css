@@ -46,6 +46,8 @@ button.btncancel{
     color:#F6f6f6;
     outline: none;
     width:100px;
+    margin-top: 30px;
+    border: none;
 }
 button.btnsave:hover,
 button.btncancel:hover{

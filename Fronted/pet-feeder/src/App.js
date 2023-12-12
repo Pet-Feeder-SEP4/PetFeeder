@@ -11,7 +11,9 @@ import PetFeedersC from './components/PetFeedersC/PetFeedersC';
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Time from "./pages/Schedule/Time/Time"
 import EditPet from "./pages/EditPet/EditPet";
+import PetInfo from "./pages/PetInfo/PetInfo";
 import PetFeederHistoryPage from "./pages/History/History";
+
 
 
 
@@ -31,6 +33,7 @@ function App() {
       <Route path="/PetFeedersC" element={<PetFeedersC />} />
       <Route path="/dashboard/:petFeederId" element={<Dashboard />} />
       <Route path="/add-time/:scheduleId/:scheduleLabel" element={<Time />} />
+      <Route path="/PetInfo/:petId" element={<PetInfo />} />
       <Route path="/History/:petFeederId" element={<PetFeederHistoryPage />} />
       </Routes>
     </Router>
