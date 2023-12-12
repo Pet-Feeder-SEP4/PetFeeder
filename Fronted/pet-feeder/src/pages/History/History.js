@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
-import axios from '../../api/axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useParams } from 'react-router-dom';
-import { Card, Row, Col } from 'react-bootstrap';
-import NavBar from '../../components/Navbar/Navbar';
-import '../History/History.css';
+import React, { useState } from "react";
+import axios from "../../api/axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useParams } from "react-router-dom";
+import { Card, Row, Col } from "react-bootstrap";
+import NavBar from "../../components/Navbar/Navbar";
+import "../History/History.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faTemperatureHalf } from "@fortawesome/free-solid-svg-icons";
+import { faDroplet } from "@fortawesome/free-solid-svg-icons";
+import { faBowlFood } from "@fortawesome/free-solid-svg-icons";
 
 const PetFeederHistory = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [selectedPartOfDay, setSelectedPartOfDay] = useState('all');
-  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [selectedPartOfDay, setSelectedPartOfDay] = useState("all");
+  const [selectedFilter, setSelectedFilter] = useState("all");
   const [historyData, setHistoryData] = useState(null);
 
   const { petFeederId } = useParams();
 
   const handleDateChange = (date, dateType) => {
-    if (dateType === 'start') {
+    if (dateType === "start") {
       setStartDate(date);
     } else {
       setEndDate(date);
@@ -38,51 +43,60 @@ const PetFeederHistory = () => {
         let response;
 
         if (endDate) {
-          response = await axios.post('/petFeederHistory/getHistoryByDateInterval', {
-            petFeederId,
-            startDate: startDate.toISOString().split('T')[0],
-            endDate: endDate.toISOString().split('T')[0],
-          });
+          response = await axios.post(
+            "/petFeederHistory/getHistoryByDateInterval",
+            {
+              petFeederId,
+              startDate: startDate.toISOString().split("T")[0],
+              endDate: endDate.toISOString().split("T")[0],
+            }
+          );
         } else {
-          response = await axios.post('/petFeederHistory/history', {
+          response = await axios.post("/petFeederHistory/history", {
             petFeederId,
-            date: startDate.toISOString().split('T')[0],
+            date: startDate.toISOString().split("T")[0],
           });
         }
 
         const filteredData = response.data
           .filter((item) => {
-            const time = item.time.split('.')[0];
-            const hour = parseInt(time.split(':')[0], 10);
+            const time = item.time.split(".")[0];
+            const hour = parseInt(time.split(":")[0], 10);
 
-            if (selectedPartOfDay === 'morning') {
+            if (selectedPartOfDay === "morning") {
               return hour >= 6 && hour < 12;
-            } else if (selectedPartOfDay === 'afternoon') {
+            } else if (selectedPartOfDay === "afternoon") {
               return hour >= 12 && hour < 18;
-            } else if (selectedPartOfDay === 'night') {
+            } else if (selectedPartOfDay === "night") {
               return hour >= 18 || hour < 6;
             }
 
             return true;
           })
           .map((item) => ({
-            time: item.time.split('.')[0],
-            ...(selectedFilter === 'all' && { foodLevel: item.foodLevel, foodHumidity: item.foodHumidity, waterTemperature: item.waterTemperature }),
-            ...(selectedFilter !== 'all' && { [selectedFilter]: item[selectedFilter] }),
+            time: item.time.split(".")[0],
+            ...(selectedFilter === "all" && {
+              foodLevel: item.foodLevel,
+              foodHumidity: item.foodHumidity,
+              waterTemperature: item.waterTemperature,
+            }),
+            ...(selectedFilter !== "all" && {
+              [selectedFilter]: item[selectedFilter],
+            }),
           }));
 
         setHistoryData(filteredData);
         console.log(
           petFeederId,
-          startDate.toISOString().split('T')[0],
-          endDate && endDate.toISOString().split('T')[0]
+          startDate.toISOString().split("T")[0],
+          endDate && endDate.toISOString().split("T")[0]
         );
         console.log(filteredData);
       } catch (error) {
-        console.error('Error fetching history data:', error);
+        console.error("Error fetching history data:", error);
       }
     } else {
-      console.warn('Please select the start date.');
+      console.warn("Please select the start date.");
     }
   };
 
@@ -92,36 +106,48 @@ const PetFeederHistory = () => {
   };
 
   return (
-    <div style={{ fontFamily: 'Poppins, sans-serif' }}>
+    <div style={{ fontFamily: "Poppins, sans-serif" }}>
       <NavBar />
-      <div className="text-white d-flex align-items-center justify-content-center p-4" style={{ height: '20vh', backgroundColor: '#06350D' }}>
-        <h1 className="display-4" style={{ fontFamily: 'Poppins, sans-serif', fontSize: '20px', fontWeight: '500' }}>PET FEEDER HISTORY</h1>
+      <div
+        className="text-white d-flex align-items-center justify-content-center p-4"
+        style={{ height: "20vh", backgroundColor: "#06350D" }}
+      >
+        <h1
+          className="display-4"
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "20px",
+            fontWeight: "500",
+          }}
+        >
+          PET FEEDER HISTORY
+        </h1>
       </div>
-      <Row className='m-4'>
+      <Row className="m-4">
         <Col sm={6} md={4} lg={3}>
-          <label className='mr-2'>Start Date</label>
+          <label className="mr-2">Start Date</label>
           <div>
             <DatePicker
               selected={startDate}
-              onChange={(date) => handleDateChange(date, 'start')}
+              onChange={(date) => handleDateChange(date, "start")}
               className="form-control"
-              id='datepicker'
+              id="datepicker"
             />
           </div>
         </Col>
         <Col sm={6} md={4} lg={3}>
-          <label className='mr-2'>End Date</label>
+          <label className="mr-2">End Date</label>
           <div>
             <DatePicker
               selected={endDate}
-              onChange={(date) => handleDateChange(date, 'end')}
+              onChange={(date) => handleDateChange(date, "end")}
               className="form-control"
-              id='datepicker'
+              id="datepicker"
             />
           </div>
         </Col>
         <Col sm={6} md={4} lg={3}>
-          <label className='mr-2'>Part of Day</label>
+          <label className="mr-2">Part of Day</label>
           <div>
             <select
               value={selectedPartOfDay}
@@ -153,27 +179,85 @@ const PetFeederHistory = () => {
       </Row>
       <Row>
         <Col>
-          <button style={{ backgroundColor: '#AAC88F', color: 'white' }} onClick={fetchHistoryData} className="btn m-4">
+          <button
+            style={{ backgroundColor: "#AAC88F", color: "white" }}
+            onClick={fetchHistoryData}
+            className="btn m-4"
+          >
             Fetch
           </button>
-          <button style={{ backgroundColor: '#ff6961', color: 'white', marginLeft: '10px' }} onClick={handleClearDates} className="btn m-4">
+          <button
+            style={{
+              backgroundColor: "#ff6961",
+              color: "white",
+              marginLeft: "10px",
+            }}
+            onClick={handleClearDates}
+            className="btn m-4"
+          >
             Clear Dates
           </button>
         </Col>
       </Row>
       {historyData && (
-        <div className='m-4'>
-          <h4 className='mb-4'>History</h4>
+        <div className="m-4">
+          <h4 className="mb-4">History</h4>
           <Row>
             {historyData.map((item, index) => (
-              <Col key={index} xs={12} sm={6} md={4} lg={3} xl={3} className="mb-3">
-                <Card className='shadow' style={{ border: '1px solid white', borderRadius: '8px', marginBottom: '15px' }}>
+              <Col
+                key={index}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={3}
+                className="mb-3"
+              >
+                <Card
+                  className="shadow"
+                  style={{
+                    border: "1px solid white",
+                    borderRadius: "8px",
+                    marginBottom: "15px",
+                  }}
+                >
                   <Card.Body>
-                    <Card.Title style={{ color: '#06350D', fontSize: '18px' }}>Time: {item.time}</Card.Title>
-                    {item.foodLevel && <Card.Text>Food Level: <span style={{ color: '#829B6A' }}>{item.foodLevel} </span></Card.Text>}
-                    {item.foodHumidity && <Card.Text>Food Humidity: <span style={{ color: '#829B6A' }}>{item.foodHumidity} </span></Card.Text>}
+                    <Card.Title style={{ color: "#969696", fontSize: "18px" }}>
+                      <FontAwesomeIcon icon={faClock} className="me-1" />{" "}
+                      {item.time}
+                    </Card.Title>
+                    {item.foodLevel && (
+                      <Card.Text>
+                        <FontAwesomeIcon icon={faBowlFood} className=" me-2" />
+                        Food Level:{" "}
+                        <span style={{ color: "#829B6A" }}>
+                          {item.foodLevel}{" "}
+                        </span>
+                      </Card.Text>
+                    )}
+                    {item.foodHumidity && (
+                      <Card.Text>
+                        {" "}
+                        <FontAwesomeIcon icon={faDroplet} className="me-2" />
+                        Food Humidity:{" "}
+                        <span style={{ color: "#829B6A" }}>
+                          {item.foodHumidity}{" "}
+                        </span>
+                      </Card.Text>
+                    )}
                     {item.waterTemperature && (
-                      <Card.Text> Water Temperature: <span style={{ color: '#829B6A' }}> {item.waterTemperature}</span> </Card.Text>
+                      <Card.Text>
+                        {" "}
+                        <FontAwesomeIcon
+                          icon={faTemperatureHalf}
+                          className="me-2"
+                        />
+                        Water Temperature:{" "}
+                        <span style={{ color: "#829B6A" }}>
+                          {" "}
+                          {item.waterTemperature}
+                        </span>{" "}
+                      </Card.Text>
                     )}
                   </Card.Body>
                 </Card>
