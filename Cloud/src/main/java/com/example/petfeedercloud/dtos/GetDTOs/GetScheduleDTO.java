@@ -3,13 +3,13 @@ package com.example.petfeedercloud.dtos.GetDTOs;
 public class GetScheduleDTO {
     private Long scheduleId;
     private String scheduleLabel;
-    private Long userId;
+
     private Long petFeederId;
     private Boolean active;
-    public GetScheduleDTO(Long scheduleId, String scheduleLabel, Long userId,Long petFeederId,Boolean active) {
+    public GetScheduleDTO(Long scheduleId, String scheduleLabel, Long petFeederId,Boolean active) {
         this.scheduleId = scheduleId;
         this.scheduleLabel = scheduleLabel;
-        this.userId = userId;
+
         this.petFeederId=petFeederId;
         this.active=active;
     }
@@ -35,13 +35,6 @@ public class GetScheduleDTO {
         this.scheduleLabel = scheduleLabel;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Long getPetFeederId() {
         return petFeederId;

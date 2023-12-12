@@ -12,9 +12,7 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
     private String scheduleLabel;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId") // Name of the foreign key column in the pet_feeder table
-    private UserP user;
+
     private Boolean active;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "petFeederId") // Name of the foreign key column in the pet_feeder table
@@ -33,12 +31,6 @@ public class Schedule {
     }
     public void setPetFeeder(PetFeeder petFeeder) {
         this.petFeeder = petFeeder;
-    }
-    public UserP getUser() {
-        return user;
-    }
-    public void setUser(UserP user) {
-        this.user = user;
     }
     public Long getScheduleId() {
         return scheduleId;

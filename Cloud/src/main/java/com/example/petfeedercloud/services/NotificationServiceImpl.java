@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService{
@@ -93,5 +97,28 @@ public class NotificationServiceImpl implements NotificationService{
         notificationDTO.setPetFeeder(notification.getPetFeeder().getPetFeederId());
 
         return notificationDTO;
+    }
+
+    @Override
+    public boolean isNotificationActive(Long petFeederId){
+        Notification notification = notificationRepository.getNotificationByPetFeederId(petFeederId);
+        return notification.isActive();
+    }
+
+    @Override
+    public List<String> sendAlert(Long petFeederId) {
+        List<String> alerts = new ArrayList<String>();
+        Notification notification = notificationRepository.getNotificationByPetFeederId(petFeederId);
+        PetFeeder petFeeder = petFeederRepository.findByPetFeederId(petFeederId);
+        if(notification.getFoodHumidity()>=petFeeder.getFoodHumidity())
+            alerts.add("food humidity is low");
+        if(notification.getWaterTemperture()<=petFeeder.getWaterTemperture())
+            alerts.add("water temperature is high");
+        if(notification.getFoodLevel()>=petFeeder.getFoodLevel())
+            alerts.add("food level is low");
+        if(notification.getWaterLevel()>=petFeeder.getWaterLevel())
+            alerts.add("water level is low");
+
+        return alerts;
     }
 }

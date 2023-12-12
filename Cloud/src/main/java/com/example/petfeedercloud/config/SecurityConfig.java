@@ -34,6 +34,7 @@ public class SecurityConfig{
             "/swagger-ui/**",
             "/webjars/**",
             "/",
+            "/notificationsWS/**",
             "/petfeeder/info/**",
             "/swagger-ui.html"};
 
