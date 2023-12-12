@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
-import { Row, Col, Button } from "react-bootstrap"; // Import Bootstrap grid components
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import { Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faBone } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import PetAssociationModal from "../modals/Associate/AssociatePetModal";
 import "./PetFeedersC.css";
 
 const NotFound = () => (
-  <div className="mt-4" styles={{ fontFamily: "Poppins, sans-serif" }}>
+  <div className="mt-4" style={{ fontFamily: "Poppins, sans-serif" }}>
     <h4 className="titlepet mt-2">Pet Feeders</h4>
     <h5 className="subtitlepet mt-2">No Pet Feeders Found</h5>
     <p className="sometext mt-2">
@@ -21,6 +21,9 @@ const NotFound = () => (
 const PetFeedersC = ({ userPetFeeders, setUserPetFeeders }) => {
   const userId = localStorage.getItem("userId");
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPetFeeder, setSelectedPetFeeder] = useState(null);
+  const [userPets, setUserPets] = useState([]);
 
   useEffect(() => {
     const fetchPetFeeders = async () => {
@@ -51,6 +54,41 @@ const PetFeedersC = ({ userPetFeeders, setUserPetFeeders }) => {
     }
   };
 
+  const handleShowModal = async (petFeederId) => {
+    try {
+      const response = await axios.get(`/pets/user/${userId}`);
+      console.log("petFeederId", petFeederId); // Add this line
+      console.log("userPets", response.data);
+      setUserPets(response.data);
+      setSelectedPetFeeder(petFeederId);
+
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error fetching user pets:", error);
+    }
+  };
+
+  const handleHideModal = () => {
+    setShowModal(false);
+  };
+
+  const handleAssociatePet = async (petId) => {
+    try {
+      const associatedPetId = petId.id;
+      console.log(associatedPetId);
+      console.log("hey", selectedPetFeeder);
+      console.log("yo", petId);
+
+      const url = `/petfeeder/${selectedPetFeeder}/addPet/${petId}`;
+      console.log("Request URL:", url);
+      await axios.post(`/petfeeder/${selectedPetFeeder}/addPet/${petId}`);
+      // You may want to update the state or fetch pet feeders again after association
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error associating pet:", error);
+    }
+  };
+
   if (loading) {
     return <div>Loading pet feeders...</div>;
   }
@@ -66,23 +104,21 @@ const PetFeedersC = ({ userPetFeeders, setUserPetFeeders }) => {
         {userPetFeeders.map((petfeeder) => (
           <Col key={petfeeder.petFeederId} sm={6} md={4} lg={4}>
             <div className="text-center shadow-lg" id="petfeederItem">
-              <div className="buttonactions-container">
-                <button
-                  className="btn"
-                  id="top-remove-button"
-                  onClick={() => handleRemovePetFeeder(petfeeder.petFeederId)}
-                >
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    style={{
-                      color: "#06350D",
-                      fontSize: "18px",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  />
-                </button>
-              </div>
+              <button
+                className="btn"
+                id="top-remove-button"
+                onClick={() => handleRemovePetFeeder(petfeeder.petFeederId)}
+              >
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  style={{
+                    color: "#06350D",
+                    fontSize: "18px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                />
+              </button>
               <Link
                 to={`/dashboard/${petfeeder.petFeederId}`}
                 style={{ textDecoration: "none" }}
@@ -105,13 +141,24 @@ const PetFeedersC = ({ userPetFeeders, setUserPetFeeders }) => {
                   style={{ color: "#06350D", fontSize: "32px" }}
                 />
               </div>
-              <Button className="btn" id="bottom-button">
+              <Button
+                className="btn"
+                id="bottom-button"
+                onClick={() => handleShowModal(petfeeder.petFeederId)}
+              >
                 <span className="text-lg">Associate Pet</span>
               </Button>
             </div>
           </Col>
         ))}
       </Row>
+
+      <PetAssociationModal
+        show={showModal}
+        onHide={handleHideModal}
+        pets={userPets}
+        associatePet={handleAssociatePet}
+      />
     </div>
   );
 };
