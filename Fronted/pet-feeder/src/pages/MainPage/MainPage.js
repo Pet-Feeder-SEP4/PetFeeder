@@ -1,24 +1,51 @@
-import React from 'react';
-import PetFeedersC from '../../components/PetFeedersC/PetFeedersC';
-import MyPets from '../../components/MyPets/MyPets';
-import NavBar from '../../components/Navbar/Navbar';
-import { Link, useNavigate } from 'react-router-dom';
-import useVerifyToken from '../../hooks/useVerifyToken'; 
-import './MainPage.css'; // Import the CSS file for styling
+import React, { useState } from "react";
+import PetFeedersC from "../../components/PetFeedersC/PetFeedersC";
+import MyPets from "../../components/MyPets/MyPets";
+import NavBar from "../../components/Navbar/Navbar";
+import { Link, useNavigate } from "react-router-dom";
+import useVerifyToken from "../../hooks/useVerifyToken";
+import axios from "../../api/axios";
+
+import "./MainPage.css";
+import ConnectionModal from "../../components/modals/Connection/ConnectionModal";
 
 const MainPage = () => {
-
   const navigate = useNavigate();
   const isTokenValid = useVerifyToken();
 
+  const [showModal, setShowModal] = useState(false);
+  const [petfeederId, setPetFeederId] = useState(""); // State to store the entered petFeederId
+  const [userPetFeeders, setUserPetFeeders] = useState([]); // State to store the list of pet feeders
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
+  const handlePetFeederSubmit = async () => {
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const response = await axios.post(
+        `/petfeeder/{petfeederId}/connected?userId=${userId}&petFeederId=${petfeederId}`
+      );
+      console.log(response);
+      // Fetch the updated list of pet feeders after successfully adding a new one
+      const updatedPetFeedersResponse = await axios.get(
+        `/petfeeder/connected/${userId}`
+      );
+      setUserPetFeeders(updatedPetFeedersResponse.data);
+
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error making POST request", error.response);
+      // Handle error as needed
+    }
+  };
   if (isTokenValid === null) {
-    // You can show a loading spinner or some other indication while verifying the token
     return <p>Loading...</p>;
   }
 
   if (!isTokenValid) {
-    // Redirect to login page if token is not valid
-    navigate('/LogIn');
+    navigate("/LogIn");
     return null;
   }
 
@@ -26,13 +53,16 @@ const MainPage = () => {
     <>
       <NavBar />
       <div className="MainContainer">
-        {/* Buttons with absolute positioning */}
         <div className="buttonsinMain">
-          <Link to={`/putActivationPageLink/`}>
-            <button type="button"  className="btn btn-success " id="btnAdd">
-              + Pet Feeder
-            </button>
-          </Link>
+          <button
+            type="button"
+            className="btn btn-success"
+            id="btnAdd"
+            onClick={handleShowModal}
+          >
+            + Pet Feeder
+          </button>
+
           <Link to={`/CreatePet/`}>
             <button type="button" className="btn btn-success" id="btnAdd">
               + Pet
@@ -40,9 +70,19 @@ const MainPage = () => {
           </Link>
         </div>
 
+        <ConnectionModal
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+          setPetFeederId={setPetFeederId} // Pass the state setter function to the modal
+          handlePetFeederSubmit={handlePetFeederSubmit} // Pass the submit function to the modal
+        />
+
         <div className="row">
           <div className="Feeder-column col-8">
-            <PetFeedersC />
+            <PetFeedersC
+              userPetFeeders={userPetFeeders}
+              setUserPetFeeders={setUserPetFeeders}
+            />
           </div>
           <div className="Pet-column col">
             <MyPets />
@@ -54,4 +94,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-

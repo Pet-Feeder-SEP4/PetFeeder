@@ -44,7 +44,7 @@ public class AuthIntegrationTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("John");
         userDTO.setLastName("Doe");
-        userDTO.setEmail("john@example.com");
+        userDTO.setEmail("john@exampl.com");
         userDTO.setPassword("StrongPwd@123");
 
         MvcResult createUserResult = mockMvc.perform(MockMvcRequestBuilders
@@ -56,7 +56,7 @@ public class AuthIntegrationTest {
 
 
         UserLoginDTO loginDTO = new UserLoginDTO();
-        loginDTO.setEmail("john@example.com");
+        loginDTO.setEmail("john@exampl.com");
         loginDTO.setPassword("StrongPwd@123");
 
         MvcResult loginResult = mockMvc.perform(MockMvcRequestBuilders

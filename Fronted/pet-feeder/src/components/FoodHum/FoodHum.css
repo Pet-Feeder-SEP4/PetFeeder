@@ -1,0 +1,38 @@
+.hum-card {
+    height: 250px;
+    width: 350px;
+    background-color: #F8F9FA;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hum-card-header {
+    padding: 10px;
+    background-color: #06350D;
+    color: #ffffff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.hum-card-body {
+    padding: 20px;
+}
+
+.hum-card-title {
+    padding-top: 57px;
+    font-size: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+    .hum-card {
+        height: 200px;
+        width: 300px;
+    }
+
+    .hum-card-title {
+        font-size: 30px;
+        padding-top: 40px;
+    }
+
+}
