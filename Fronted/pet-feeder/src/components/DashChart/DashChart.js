@@ -60,7 +60,8 @@ const DashChart = ({ petFeederId }) => {
 
     useEffect(() => {
         fetchChartData();
-    }, []); // Empty dependency array ensures this effect runs once when the component mounts (warning in terminal is nessecary)
+        // eslint-disable-next-line
+    }, []);
 
     const renderLineChart = (
         <ResponsiveContainer width="100%" height={413}>
