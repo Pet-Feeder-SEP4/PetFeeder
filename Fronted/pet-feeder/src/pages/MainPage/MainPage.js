@@ -27,7 +27,7 @@ const MainPage = () => {
       const response = await axios.post(
         `/petfeeder/{petfeederId}/connected?userId=${userId}&petFeederId=${petfeederId}`
       );
-
+      console.log(response);
       // Fetch the updated list of pet feeders after successfully adding a new one
       const updatedPetFeedersResponse = await axios.get(
         `/petfeeder/connected/${userId}`
