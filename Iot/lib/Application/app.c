@@ -10,7 +10,7 @@
 #include "sensor_controller.h"
 #include "parse_info.h"
 
-char buffer[8];
+//char buffer[8];
 
 void tcpCallback(){
     pc_comm_send_string_blocking("tcpcallback called");
