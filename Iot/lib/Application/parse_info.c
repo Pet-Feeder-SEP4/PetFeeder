@@ -34,7 +34,6 @@ void sensor_get_data()
     pc_comm_send_string_blocking(str);
 }
 
-// Add method for handling data.
 void handle_received_data(char *data)
 {
     char data_copy[256];
@@ -55,7 +54,6 @@ void handle_received_data(char *data)
     char *token = strtok(data_copy, ":");
     if (token != NULL && strcmp(token, "DIS") == 0)
     {
-        
         // Get the next token, which should be the gramms value
         token = strtok(NULL, ":");
         if (token != NULL)
@@ -66,10 +64,8 @@ void handle_received_data(char *data)
                 pc_comm_send_string_blocking(" Dispensing ");
                 pc_comm_send_int_blocking(gramms);
                 pc_comm_send_string_blocking(" gramms of food\n");
-
                 // Calculate the amount of turns based on the gramms value
                 int amountOfTurns = gramms / 10; // Assuming 10 gramms per second
-
                 // Call the rotate function from servo360.h
                 rotate(50, amountOfTurns); // Adjust the speed as needed
             }
