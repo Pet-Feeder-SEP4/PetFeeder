@@ -13,9 +13,9 @@
 
 .sidebar {
   width: 12vw;
-  height: 91vh;
+  height: 100vh;
   background-color: #F8F9FA;
-
+  margin-left: -10px; 
  
 }
 
