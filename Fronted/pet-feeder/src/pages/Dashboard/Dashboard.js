@@ -5,11 +5,16 @@ import NavBar from "../../components/Navbar/Navbar";
 import DispensePop from "../../components/SideBar/DispensePop";
 import axios from "../../api/axios";
 
-import WaterTemp from "../../components/WaterTemp/WaterTemp";
+import WaterTemp from '../../components/WaterTemp/WaterTemp';
+import { Col, Row } from 'react-bootstrap';
+import EditNotifications from '../../components/modals/EditNotifications/EditNotificationsModal';
+import FoodHum from '../../components/FoodHum/FoodHum';
+import FoodLevel from '../../components/FoodLevel/FoodLevel';
+import DashChart from '../../components/DashChart/DashChart';
+import WaterLevel from '../../components/WaterLevel/WaterLevel';
+import './Dashboard.css'
 
-import EditNotifications from "../../components/modals/EditNotifications/EditNotificationsModal";
-import FoodHum from "../../components/FoodHum/FoodHum";
-import FoodLevel from "../../components/FoodLevel/FoodLevel";
+
 
 const Dashboard = () => {
   const { petFeederId } = useParams();
@@ -155,30 +160,41 @@ const Dashboard = () => {
         />
       )}
 
-      <div className="dash">
-        <div className="row dashrow">
-          <div className="col-2 sideCol">
+      <div className="dash container-fluid">
+        <Row className="dashrow">
+          <Col xs={2} className="sideCol">
             <SideBar
               onDispenseClick={handleDispenseClick}
               onEditClick={handleEditClick}
             />
-          </div>
-          <div className="col-10">
-            <div class="container-upper mt-5">
-              <div class="row upper">
-                <div class="col-lg-4 col-md-12 waterTemp ">
+          </Col>
+          <Col xs={10} >
+            <div className="container-upper mt-5">
+              <Row className="upper">
+                <Col xxl={3} xl={6} lg={6} md={9} sm={12} className="waterTemp">
                   <WaterTemp petFeederData={petFeederData} />
-                </div>
-                <div class="col-lg-4 col-md-12 foodHum">
+                </Col>
+                <Col  xxl={3} xl={6}  md={9} sm={12} className="foodHum">
                   <FoodHum petFeederData={petFeederData} />
-                </div>
-                <div class="col-lg-4 col-md-12 foodLevel">
+                </Col>
+                <Col  xxl={3} xl={6}  md={9} sm={12} className="waterLevel">
+                  <WaterLevel petFeederData={petFeederData} />
+                </Col>
+                <Col  xxl={3} xl={6}  md={9} sm={12} className="foodLevel">
                   <FoodLevel petFeederData={petFeederData} />
-                </div>
-              </div>
+                </Col>
+              </Row>
             </div>
-          </div>
-        </div>
+
+            <div className="container-upper mt-5">
+              <Row className="lower">
+                <Col xs={12} className="chartt mt-5">
+                  <DashChart petFeederId={petFeederId} />
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
       </div>
     </>
   );
