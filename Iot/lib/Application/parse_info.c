@@ -32,14 +32,14 @@ char* sensor_get_data()
     return str;
 }
 
-void handle_received_data(char *data)
+int get_gramms_from_data(char *data)
 {
     char data_copy[256];
     strcpy(data_copy, data);
 
-    if (str_lenght(data_copy) > 7) {
+    if (str_length(data_copy) > 7) {
         pc_comm_send_string_blocking("Error parsing data\n");
-        return;
+        return -1;
     }
     
     pc_comm_send_string_blocking("Received data: ");
@@ -53,24 +53,12 @@ void handle_received_data(char *data)
         if (token != NULL)
         {
             int gramms = atoi(token); // Convert the token to an integer
-            if (gramms > 0)
-            {
-                pc_comm_send_string_blocking(" Dispensing ");
-                pc_comm_send_int_blocking(gramms);
-                pc_comm_send_string_blocking(" gramms of food\n");
-                // Calculate the amount of turns based on the gramms value
-                int amountOfTurns = gramms / 10; // Assuming 10 gramms per second
-                // Call the rotate function from servo360.h
-                rotate(50, amountOfTurns); // Adjust the speed as needed
-            }
-            else
-            {
-                pc_comm_send_string_blocking("Error parsing data\n");
+            if (gramms > 0) {
+                return gramms;
             }
         }
     }
-    else
-    {
-        pc_comm_send_string_blocking("Error parsing data\n");
-    }
+    
+    pc_comm_send_string_blocking("Error parsing data\n");
+    return -1;
 }

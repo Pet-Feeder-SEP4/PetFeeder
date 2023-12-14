@@ -1,4 +1,4 @@
 #pragma once
 
-char*    sensor_get_data();
-void handle_received_data(char *data);
+char* sensor_get_data();
+int get_gramms_from_data(char *data);

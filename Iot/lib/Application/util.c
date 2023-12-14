@@ -1,7 +1,7 @@
 #include "util.h"
 #include <string.h>
 
-int str_lenght(char *str) {
+int str_length(char *str) {
     char data_copy[256];
     strcpy(data_copy, str);
     char *p = data_copy;

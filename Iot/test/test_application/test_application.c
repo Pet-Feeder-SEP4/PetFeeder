@@ -4,6 +4,8 @@
 #include "parse_info.h"
 #include "wifi.h"
 #include "pc_comm.h"
+#include "servo_controller.h"
+
 
 #include "app.h"
 #include "configuration.h"
@@ -14,7 +16,8 @@
 #define TEST_APP_WIN
 
 DEFINE_FFF_GLOBALS
-FAKE_VOID_FUNC(handle_received_data, char *);
+FAKE_VALUE_FUNC(int, get_gramms_from_data, char *);
+FAKE_VOID_FUNC(dispense, int);
 FAKE_VALUE_FUNC(char *, sensor_get_data);
 FAKE_VOID_FUNC(hc_sr04_init);
 FAKE_VOID_FUNC(dht11_init);
@@ -46,6 +49,7 @@ void setUp(void)
     RESET_FAKE(wifi_init);
     RESET_FAKE(wifi_command_join_AP);
     RESET_FAKE(wifi_command_create_TCP_connection);
+    RESET_FAKE(dispense);
     strcpy(buffer, "");
 }
 
@@ -58,8 +62,21 @@ void test_buffer_size() {
 void test_tcpCallback() {
     strcpy(buffer, "TEST");
     tcpCallback();
-    TEST_ASSERT_EQUAL_INT(1, handle_received_data_fake.call_count);
-    TEST_ASSERT_EQUAL_STRING("TEST", handle_received_data_fake.arg0_val);
+    TEST_ASSERT_EQUAL_INT(1, get_gramms_from_data_fake.call_count);
+    TEST_ASSERT_EQUAL_STRING("TEST", get_gramms_from_data_fake.arg0_val);
+}
+
+void test_tcpCallback_error_parsing() {
+    get_gramms_from_data_fake.return_val = -1;
+    tcpCallback();
+    TEST_ASSERT_EQUAL_INT(0, dispense_fake.call_count);
+}
+
+void test_tcpCallback_dispense() {
+    get_gramms_from_data_fake.return_val = 50;
+    tcpCallback();
+    TEST_ASSERT_EQUAL_INT(1, dispense_fake.call_count);
+    TEST_ASSERT_EQUAL_INT(50, dispense_fake.arg0_val);
 }
 
 void test_app_init_pc_comm() {
@@ -121,6 +138,8 @@ int main()
     UNITY_BEGIN();
     RUN_TEST(test_buffer_size);
     RUN_TEST(test_tcpCallback);
+    RUN_TEST(test_tcpCallback_error_parsing);
+    RUN_TEST(test_tcpCallback_dispense);
     RUN_TEST(test_app_init_pc_comm);
     RUN_TEST(test_app_init_sensor_init);
     RUN_TEST(test_app_init_wifi);

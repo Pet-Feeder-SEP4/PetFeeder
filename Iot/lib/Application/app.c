@@ -9,14 +9,22 @@
 
 #include "parse_info.h"
 #include "util.h"
+#include "servo_controller.h"
 
 char buffer[BUFFER_SIZE] = "";
+
 void connect_wifi(void);
 
 void tcpCallback(){
-    pc_comm_send_string_blocking("tcpcallback called");
-    handle_received_data(buffer);
+    pc_comm_send_string_blocking("Reciving data...\n");
+    
+    int gramms = get_gramms_from_data(buffer);
+
+    if (gramms > -1) {
+        dispense(gramms);
+    }
 }
+
 void app_init(){
     pc_comm_init(9600, NULL);
     dht11_init();
