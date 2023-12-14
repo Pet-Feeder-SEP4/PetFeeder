@@ -92,14 +92,14 @@ void test_getFoodMeasurament_0() {
 void test_waterMeasurementPercentage() {
      hc_sr04_takeMeasurement_water_fake.return_val = 10;
      int value = getWaterMeasurement();
-     int expected = (10*100)/300;
+     int expected = 100-((10*100)/300);
      TEST_ASSERT_EQUAL_INT(expected, value);
 }
 
 void test_foodMeasurementPercentage() {
      hc_sr04_takeMeasurement_food_fake.return_val = 10;
      int value = getFoodMeasurement();
-     int expected = (10*100)/160;
+     int expected = 100-((10*100)/160);
      TEST_ASSERT_EQUAL_INT(expected, value);
 }
 

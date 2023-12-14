@@ -162,38 +162,38 @@ const Dashboard = () => {
 
       <div className="dash container-fluid">
         <Row className="dashrow">
-          <Col xs={2} className="sideCol">
+          <div className="sideCol col-2 col-sm-25 col-xs-50" style={{ width:'calc(100% - 700px)', maxWidth:"170px", minWidth:"70px" }}>
             <SideBar
               onDispenseClick={handleDispenseClick}
               onEditClick={handleEditClick}
             />
-          </Col>
-          <Col xs={10} >
+          </div>
+          <div className="dashCol col-10 ms-4" style={{ width: 'calc(100% - 200px)' }}>
             <div className="container-upper mt-5">
               <Row className="upper">
                 <Col xxl={3} xl={6} lg={6} md={9} sm={12} className="waterTemp">
                   <WaterTemp petFeederData={petFeederData} />
                 </Col>
-                <Col  xxl={3} xl={6}  md={9} sm={12} className="foodHum">
+                <Col xxl={3} xl={6} md={9} sm={12} className="foodHum">
                   <FoodHum petFeederData={petFeederData} />
                 </Col>
-                <Col  xxl={3} xl={6}  md={9} sm={12} className="waterLevel">
+                <Col xxl={3} xl={6} md={9} sm={12} className="waterLevel">
                   <WaterLevel petFeederData={petFeederData} />
                 </Col>
-                <Col  xxl={3} xl={6}  md={9} sm={12} className="foodLevel">
+                <Col xxl={3} xl={6} md={9} sm={12} className="foodLevel">
                   <FoodLevel petFeederData={petFeederData} />
                 </Col>
               </Row>
             </div>
 
-            <div className="container-upper mt-5">
+            <div className="container-lower mt-5">
               <Row className="lower">
                 <Col xs={12} className="chartt mt-5">
                   <DashChart petFeederId={petFeederId} />
                 </Col>
               </Row>
             </div>
-          </Col>
+          </div>
         </Row>
       </div>
     </>
