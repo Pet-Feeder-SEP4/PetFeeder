@@ -41,7 +41,8 @@ int getWaterMeasurement(){
    if (temporaryMeasure != 0)
         {
             int capacity = 300;
-            int result= (temporaryMeasure*100)/ capacity;
+            int emptyper= (temporaryMeasure*100)/ capacity;
+            int result = 100-emptyper;
             return result;
         }
         else
@@ -58,7 +59,8 @@ int getFoodMeasurement(){
    if (temporaryMeasure != 0)
         {
             int capacity=160;
-            int result= (temporaryMeasure*100)/ capacity;
+            int emptyper= (temporaryMeasure*100)/ capacity;
+            int result=100-emptyper;
             return result;
         }
         else
