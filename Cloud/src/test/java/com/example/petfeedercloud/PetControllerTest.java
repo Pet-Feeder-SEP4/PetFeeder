@@ -101,6 +101,7 @@ class PetControllerTest {
 
         Date date = calendar.getTime();
         PetDTO petDTO = new PetDTO();
+        petDTO.setPetId(1L);
         petDTO.setUserId(1L);
         petDTO.setName("Fluffy");
         petDTO.setBirthdate(date);
@@ -132,32 +133,35 @@ class PetControllerTest {
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-        // Verify that the petService.updatePet method was called with the provided parameters
         verify(petService, times(1)).updatePet(petId, petDTO);
     }
+    @Test
+    void testGetAllPetsByUser() {
+        long userId = 1L;
 
+        PetDTO petDTO = new PetDTO();
+        petDTO.setPetId(1L);
+        petDTO.setUserId(userId);
+        petDTO.setName("Fluffy");
+
+        List<PetDTO> petList = new ArrayList<>();
+        petList.add(petDTO);
+
+        when(petService.getAllPetsByUser(anyLong())).thenReturn(petList);
+
+        List<PetDTO> result = petController.getAllPetsByUser(userId);
+
+        assertEquals(petList, result);
+    }
     @Test
     void testDeletePet() {
         long petId = 1L;
 
         doNothing().when(petService).deletePet(petId);
 
-
         ResponseEntity<?> responseEntity = petController.deletePet(petId);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
-
-    @Test
-    void testGetAllPetsByUser() {
-        long userId = 1L;
-        List<PetDTO> petList = new ArrayList<>();
-
-        when(petService.getAllPetsByUser(userId)).thenReturn(petList);
-
-        List<PetDTO> result = petController.getAllPetsByUser(userId);
-
-        assertEquals(petList, result);
     }
 }
 
