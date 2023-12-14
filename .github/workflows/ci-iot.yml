@@ -1,0 +1,50 @@
+name: IoT Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Define cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pip
+          ~/.platformio/.cache
+        key: ${{ runner.os }}-pio
+    
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install PlatformIO Core
+      run: pip install --upgrade platformio
+
+    - name: Run Sensor test
+      run: |
+        cd Iot
+        pio test -e win_test -f "test_control"
+
+    - name: Run Parse_info test
+      run: |
+        cd Iot
+        pio test -e win_test -f "test_parse_info"
+
+    - name: Run Application test
+      run: |
+        cd Iot
+        pio test -e win_test -f "test_application"

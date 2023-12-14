@@ -13,6 +13,9 @@ public interface PetFeederService {
     void deletePetFeeder(Long petFeederId);
     List<PetFeederDTO> getAllPetFeedersByUser(Long userId);
     void setActivePetFeeder(Long userId, Long petFeederId);
-    void deactivatePetFeeder(Long userId, Long petId, Long petFeederId);
+    void deactivatePetFeeder(Long userId, Long petFeederId);
     void createPetFeeder(PetFeederDTO petFeederDTO);
+    List<PetFeederDTO> getAllConnectedPetFeedersByUser(Long userId);
+    void addPetToPetFeeder(Long petFeederId, Long petId);
+    PetDTO getPetForPetFeeder(Long petFeederId);
 }

@@ -1,6 +1,8 @@
 package com.example.petfeedercloud.controllers;
 
+import com.example.petfeedercloud.PetFeederCloudApplication;
 import com.example.petfeedercloud.config.WebSocketHandler;
+import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.services.PetFeederService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,10 +23,10 @@ public class PetFeederController {
     private PetFeederService petFeederService;
 
     @Autowired
-    private final WebSocketHandler webSocketHandler;
+    private final PetFeederCloudApplication petFeederCloudApplication;
 
-    public PetFeederController(WebSocketHandler webSocketHandler) {
-        this.webSocketHandler = webSocketHandler;
+    public PetFeederController(PetFeederCloudApplication petFeederCloudApplication) {
+        this.petFeederCloudApplication = petFeederCloudApplication;
     }
 
     @GetMapping("/")
@@ -82,7 +84,13 @@ public class PetFeederController {
         return petFeederService.getAllPetFeedersByUser(userId);
     }
 
-    @PostMapping("/{petfeederId}/activate")
+    @GetMapping("/connected/{userId}")
+    @Operation(summary = "Get all connected pet feeders by user", description = "Get all connected pet feeders from a user using user id")
+    public List<PetFeederDTO> getAllActivePetFeedersByUser(@PathVariable Long userId) {
+        return petFeederService.getAllConnectedPetFeedersByUser(userId);
+    }
+
+    @PostMapping("/{petfeederId}/connected")
     @Operation(summary = "Activate pet feeder", description = "Activate a pet feeder for a specific user and pet")
     public ResponseEntity<String> activatePetFeeder(
             @RequestParam(required = true) Long userId,
@@ -105,14 +113,13 @@ public class PetFeederController {
     @Operation(summary = "Deactivate pet feeder", description = "Deactivate a pet feeder for a specific user and pet")
     public ResponseEntity<String> deactivatePetFeeder(
             @RequestParam(required = true) Long userId,
-            @RequestParam(required = true) Long petId,
             @RequestParam Long petFeederId) {
         try {
-            if (userId == null || userId <= 0 || petId == null || petId <= 0) {
+            if (userId == null || userId <= 0) {
                 throw new IllegalArgumentException("userId and petId are required and must be greater than 0");
             }
 
-            petFeederService.deactivatePetFeeder(userId, petId, petFeederId);
+            petFeederService.deactivatePetFeeder(userId, petFeederId);
             return ResponseEntity.ok("Pet feeder deactivated successfully");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -121,18 +128,47 @@ public class PetFeederController {
         }
     }
 
+    @PostMapping("/{petfeederId}/addPet/{petId}")
+    @Operation(summary = "Add pet to pet feeder", description = "Add a pet to a specific pet feeder")
+    public ResponseEntity<String> addPetToPetFeeder(@PathVariable Long petfeederId, @PathVariable Long petId) {
+        try {
+            petFeederService.addPetToPetFeeder(petfeederId, petId);
+            return ResponseEntity.ok("Pet added to pet feeder successfully");
+        } catch (NotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found: " + ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
+        }
+    }
     @PostMapping("/sendPortion/{petFeederId}/{portion}")
     @Operation(summary = "Send portion to petfeeder", description = "Send portion(ggg) to a specific pet feeder")
     public ResponseEntity<String> sendPortionToPetFeeder(@PathVariable Long petFeederId, @PathVariable String portion){
         try{
             if(petFeederId == null || portion == null || portion.equals(""))
                 throw new IllegalArgumentException("PetFeeder and Portion are required");
-            webSocketHandler.sendPortionToPetFeeder(petFeederId, portion);
+            petFeederCloudApplication.sendPortionToPetFeeder(petFeederId, portion);
             return ResponseEntity.ok("Portion "+portion+" sent to petfeeder:"+petFeederId);
         }catch (IllegalArgumentException ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }catch(Exception ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("/{petfeederId}/pet")
+    @Operation(summary = "Get pet for pet feeder", description = "Get the pet associated with a specific pet feeder")
+    public ResponseEntity<?> getPetForPetFeeder(@PathVariable Long petfeederId) {
+        try {
+            PetDTO petDTO = petFeederService.getPetForPetFeeder(petfeederId);
+            if (petDTO != null) {
+                return ResponseEntity.ok(petDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No pet found for this pet feeder");
+            }
+        } catch (NotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pet feeder not found: " + ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
         }
     }
 }

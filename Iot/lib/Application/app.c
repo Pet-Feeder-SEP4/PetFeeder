@@ -7,7 +7,6 @@
 #include "hc_sr04.h"
 #include "configuration.h"
 
-#include "sensor_controller.h"
 #include "parse_info.h"
 
 char buffer[8] = "";
@@ -17,18 +16,16 @@ void tcpCallback(){
     handle_received_data(buffer);
 }
 void app_init(){
-    //sensor_init();
-    pc_comm_init(9600, NULL);  // Initialize communication at the beginning
+    pc_comm_init(9600, NULL);
     dht11_init();
     hc_sr04_init();
     wifi_init();
     wifi_command_join_AP(WIFI_NAME, WIFI_PASSWORD);
     wifi_command_create_TCP_connection(IP, PORT, tcpCallback, buffer);
+    _delay_ms(3000);
+    
 }
 
 void app_start(void){
     sensor_get_data();
-    //Delay to send data to cloud.
-    //_delay_ms(5000);
-    
 }

@@ -1,0 +1,49 @@
+.level-card {
+    height: 250px;
+    width: 350px;
+    background-color: #F8F9FA;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.level-card-header {
+    padding: 10px;
+    background-color: #06350D;
+    color: #ffffff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.level-card-body {
+    padding: 20px;
+}
+
+.level-card-title {
+    padding-top: 60px;
+    font-size: 40px;
+}
+
+.level-card .progress {
+    height: 162px;
+    position: relative;
+
+}
+
+@media only screen and (max-width: 768px) {
+    .level-card {
+        height: 200px;
+        width: 300px;
+    }
+
+    .level-card-title {
+        font-size: 30px;
+        padding-top: 40px;
+    }
+
+    .level-card .progress {
+        height: 100px;
+        position: relative;
+
+    }
+}

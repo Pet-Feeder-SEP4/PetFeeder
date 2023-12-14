@@ -58,12 +58,12 @@ void test_sensor_get_data_wifi_send()
     int humidity = 2;
     int temperature = 3;
     int waterMeasurement = 4;
-    int msg_length = 108;
+    int msg_length = 99;
     getTemp_fake.return_val = temperature;
     getHum_fake.return_val = humidity;
     getWaterMeasurement_fake.return_val = waterMeasurement;
     getFoodMeasurement_fake.return_val = foodMeasurement;
-    int idNumber = 555;
+    int idNumber = 37;
 
     sensor_get_data();
     char *msg = getMsgStr(idNumber, foodMeasurement, humidity, temperature, waterMeasurement, msg_length);

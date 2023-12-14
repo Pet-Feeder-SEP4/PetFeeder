@@ -17,6 +17,3 @@ int getWaterMeasurement();
 
 int getFoodMeasurement();
 
-int waterMeasurementPercentage();
-
-int foodMeasurementPercentage();

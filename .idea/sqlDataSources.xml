@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="5d12a6b9-4ffe-475e-ba99-fa49b34917d9" name="Azure SQL Database Mapping">
+      <data-sources db="fe4d979a-4d1a-4bb1-98a7-1ce028b5cfa5" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+  </component>
+</project>
