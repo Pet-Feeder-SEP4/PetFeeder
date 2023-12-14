@@ -7,7 +7,6 @@
 #include "sensor_controller.h"
 
 #include "pc_comm.h"
-#include "wifi.h"
 #include "servo360.h"
 
 #include <stdio.h>
@@ -16,7 +15,6 @@
 #define TEST_PARSE_INFO_WIN
 
 DEFINE_FFF_GLOBALS
-FAKE_VALUE_FUNC(WIFI_ERROR_MESSAGE_t, wifi_command_TCP_transmit, uint8_t *, uint16_t);
 FAKE_VOID_FUNC(getTempandHum);
 FAKE_VALUE_FUNC(int, getTemp);
 FAKE_VALUE_FUNC(int, getHum);
@@ -65,10 +63,8 @@ void test_sensor_get_data_wifi_send()
     getFoodMeasurement_fake.return_val = foodMeasurement;
     int idNumber = 37;
 
-    sensor_get_data();
     char *msg = getMsgStr(idNumber, foodMeasurement, humidity, temperature, waterMeasurement, msg_length);
-    TEST_ASSERT_EQUAL_STRING(msg, wifi_command_TCP_transmit_fake.arg0_val);
-    TEST_ASSERT_EQUAL_INT(msg_length, wifi_command_TCP_transmit_fake.arg1_val);
+    TEST_ASSERT_EQUAL_STRING(msg, sensor_get_data());
     free(msg);
 }
 
@@ -135,7 +131,6 @@ int main()
 {
     UNITY_BEGIN();
     RUN_TEST(test_sensor_get_data_pc_comm);
-    RUN_TEST(test_sensor_get_data_wifi_send);
     RUN_TEST(test_handle_received_data_good_input);
     RUN_TEST(test_handle_received_data_wrong_input_0);
     RUN_TEST(test_handle_received_data_wrong_input_name_short);

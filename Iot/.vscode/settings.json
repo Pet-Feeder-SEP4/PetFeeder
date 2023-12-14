@@ -2,6 +2,12 @@
     "files.associations": {
         "includes.h": "c",
         "app.h": "c",
-        "parse_info.h": "c"
+        "parse_info.h": "c",
+        "include_avr_util.h": "c",
+        "string.h": "c",
+        "util.h": "c",
+        "wifi.h": "c",
+        "pc_comm.h": "c",
+        "uart.h": "c"
     }
 }
