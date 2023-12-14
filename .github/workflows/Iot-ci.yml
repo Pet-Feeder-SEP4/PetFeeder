@@ -3,10 +3,10 @@ name: IoT Test
 on:
   push:
     branches:
-      - Iot_error_handling
+      - main
   pull_request:
     branches:
-      - Iot_error_handling
+      - main
 
 jobs:
   test:
