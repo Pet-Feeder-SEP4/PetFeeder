@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Dashboard from "./Dashboard";
+import { MemoryRouter } from "react-router-dom";
 
 jest.mock("../../api/axios", () => ({
   get: jest.fn(() => Promise.resolve({ data: {} })),
@@ -8,7 +9,12 @@ jest.mock("../../api/axios", () => ({
 
 describe("Dashboard Component", () => {
   it("renders without errors", () => {
-    render(<Dashboard />);
+    <MemoryRouter>
+      render(
+      <Dashboard />
+      );
+    </MemoryRouter>;
+
     // You can add more specific assertions based on your component structure
     expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
   });
