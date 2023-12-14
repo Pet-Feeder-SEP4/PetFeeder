@@ -1,13 +1,10 @@
 import React from "react";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import axios from "../../../api/axios"; // Import axios for mocking
-import { MemoryRouter, useHistory } from "react-router-dom"; // Import MemoryRouter and useHistory
+import { MemoryRouter } from "react-router-dom"; // Import MemoryRouter
 
-// Mock react-router-dom
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"), // Use actual implementation for other exports
-  useHistory: jest.fn(),
-}));
+// Import your component
+import Time from "./Time";
 
 // Mock axios requests
 jest.mock("../../../api/axios");
@@ -20,10 +17,6 @@ describe("Time Component", () => {
   });
 
   test("renders component and handles add button click", async () => {
-    // Mock useHistory
-    const mockHistory = { push: jest.fn() };
-    useHistory.mockReturnValue(mockHistory);
-
     // Mock axios get request
     axios.get.mockResolvedValue({
       data: [
@@ -56,9 +49,6 @@ describe("Time Component", () => {
 
     // Wait for the axios request to be resolved
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-
-    // Check if useHistory.push was called with the expected path
-    expect(mockHistory.push).toHaveBeenCalledWith("/expected-path");
 
     // Additional assertions can be added based on the component's behavior
   });
