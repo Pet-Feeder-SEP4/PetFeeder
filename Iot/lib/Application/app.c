@@ -71,7 +71,7 @@ void connect_wifi() {
             char str[128];
             sprintf(str, "Error connecting to the server %s:%d\n", IP, PORT);
             pc_comm_send_string_blocking(str);
+            _delay_ms(5000);
         }
-        _delay_ms(5000);
     }
 }
