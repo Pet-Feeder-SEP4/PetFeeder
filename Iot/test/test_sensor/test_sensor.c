@@ -71,7 +71,7 @@ void test_getWaterMeasurament_value() {
     hc_sr04_takeMeasurement_water_fake.return_val = 10;
     int value = getWaterMeasurement();
      int capacity = 300;
-    int expected= (10*100)/ capacity;
+    int expected= 100 - ((10*100)/ capacity);
     TEST_ASSERT_EQUAL_INT(expected, value);
 }
 
@@ -91,7 +91,7 @@ void test_getFoodMeasurament_value() {
     hc_sr04_takeMeasurement_food_fake.return_val = 10;
     int value = getFoodMeasurement();
     int capacity = 160;
-    int expected= (10*100)/ capacity;
+    int expected= 100 - ((10*100)/ capacity);
     TEST_ASSERT_EQUAL_INT(expected, value);
 }
 
