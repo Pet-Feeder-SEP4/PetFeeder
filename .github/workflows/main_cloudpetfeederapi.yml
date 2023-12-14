@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - petfeedercloud
+name: Build and deploy container app to Azure Web App - cloudpetfeederapi
 
 on:
   push:
@@ -23,15 +23,15 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://index.docker.io/v1/
-        username: ${{ secrets.AzureAppService_ContainerUsername_d9ae2ec7dc2f46f291eab8221dbbc1e6 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_35bd996909ab47768c6588bca4b9c71b }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_3d1cceeb2b27478b8e08baff5d1dfcf0 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_2a5de0b01d55418894b168945d1de31a }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_d9ae2ec7dc2f46f291eab8221dbbc1e6 }}/kokas340/petfeederapi:${{ github.sha }}
-        file: Cloud/Dockerfile
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_3d1cceeb2b27478b8e08baff5d1dfcf0 }}/kokas340/petfeederapi:${{ github.sha }}
+        file: ./Cloud/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'petfeedercloud'
+        app-name: 'cloudpetfeederapi'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_9ff4952ca3fe468489450c60f508b6e7 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_d9ae2ec7dc2f46f291eab8221dbbc1e6 }}/kokas340/petfeederapi:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_bd2f04fc69ff42a98892a4444a48032f }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_3d1cceeb2b27478b8e08baff5d1dfcf0 }}/kokas340/petfeederapi:${{ github.sha }}'
