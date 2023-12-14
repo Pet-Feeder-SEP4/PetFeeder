@@ -53,3 +53,8 @@ jobs:
       run: |
         cd Iot
         pio test -e win_test -f "test_servo"
+    
+    - name: Run WiFi test
+      run: |
+        cd Iot
+        pio test -e win_test -f "test_wifi"

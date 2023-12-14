@@ -8,6 +8,10 @@
         "util.h": "c",
         "wifi.h": "c",
         "pc_comm.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "stdint.h": "c",
+        "wifi_controller.h": "c",
+        "mock_avr_io.h": "c",
+        "servo360.h": "c"
     }
 }
