@@ -1,3 +1,3 @@
 #pragma once
 
-int str_lenght(char *);
+int str_length(char *);

@@ -28,7 +28,7 @@ void app_init(){
 void app_start(void){
     char* data = sensor_get_data();
 
-    WIFI_ERROR_MESSAGE_t error = wifi_command_TCP_transmit((uint8_t *)data, str_lenght(data));
+    WIFI_ERROR_MESSAGE_t error = wifi_command_TCP_transmit((uint8_t *)data, str_length(data));
 
     // if can't send data -> reconnect to wifi and server
     if (error != WIFI_OK) {

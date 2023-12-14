@@ -91,7 +91,7 @@ void test_app_init_wifi() {
     TEST_ASSERT_EQUAL_STRING(buffer, wifi_command_create_TCP_connection_fake.arg3_val);
 }
 
-int str_lenght(char *str) {
+int str_length(char *str) {
     char data_copy[256];
     strcpy(data_copy, str);
     char *p = data_copy;
@@ -105,7 +105,7 @@ int str_lenght(char *str) {
 void test_app_start_send_data_wifi()
 {
     char msg[] = "This is a test string";
-    char msg_copy[str_lenght(msg)];
+    char msg_copy[str_length(msg)];
 
     strcpy(msg_copy, msg);
     sensor_get_data_fake.return_val = msg_copy;
@@ -113,7 +113,7 @@ void test_app_start_send_data_wifi()
     app_start();
 
     TEST_ASSERT_EQUAL_STRING(msg, wifi_command_TCP_transmit_fake.arg0_val);
-    TEST_ASSERT_EQUAL_INT(str_lenght(msg), wifi_command_TCP_transmit_fake.arg1_val);
+    TEST_ASSERT_EQUAL_INT(str_length(msg), wifi_command_TCP_transmit_fake.arg1_val);
 }
 
 int main()
