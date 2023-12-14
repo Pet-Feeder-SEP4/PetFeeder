@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_d9ae2ec7dc2f46f291eab8221dbbc1e6 }}/kokas340/petfeederapi:${{ github.sha }}
-        file: ./Dockerfile
+        file: CLoud/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
