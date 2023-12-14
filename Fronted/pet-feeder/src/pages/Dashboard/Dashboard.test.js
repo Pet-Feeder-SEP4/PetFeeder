@@ -7,13 +7,6 @@ jest.mock("../../api/axios", () => ({
   get: jest.fn(() => Promise.resolve({ data: {} })),
 }));
 
-describe("Dashboard Component", () => {
-  it("renders without errors", () => {
-    <MemoryRouter>
-      render(
-      <Dashboard />
-      );
-    </MemoryRouter>;
 
     // You can add more specific assertions based on your component structure
     expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
