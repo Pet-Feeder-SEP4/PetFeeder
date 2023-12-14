@@ -12,6 +12,7 @@
         "stdint.h": "c",
         "wifi_controller.h": "c",
         "mock_avr_io.h": "c",
-        "servo360.h": "c"
+        "servo360.h": "c",
+        "configuration.h": "c"
     }
 }

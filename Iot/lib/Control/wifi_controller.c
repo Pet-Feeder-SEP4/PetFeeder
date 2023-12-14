@@ -4,7 +4,7 @@
 
 #include "pc_comm.h"
 #include <stdio.h>
-#include "mock_avr_io.h"
+#include "../Application/include_avr_util.h"
 
 void connect_wifi(WIFI_TCP_Callback_t tcpCallback, char *buffer) {
     wifi_init();
