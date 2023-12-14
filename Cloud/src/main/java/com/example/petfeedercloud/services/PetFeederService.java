@@ -18,4 +18,6 @@ public interface PetFeederService {
     List<PetFeederDTO> getAllConnectedPetFeedersByUser(Long userId);
     void addPetToPetFeeder(Long petFeederId, Long petId);
     PetDTO getPetForPetFeeder(Long petFeederId);
+
+    List<Object[]> findTimesAndPetFeederIdWherePetFeederIsActive();
 }

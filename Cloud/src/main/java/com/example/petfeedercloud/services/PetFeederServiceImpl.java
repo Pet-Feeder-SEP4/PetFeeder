@@ -1,21 +1,23 @@
 package com.example.petfeedercloud.services;
 
+import com.example.petfeedercloud.PetFeederCloudApplication;
 import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
-import com.example.petfeedercloud.models.Notification;
-import com.example.petfeedercloud.models.Pet;
-import com.example.petfeedercloud.models.PetFeeder;
-import com.example.petfeedercloud.models.UserP;
+import com.example.petfeedercloud.models.*;
 import com.example.petfeedercloud.repositories.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,6 +65,9 @@ public class PetFeederServiceImpl implements PetFeederService{
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+
+
     @Override
     public void saveOrUpdatePetFeeder(PetFeederDTO petFeeder) {
         try {
@@ -217,6 +222,11 @@ public class PetFeederServiceImpl implements PetFeederService{
         } catch (Exception ex) {
             throw new RuntimeException("An error occurred while retrieving the pet for the pet feeder: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public List<Object[]> findTimesAndPetFeederIdWherePetFeederIsActive() {
+        return timeRepository.findTimesAndPetFeederIdWherePetFeederIsActive();
     }
 
     private PetDTO convertPetToDto(Pet pet) {

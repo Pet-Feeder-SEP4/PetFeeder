@@ -4,16 +4,22 @@ import com.example.petfeedercloud.dtos.PetDTO;
 import com.example.petfeedercloud.jwt.serviceJWT.JwtServiceInterface;
 import com.example.petfeedercloud.models.Pet;
 import com.example.petfeedercloud.models.PetFeeder;
+import com.example.petfeedercloud.models.Time;
 import com.example.petfeedercloud.models.UserP;
 import com.example.petfeedercloud.repositories.PetFeederRepository;
 import com.example.petfeedercloud.repositories.PetRepository;
+import com.example.petfeedercloud.repositories.TimeRepository;
 import com.example.petfeedercloud.repositories.UserRepository;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +32,7 @@ public class PetServiceImpl implements PetService {
     private PetFeederRepository petFeederRepository;
     @Autowired
     private UserRepository userRepository;
+
 
     @Override
     public List<PetDTO> getAllPets() {
@@ -41,6 +48,9 @@ public class PetServiceImpl implements PetService {
                 .map(this::convertToDtoWithId)
                 .orElseThrow(() -> new NotFoundException("Pet not found with ID: " + petId));
     }
+
+
+
 
     @Override
     public PetDTO createPet(PetDTO petDTO) {

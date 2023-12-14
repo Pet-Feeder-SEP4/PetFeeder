@@ -16,4 +16,7 @@ public interface TimeRepository  extends JpaRepository<Time, Long> {
     @Modifying
     @Query("DELETE FROM Time t WHERE t.schedule.petFeeder.petFeederId = :petFeederId")
     void deleteTimesByPetFeederId(Long petFeederId);
+
+    @Query("SELECT t, pf.petFeederId FROM Time t JOIN t.schedule s JOIN s.petFeeder pf WHERE pf.active = true")
+    List<Object[]> findTimesAndPetFeederIdWherePetFeederIsActive();
 }

@@ -3,7 +3,10 @@ package com.example.petfeedercloud;
 import com.example.petfeedercloud.config.WebSocketPetFeeder;
 import com.example.petfeedercloud.dtos.PetFeederDTO;
 import com.example.petfeedercloud.models.PetFeeder;
+import com.example.petfeedercloud.models.Time;
+import com.example.petfeedercloud.repositories.TimeRepository;
 import com.example.petfeedercloud.services.PetFeederService;
+import com.example.petfeedercloud.services.TimeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,10 +37,14 @@ public class PetFeederCloudApplication{
     @Autowired
     private static PetFeederService petFeederService;
 
+
     @Autowired
     private static WebSocketPetFeeder webSocketPetFeeder;
 
     private static final Map<Long,Socket> sessions = new ConcurrentHashMap<>();
+
+
+    //schedule feedings
 
     public PetFeederCloudApplication(PetFeederService petFeederService, WebSocketPetFeeder webSocketPetFeeder) {
         this.petFeederService = petFeederService;
@@ -50,6 +62,8 @@ public class PetFeederCloudApplication{
             System.out.println("Server is listening on port " + port);
 
             while (true) {
+                //scheduled feeding
+                application.executeScheduledTask();
                 // Wait for a client to connect
                 Socket clientSocket = serverSocket.accept();
 
@@ -67,8 +81,33 @@ public class PetFeederCloudApplication{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 
+    private void executeScheduledTask() {
+        List<Object[]> activeTimes = petFeederService.findTimesAndPetFeederIdWherePetFeederIsActive();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date currentTime = new Date();
+        System.out.println("Current time->"+currentTime);
+        for (Object[] timeAndPetFeederId : activeTimes) {
+            Time time = (Time) timeAndPetFeederId[0];
+            Long petFeederId = (Long) timeAndPetFeederId[1];
+
+            try {
+
+                Date scheduledTime = sdf.parse(time.getTime());
+                if (currentTime.after(scheduledTime)) {
+                    sendPortionToPetFeeder(petFeederId, String.valueOf(time.getPortionSize()));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+
+            }
+        }
+    }
     private String waitForSignal(Socket clientSocket) {
         try {
             /*BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
