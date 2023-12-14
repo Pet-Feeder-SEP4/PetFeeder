@@ -7,11 +7,7 @@ jest.mock("../../api/axios", () => ({
   get: jest.fn(() => Promise.resolve({ data: {} })),
 }));
 
-
-    // You can add more specific assertions based on your component structure
-    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
-  });
-
+describe("Dashboard Component", () => {
   it("opens DispensePop modal when Dispense button is clicked", () => {
     render(<Dashboard />);
 
