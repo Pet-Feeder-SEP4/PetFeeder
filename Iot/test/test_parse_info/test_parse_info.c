@@ -7,8 +7,6 @@
 #include "sensor_controller.h"
 
 #include "pc_comm.h"
-#include "wifi.h"
-#include "servo360.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,13 +14,11 @@
 #define TEST_PARSE_INFO_WIN
 
 DEFINE_FFF_GLOBALS
-FAKE_VALUE_FUNC(WIFI_ERROR_MESSAGE_t, wifi_command_TCP_transmit, uint8_t *, uint16_t);
 FAKE_VOID_FUNC(getTempandHum);
 FAKE_VALUE_FUNC(int, getTemp);
 FAKE_VALUE_FUNC(int, getHum);
 FAKE_VALUE_FUNC(int, getWaterMeasurement);
 FAKE_VALUE_FUNC(int, getFoodMeasurement);
-FAKE_VOID_FUNC(rotate, uint8_t, int);
 FAKE_VOID_FUNC(uart_send_string_blocking, USART_t, char *);
 FAKE_VOID_FUNC(uart_init, USART_t, uint32_t, UART_Callback_t);
 FAKE_VOID_FUNC(uart_send_array_blocking, USART_t, uint8_t *, uint16_t);
@@ -65,25 +61,22 @@ void test_sensor_get_data_wifi_send()
     getFoodMeasurement_fake.return_val = foodMeasurement;
     int idNumber = 37;
 
-    sensor_get_data();
     char *msg = getMsgStr(idNumber, foodMeasurement, humidity, temperature, waterMeasurement, msg_length);
-    TEST_ASSERT_EQUAL_STRING(msg, wifi_command_TCP_transmit_fake.arg0_val);
-    TEST_ASSERT_EQUAL_INT(msg_length, wifi_command_TCP_transmit_fake.arg1_val);
+    TEST_ASSERT_EQUAL_STRING(msg, sensor_get_data());
     free(msg);
 }
 
-void test_handle_received_data_good_input()
+void test_get_gramms_from_data_good_input()
 {
-    handle_received_data("DIS:050");
-    int expected = 50 / 10;
-    TEST_ASSERT_EQUAL_INT(1, rotate_fake.call_count);
-    TEST_ASSERT_EQUAL_INT(expected, rotate_fake.arg1_val);
+    int gramms = get_gramms_from_data("DIS:050");
+    int expected = 50;
+    TEST_ASSERT_EQUAL_INT(expected, gramms);
 }
 
 
-void test_handle_received_data_wrong_input(char* input)
+void test_get_gramms_from_data_wrong_input(char* input)
 {
-    handle_received_data(input);
+    get_gramms_from_data(input);
 
     char error_msg[] = "Error parsing data\n";
     int err_counter = 0;
@@ -100,34 +93,29 @@ void test_handle_received_data_wrong_input(char* input)
     TEST_ASSERT_EQUAL_INT(1, err_counter);
 }
 
-void test_handle_received_data_wrong_input_0()
+void test_get_gramms_from_data_wrong_input_name_short()
 {  
-    test_handle_received_data_wrong_input("DIS:000");
+    test_get_gramms_from_data_wrong_input("DI:050");
 }
 
-void test_handle_received_data_wrong_input_name_short()
+void test_get_gramms_from_data_wrong_input_no_separator()
 {  
-    test_handle_received_data_wrong_input("DI:050");
+    test_get_gramms_from_data_wrong_input("DIS050");
 }
 
-void test_handle_received_data_wrong_input_no_separator()
+void test_get_gramms_from_data_wrong_input_value_not_number()
 {  
-    test_handle_received_data_wrong_input("DIS050");
+    test_get_gramms_from_data_wrong_input("DIS:A10");
 }
 
-void test_handle_received_data_wrong_input_value_not_number()
+void test_get_gramms_from_data_wrong_input_name_wrong()
 {  
-    test_handle_received_data_wrong_input("DIS:A10");
+    test_get_gramms_from_data_wrong_input("DIT:050");
 }
 
-void test_handle_received_data_wrong_input_name_wrong()
+void test_get_gramms_from_data_wrong_input_no_value()
 {  
-    test_handle_received_data_wrong_input("DIT:050");
-}
-
-void test_handle_received_data_wrong_input_no_value()
-{  
-    test_handle_received_data_wrong_input("DIT:");
+    test_get_gramms_from_data_wrong_input("DIT:");
 }
 
 
@@ -136,12 +124,11 @@ int main()
     UNITY_BEGIN();
     RUN_TEST(test_sensor_get_data_pc_comm);
     RUN_TEST(test_sensor_get_data_wifi_send);
-    RUN_TEST(test_handle_received_data_good_input);
-    RUN_TEST(test_handle_received_data_wrong_input_0);
-    RUN_TEST(test_handle_received_data_wrong_input_name_short);
-    RUN_TEST(test_handle_received_data_wrong_input_no_separator);
-    RUN_TEST(test_handle_received_data_wrong_input_value_not_number);
-    RUN_TEST(test_handle_received_data_wrong_input_name_wrong);
-    RUN_TEST(test_handle_received_data_wrong_input_no_value);
+    RUN_TEST(test_get_gramms_from_data_good_input);
+    RUN_TEST(test_get_gramms_from_data_wrong_input_name_short);
+    RUN_TEST(test_get_gramms_from_data_wrong_input_no_separator);
+    RUN_TEST(test_get_gramms_from_data_wrong_input_value_not_number);
+    RUN_TEST(test_get_gramms_from_data_wrong_input_name_wrong);
+    RUN_TEST(test_get_gramms_from_data_wrong_input_no_value);
     return UNITY_END();
 }

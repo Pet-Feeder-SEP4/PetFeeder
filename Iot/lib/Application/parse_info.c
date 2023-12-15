@@ -6,9 +6,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "wifi.h"
 #include "servo360.h"
 #include <stdlib.h>
+#include "util.h"
 
 char str[108];
 int temperature;
@@ -17,7 +17,7 @@ int waterMeasurement;
 int foodMeasurement;
 int idNumber;
 
-void sensor_get_data()
+char* sensor_get_data()
 {
     pc_comm_init(9600, NULL);
     getTempandHum();
@@ -29,23 +29,17 @@ void sensor_get_data()
     foodMeasurement = getFoodMeasurement();
     sprintf(str, "{\"petFeederId\":\"%d\",\"foodLevel\":\"%d\",\"foodHumidity\":\"%d\",\"waterTemperature\":\"%d\",\"waterLevel\":\"%d\"}\n",
             idNumber, foodMeasurement, humidity, temperature, waterMeasurement);
-    
-    wifi_command_TCP_transmit((uint8_t *)str, 99);
-    pc_comm_send_string_blocking(str);
+    return str;
 }
 
-void handle_received_data(char *data)
+int get_gramms_from_data(char *data)
 {
     char data_copy[256];
     strcpy(data_copy, data);
-    char *p = data_copy;
-    int length = 0;
-    for (;*p; ++p) {
-        length++;
-    }
-    if (length > 7) {
+
+    if (str_length(data_copy) > 7) {
         pc_comm_send_string_blocking("Error parsing data\n");
-        return;
+        return -1;
     }
     
     pc_comm_send_string_blocking("Received data: ");
@@ -59,24 +53,12 @@ void handle_received_data(char *data)
         if (token != NULL)
         {
             int gramms = atoi(token); // Convert the token to an integer
-            if (gramms > 0)
-            {
-                pc_comm_send_string_blocking(" Dispensing ");
-                pc_comm_send_int_blocking(gramms);
-                pc_comm_send_string_blocking(" gramms of food\n");
-                // Calculate the amount of turns based on the gramms value
-                int amountOfTurns = gramms / 10; // Assuming 10 gramms per second
-                // Call the rotate function from servo360.h
-                rotate(50, amountOfTurns); // Adjust the speed as needed
-            }
-            else
-            {
-                pc_comm_send_string_blocking("Error parsing data\n");
+            if (gramms > 0) {
+                return gramms;
             }
         }
     }
-    else
-    {
-        pc_comm_send_string_blocking("Error parsing data\n");
-    }
+    
+    pc_comm_send_string_blocking("Error parsing data\n");
+    return -1;
 }

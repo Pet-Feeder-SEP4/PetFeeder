@@ -37,7 +37,7 @@ jobs:
     - name: Run Sensor test
       run: |
         cd Iot
-        pio test -e win_test -f "test_control"
+        pio test -e win_test -f "test_sensor"
 
     - name: Run Parse_info test
       run: |
@@ -48,3 +48,13 @@ jobs:
       run: |
         cd Iot
         pio test -e win_test -f "test_application"
+
+    - name: Run Servo test
+      run: |
+        cd Iot
+        pio test -e win_test -f "test_servo"
+    
+    - name: Run WiFi test
+      run: |
+        cd Iot
+        pio test -e win_test -f "test_wifi"

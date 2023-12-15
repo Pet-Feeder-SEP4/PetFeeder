@@ -1,6 +1,18 @@
 {
     "files.associations": {
         "includes.h": "c",
-        "parse_info.h": "c"
+        "app.h": "c",
+        "parse_info.h": "c",
+        "include_avr_util.h": "c",
+        "string.h": "c",
+        "util.h": "c",
+        "wifi.h": "c",
+        "pc_comm.h": "c",
+        "uart.h": "c",
+        "stdint.h": "c",
+        "wifi_controller.h": "c",
+        "mock_avr_io.h": "c",
+        "servo360.h": "c",
+        "configuration.h": "c"
     }
 }

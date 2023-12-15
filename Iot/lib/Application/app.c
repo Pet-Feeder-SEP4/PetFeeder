@@ -1,31 +1,48 @@
 #include "include_avr_util.h"
-#include "wifi.h"
 #include "app.h"
 #include "pc_comm.h" 
 #include "dht11.h"
 #include <stdio.h>
 #include "hc_sr04.h"
-#include "configuration.h"
 
 #include "parse_info.h"
+#include "util.h"
+#include "servo_controller.h"
+#include "wifi_controller.h"
 
-char buffer[8];
+char buffer[BUFFER_SIZE] = "";
 
 void tcpCallback(){
-    pc_comm_send_string_blocking("tcpcallback called");
-    handle_received_data(buffer);
+    pc_comm_send_string_blocking("Reciving data...\n");
+    
+    int gramms = get_gramms_from_data(buffer);
+
+    if (gramms > -1) {
+        dispense(gramms);
+    }
 }
+
 void app_init(){
     pc_comm_init(9600, NULL);
     dht11_init();
     hc_sr04_init();
-    wifi_init();
-    wifi_command_join_AP(WIFI_NAME, WIFI_PASSWORD);
-    wifi_command_create_TCP_connection(IP, PORT, tcpCallback, buffer);
+    connect_wifi(tcpCallback, buffer);
     _delay_ms(3000);
-    
 }
 
 void app_start(void){
-    sensor_get_data();
+    char* data = sensor_get_data();
+
+    WIFI_ERROR_MESSAGE_t error = transmit_data(data);
+
+    // if can't send data -> reconnect to wifi and server
+    if (error != WIFI_OK) {
+        pc_comm_send_string_blocking("Error sending data. Try to reconnect Wi-Fi and Server\n");
+        close_wifi();
+        connect_wifi(tcpCallback, buffer);
+        app_start();
+    } else {
+        pc_comm_send_string_blocking(data);
+    }
 }
+
