@@ -10,7 +10,7 @@ public class TestController {
 
     //http://localhost:8080/swagger-ui/index.html
 
-    @GetMapping("/test")
+    @GetMapping("/testFinal")
     public String test() {
         return "This is just a test";
     }
