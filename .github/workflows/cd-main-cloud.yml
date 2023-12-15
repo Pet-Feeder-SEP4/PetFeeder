@@ -5,10 +5,10 @@ name: Deploy container app to Azure Web App - petfeederapii
 
 on:
   push:
+    paths:
+      - 'Cloud/**' 
     branches:
       - main
-  workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
