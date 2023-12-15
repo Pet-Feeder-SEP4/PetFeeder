@@ -32,7 +32,7 @@ jobs:
           context: .
           push: true
           tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_a4f182f7653f49e789b5205c06dd30dc }}/kokas340/petfeederapi:${{ github.sha }}
-          file: ./Dockerfile
+          file: ./Cloud/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
