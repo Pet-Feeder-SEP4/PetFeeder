@@ -1,5 +1,7 @@
 ## Smart Pet Feeder Project
 
+[![Watch the video](https://img.youtube.com/vi/KW97Hc_rt2E/0.jpg)](https://www.youtube.com/watch?v=KW97Hc_rt2E)
+
 ### Background Description
 
 The concept of a Smart Pet Feeder emerges as a timely and necessary solution to address the evolving needs of pet owners amidst the challenges they face and the benefits technology can offer.
