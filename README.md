@@ -1,8 +1,8 @@
-## Smart Pet Feeder Project
+## 🐾 Smart Pet Feeder Project
 
 [![Watch the video](https://img.youtube.com/vi/KW97Hc_rt2E/0.jpg)](https://www.youtube.com/watch?v=KW97Hc_rt2E)
 
-### Background Description
+### 🌟 Background Description
 
 The concept of a Smart Pet Feeder emerges as a timely and necessary solution to address the evolving needs of pet owners amidst the challenges they face and the benefits technology can offer.
 
@@ -10,7 +10,7 @@ With more individuals welcoming pets into their homes, the demand for convenient
 
 This platform aims to empower pet owners with access to real-time data and insights into their pet's well-being, offering peace of mind and enabling informed decisions about their pet's care. The system caters to tech-savvy and busy pet owners, providing them with convenience, personalized care, and a stronger connection with their pets in today's fast-paced world.
 
-### Problem Statement
+### ❓ Problem Statement
 
 **Main Problem**
 
@@ -22,7 +22,7 @@ Pet owners struggle to maintain consistent feeding schedules for their pets in o
 2. What features should a Smart Pet Feeder incorporate to cater to the diverse dietary needs of pets based on factors like breed and age?
 3. In what ways can technology provide remote monitoring and real-time insights into a pet's activities and well-being?
 
-### Definition of Purpose
+### 🎯 Definition of Purpose
 
 The purpose of this system is to provide pet owners with peace of mind regarding their pets' feeding and overall health. The system achieves this by offering customized feeding schedules and recommendations tailored to specific breeds. Through these customized recommendations, pet owners can receive real-time insights into their pets' activities, enabling them to monitor and prevent health problems such as overfeeding.
 
